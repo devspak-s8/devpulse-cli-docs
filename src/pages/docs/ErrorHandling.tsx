@@ -3,47 +3,53 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Callout } from "@/components/Callout";
+import { cn } from "@/lib/utils";
 
 const errorCodes = [
   {
     code: "400",
     name: "Bad Request",
-    description: "The request was malformed or missing required parameters",
-  },
-  {
-    code: "401",
-    name: "Unauthorized",
-    description: "Invalid or missing API key",
+    description: "Missing or conflicting parameters (provide either username or repo, not both)",
   },
   {
     code: "403",
     name: "Forbidden",
-    description: "You don't have permission to access this resource",
-  },
-  {
-    code: "404",
-    name: "Not Found",
-    description: "The requested resource does not exist",
+    description: "GitHub API rate limit exceeded",
   },
   {
     code: "429",
     name: "Too Many Requests",
-    description: "Rate limit exceeded",
+    description: "Per-IP rate limit exceeded on local API (8 req/hour)",
   },
   {
-    code: "500",
-    name: "Internal Server Error",
-    description: "Something went wrong on our end",
+    code: "502",
+    name: "Bad Gateway",
+    description: "Upstream/network/GitHub error",
   },
 ];
 
-const rateLimitResponse = `{
-  "error": {
-    "code": "RATE_LIMIT_EXCEEDED",
-    "message": "Too many requests. Please wait before retrying.",
-    "retry_after": 60
-  }
-}`;
+const commonErrors = [
+  {
+    symptom: 'CLI shows "GitHub API rate limit exceeded. Reset in ~N minute(s)."',
+    fix: "Set GITHUB_TOKEN; reduce --force-refresh usage; allow cache to serve interim responses",
+  },
+  {
+    symptom: "You hit limits faster on busy dashboards",
+    fix: "Export/set GITHUB_TOKEN to increase limit from 60 to 5,000 req/hour",
+  },
+  {
+    symptom: "RequestException or HTTP 502 from the API",
+    fix: "Retry; rely on stale cache; verify outbound connectivity and proxies",
+  },
+  {
+    symptom: 'Data appears "stale" shortly after a change',
+    fix: "Use --force-refresh for a one-off bypass; cache TTL is 10 minutes",
+  },
+  {
+    symptom: "400 error from API",
+    fix: "Provide either username or repo parameter, not both or neither",
+  },
+];
 
 const retryExample = `import time
 import requests
@@ -65,160 +71,170 @@ def make_request_with_retry(url, headers, max_retries=3):
 export default function ErrorHandling() {
   return (
     <div className="prose-docs max-w-3xl">
-      <h1>Error Handling</h1>
+      <div className="animate-fade-in">
+        <h1>Error Handling & Troubleshooting</h1>
 
-      <p className="text-lg text-muted-foreground">
-        Learn how to handle errors and rate limits gracefully when using the
-        DevPulse CLI and API.
-      </p>
+        <p className="text-lg text-muted-foreground">
+          Learn how to handle errors and rate limits gracefully when using the
+          DevPulse CLI and API.
+        </p>
+      </div>
 
-      <h2 id="error-codes">HTTP Status Codes</h2>
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+        <h2 id="error-codes">HTTP Status Codes</h2>
 
-      <p>
-        The DevPulse API uses standard HTTP status codes to indicate the success
-        or failure of requests.
-      </p>
-
-      <div className="not-prose">
-        <div className="rounded-lg border border-border overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-muted/50">
-                <th className="text-left p-3 font-medium text-sm w-20">Code</th>
-                <th className="text-left p-3 font-medium text-sm w-40">Name</th>
-                <th className="text-left p-3 font-medium text-sm">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {errorCodes.map((error) => (
-                <tr key={error.code} className="border-t border-border">
-                  <td className="p-3 font-mono text-sm">{error.code}</td>
-                  <td className="p-3 text-sm font-medium">{error.name}</td>
-                  <td className="p-3 text-sm text-muted-foreground">
-                    {error.description}
-                  </td>
+        <div className="not-prose">
+          <div className="rounded-lg border border-border overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-muted/50">
+                  <th className="text-left p-3 font-medium text-sm w-20">Code</th>
+                  <th className="text-left p-3 font-medium text-sm w-40">Name</th>
+                  <th className="text-left p-3 font-medium text-sm">Description</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {errorCodes.map((error) => (
+                  <tr key={error.code} className="border-t border-border">
+                    <td className="p-3 font-mono text-sm">{error.code}</td>
+                    <td className="p-3 text-sm font-medium">{error.name}</td>
+                    <td className="p-3 text-sm text-muted-foreground">
+                      {error.description}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
-      <h2 id="rate-limits">Rate Limits</h2>
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.15s" }}>
+        <h2 id="rate-limits">Rate Limits</h2>
 
-      <p>
-        The API is rate limited to prevent abuse and ensure fair usage:
-      </p>
+        <h3>GitHub API Limits</h3>
+        <ul>
+          <li><strong>Unauthenticated:</strong> ~60 requests/hour</li>
+          <li><strong>With <code>GITHUB_TOKEN</code>:</strong> ~5,000 requests/hour</li>
+        </ul>
 
-      <ul>
-        <li>
-          <strong>100 requests per minute</strong> for authenticated requests
-        </li>
-        <li>
-          <strong>10 requests per minute</strong> for unauthenticated requests
-        </li>
-      </ul>
+        <h3>Local API Limits</h3>
+        <ul>
+          <li><strong>In-memory limiter:</strong> 8 requests per IP per hour</li>
+          <li>No authentication required; intended for local use</li>
+        </ul>
 
-      <Callout type="warning" title="Rate Limit Response">
-        When you exceed the rate limit, the API returns a 429 status code with
-        information about when you can retry.
+        <h3>Detection</h3>
+        <p>
+          DevPulse inspects <code>X-RateLimit-Remaining</code> and <code>X-RateLimit-Reset</code>{" "}
+          response headers when present and raises a rate-limit condition when appropriate.
+        </p>
+      </div>
+
+      <Callout type="warning" title="Stale Cache Fallback">
+        On HTTP 403 from GitHub due to rate limits, DevPulse attempts to return the most recent
+        cached response. If none exists, it fails fast with a clear message and guidance.
       </Callout>
 
-      <CodeBlock
-        code={rateLimitResponse}
-        language="json"
-        filename="429 Response"
-      />
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+        <h2 id="common-errors">Common Errors & Fixes</h2>
 
-      <h2 id="best-practices">Best Practices</h2>
+        <div className="not-prose space-y-4">
+          {commonErrors.map((error, i) => (
+            <div 
+              key={i} 
+              className="p-4 rounded-lg border border-border bg-card animate-fade-in-up"
+              style={{ animationDelay: `${0.25 + i * 0.05}s` }}
+            >
+              <p className="font-mono text-sm text-danger mb-2">{error.symptom}</p>
+              <p className="text-sm text-muted-foreground">
+                <strong className="text-tip">Fix:</strong> {error.fix}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      <h3>1. Implement Exponential Backoff</h3>
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+        <h2 id="best-practices">Best Practices</h2>
 
-      <p>
-        When encountering rate limits or transient errors, use exponential backoff
-        with jitter to avoid thundering herd problems:
-      </p>
+        <h3>1. Set a GitHub Token</h3>
+        <p>
+          Always set <code>GITHUB_TOKEN</code> in production for predictable rate limits:
+        </p>
 
-      <CodeBlock
-        code={retryExample}
-        language="python"
-        filename="retry_example.py"
-        showLineNumbers
-      />
+        <CodeBlock
+          code={`# macOS/Linux
+export GITHUB_TOKEN="ghp_your_token_here"
 
-      <h3>2. Use the Cache</h3>
+# Windows PowerShell
+$env:GITHUB_TOKEN = "ghp_your_token_here"`}
+          language="bash"
+        />
 
-      <p>
-        DevPulse CLI includes built-in caching. Enable it to reduce API calls:
-      </p>
+        <h3>2. Implement Exponential Backoff</h3>
 
-      <CodeBlock
-        code={`# Enable caching (default: enabled)
-devpulse config set cache.enabled true
+        <p>
+          When encountering rate limits or transient errors, use exponential backoff
+          with jitter:
+        </p>
 
-# Set cache TTL (in seconds)
-devpulse config set cache.ttl 300
+        <CodeBlock
+          code={retryExample}
+          language="python"
+          filename="retry_example.py"
+          showLineNumbers
+        />
 
-# View cached data when offline
-devpulse stats show --cached`}
-        language="bash"
-      />
+        <h3>3. Use the Cache</h3>
 
-      <h3>3. Handle Errors Gracefully</h3>
+        <p>
+          DevPulse CLI includes built-in caching. Use it to reduce API calls:
+        </p>
 
-      <Callout type="tip">
+        <CodeBlock
+          code={`# Cache is enabled by default
+# Cache location: ~/.devpulse/cache/github/
+# Cache TTL: 10 minutes
+
+# Force refresh when needed (use sparingly)
+devpulse github stats --repo owner/name --force-refresh`}
+          language="bash"
+        />
+
+        <h3>4. Prefer Cached Results</h3>
+        <ul>
+          <li>Prefer cached results for dashboards that refresh frequently</li>
+          <li>Increase cache TTL or add a server-side cache (e.g., Redis) for multi-user APIs</li>
+          <li>Limit per-request scope (e.g., fetch one repo at a time) for predictable budgets</li>
+        </ul>
+      </div>
+
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
+        <h2 id="debugging">Debugging</h2>
+
+        <p>Enable verbose output to debug issues:</p>
+
+        <CodeBlock
+          code={`# Check system health
+devpulse health check
+
+# View all available commands
+devpulse --help
+
+# Check a specific command's options
+devpulse github stats --help`}
+          language="bash"
+        />
+      </div>
+
+      <Callout type="tip" title="Handle Errors Gracefully">
         Always check for error responses and provide meaningful feedback to users.
         Don't expose raw error messages in production applications.
       </Callout>
 
-      <h2 id="cli-errors">CLI Error Messages</h2>
-
-      <p>Common CLI errors and their solutions:</p>
-
-      <div className="space-y-4 not-prose">
-        <div className="callout callout-danger">
-          <code className="text-sm">Error: GitHub API rate limit exceeded</code>
-          <p className="text-sm text-muted-foreground mt-2">
-            <strong>Solution:</strong> Wait for the rate limit to reset, or
-            authenticate with a GitHub token to increase your limit.
-          </p>
-        </div>
-
-        <div className="callout callout-danger">
-          <code className="text-sm">Error: Unable to connect to sync server</code>
-          <p className="text-sm text-muted-foreground mt-2">
-            <strong>Solution:</strong> Check your internet connection. DevPulse
-            will use cached data when offline.
-          </p>
-        </div>
-
-        <div className="callout callout-danger">
-          <code className="text-sm">Error: Invalid configuration file</code>
-          <p className="text-sm text-muted-foreground mt-2">
-            <strong>Solution:</strong> Run <code>devpulse config validate</code> to
-            identify the issue, or reset with <code>devpulse config reset</code>.
-          </p>
-        </div>
-      </div>
-
-      <h2 id="debugging">Debugging</h2>
-
-      <p>Enable verbose output to debug issues:</p>
-
-      <CodeBlock
-        code={`# Enable debug mode
-devpulse --debug stats show
-
-# View detailed logs
-devpulse logs show --level DEBUG
-
-# Check system health
-devpulse health check --verbose`}
-        language="bash"
-      />
-
       {/* Navigation */}
-      <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose">
+      <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
         <Button variant="outline" asChild>
           <Link to="/docs/api-reference">
             <ArrowLeft className="h-4 w-4" />
