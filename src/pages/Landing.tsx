@@ -6,12 +6,14 @@ import {
   Terminal,
   Database,
   ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FeatureCard } from "@/components/FeatureCard";
 import { CodeBlock } from "@/components/CodeBlock";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const features = [
   {
@@ -190,6 +192,7 @@ export default function Landing() {
       </section>
 
       <Footer />
+      <ScrollToTop />
     </div>
   );
 }

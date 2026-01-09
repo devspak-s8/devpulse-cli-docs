@@ -195,6 +195,101 @@
     background: hsl(var(--code-bg));
   }
 
+  /* Prism.js syntax highlighting theme */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: hsl(var(--muted-foreground));
+    font-style: italic;
+  }
+
+  .token.punctuation {
+    color: hsl(var(--foreground) / 0.7);
+  }
+
+  .token.property,
+  .token.tag,
+  .token.boolean,
+  .token.number,
+  .token.constant,
+  .token.symbol,
+  .token.deleted {
+    color: hsl(0 72% 60%);
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    color: hsl(142 71% 50%);
+  }
+
+  .token.operator,
+  .token.entity,
+  .token.url,
+  .language-css .token.string,
+  .style .token.string {
+    color: hsl(38 92% 55%);
+  }
+
+  .token.atrule,
+  .token.attr-value,
+  .token.keyword {
+    color: hsl(var(--primary));
+  }
+
+  .token.function,
+  .token.class-name {
+    color: hsl(280 80% 65%);
+  }
+
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: hsl(38 92% 60%);
+  }
+
+  .token.important,
+  .token.bold {
+    font-weight: bold;
+  }
+
+  .token.italic {
+    font-style: italic;
+  }
+
+  .token.entity {
+    cursor: help;
+  }
+
+  /* Dark mode adjustments for syntax highlighting */
+  .dark .token.property,
+  .dark .token.tag,
+  .dark .token.boolean,
+  .dark .token.number,
+  .dark .token.constant,
+  .dark .token.symbol,
+  .dark .token.deleted {
+    color: hsl(0 72% 65%);
+  }
+
+  .dark .token.selector,
+  .dark .token.attr-name,
+  .dark .token.string,
+  .dark .token.char,
+  .dark .token.builtin,
+  .dark .token.inserted {
+    color: hsl(142 71% 55%);
+  }
+
+  .dark .token.function,
+  .dark .token.class-name {
+    color: hsl(280 80% 70%);
+  }
+
   /* Callout styles */
   .callout {
     @apply rounded-lg p-4 my-4 border-l-4;
@@ -275,6 +370,13 @@
 
   .prose-docs blockquote {
     @apply border-l-4 border-primary pl-4 italic my-4 text-muted-foreground;
+  }
+
+  /* Code inline styling */
+  .prose-docs code:not(pre code) {
+    @apply px-1.5 py-0.5 rounded text-sm font-mono;
+    background: hsl(var(--code-bg));
+    border: 1px solid hsl(var(--code-border));
   }
 }
 
