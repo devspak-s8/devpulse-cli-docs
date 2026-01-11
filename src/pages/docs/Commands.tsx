@@ -3,12 +3,14 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Callout } from "@/components/Callout";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
 
 export default function Commands() {
   return (
     <div className="prose-docs max-w-4xl">
       <div className="animate-fade-in">
-        <h1>DevPulse CLI - Complete Help & Usage Guide</h1>
+        <h1>DevPulse CLI Commands</h1>
 
         <p className="text-lg text-muted-foreground">
           DevPulse organizes its functionality into 17+ command groups with 120+ subcommands for tracking, analytics, automation, and productivity.
@@ -34,66 +36,67 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
         />
       </div>
 
-      {/* AI Commands */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.15s" }}>
-        <h2 id="ai-commands">🔍 AI Command Group</h2>
-        <p>AI-powered insights and suggestions</p>
+      {/* Tabbed Command Groups */}
+      <div className="animate-fade-in-up not-prose my-8" style={{ animationDelay: "0.15s" }}>
+        <h2 className="text-2xl font-bold mb-6">Command Reference</h2>
+        
+        <Tabs defaultValue="core" className="w-full">
+          <TabsList className="grid w-full grid-cols-4 mb-8">
+            <TabsTrigger value="core">Core Commands</TabsTrigger>
+            <TabsTrigger value="github">GitHub & Git</TabsTrigger>
+            <TabsTrigger value="productivity">Productivity</TabsTrigger>
+            <TabsTrigger value="advanced">Advanced</TabsTrigger>
+          </TabsList>
 
-        <h3>ai suggest</h3>
-        <CodeBlock
-          code={`devpulse ai suggest                    # Get AI suggestion
-devpulse ai suggest --context "task"   # Suggest with context`}
-          language="bash"
-        />
-        <p>Generates smart suggestions based on your activity patterns.</p>
+          {/* Core Commands Tab */}
+          <TabsContent value="core" className="prose-docs">
+            <div className="space-y-8">
 
-        <h3>ai analyze</h3>
-        <CodeBlock
-          code={`devpulse ai analyze [FILE]`}
-          language="bash"
-        />
-        <p>Analyzes logs or code for improvements.</p>
+          {/* Core Commands Tab */}
+          <TabsContent value="core" className="prose-docs">
+            <div className="space-y-8">
 
-        <h3>ai chat</h3>
-        <CodeBlock
-          code={`devpulse ai chat                       # Interactive AI chat
-devpulse ai chat "your question"       # Ask specific question
-devpulse ai chat --interactive         # Start chat session`}
-          language="bash"
-        />
+      {/* Track Commands */}
+      <div>
+        <h2 id="track-commands">⏱️ Track Command Group</h2>
+        <p>Track time and commands</p>
 
-        <h3>ai recommend</h3>
+        <h3>track start</h3>
         <CodeBlock
-          code={`devpulse ai recommend                  # Get recommendations
-devpulse ai recommend --category "code"`}
-          language="bash"
-        />
-
-        <h3>ai insights</h3>
-        <CodeBlock
-          code={`devpulse ai insights                   # Show AI insights
-devpulse ai insights --detailed        # Detailed breakdown
-devpulse ai insights --export file.json`}
+          code={`devpulse track start                   # Start tracking
+devpulse track start "task name"       # Start with task name
+devpulse track start --tag important   # Add tag`}
           language="bash"
         />
 
-        <h3>ai predict</h3>
+        <h3>track stop / pause / resume</h3>
         <CodeBlock
-          code={`devpulse ai predict                    # Predict trends (7 days)
-devpulse ai predict --days 30          # Predict 30 days ahead`}
+          code={`devpulse track stop                    # Stop current session
+devpulse track pause                   # Pause session
+devpulse track resume                  # Resume session`}
           language="bash"
         />
 
-        <h3>ai optimize</h3>
+        <h3>track list & edit</h3>
         <CodeBlock
-          code={`devpulse ai optimize                   # Get optimization suggestions
-devpulse ai optimize --apply           # Apply recommendations`}
+          code={`devpulse track list                    # List all sessions
+devpulse track list --limit 10         # Show last 10
+devpulse track edit 1 --task "new name"
+devpulse track edit 1 --duration 45    # Change duration (minutes)`}
+          language="bash"
+        />
+
+        <h3>track export</h3>
+        <CodeBlock
+          code={`devpulse track export                  # Export as CSV
+devpulse track export --format json    # Export as JSON
+devpulse track export --range 2026-01-01:2026-01-31`}
           language="bash"
         />
       </div>
 
       {/* Stats Commands */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+      <div>
         <h2 id="stats-commands">📊 Stats Command Group</h2>
         <p>View analytics and statistics</p>
 
@@ -153,47 +156,48 @@ devpulse stats goals set "Goal Name"   # Set new goal`}
         />
       </div>
 
-      {/* Track Commands */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
-        <h2 id="track-commands">⏱️ Track Command Group</h2>
-        <p>Track time and commands</p>
+      {/* Config Commands */}
+      <div>
+        <h2 id="config-commands">⚙️ Config Command Group</h2>
+        <p>Manage configuration settings</p>
 
-        <h3>track start</h3>
         <CodeBlock
-          code={`devpulse track start                   # Start tracking
-devpulse track start "task name"       # Start with task name
-devpulse track start --tag important   # Add tag`}
-          language="bash"
-        />
-
-        <h3>track stop / pause / resume</h3>
-        <CodeBlock
-          code={`devpulse track stop                    # Stop current session
-devpulse track pause                   # Pause session
-devpulse track resume                  # Resume session`}
-          language="bash"
-        />
-
-        <h3>track list & edit</h3>
-        <CodeBlock
-          code={`devpulse track list                    # List all sessions
-devpulse track list --limit 10         # Show last 10
-devpulse track edit 1 --task "new name"
-devpulse track edit 1 --duration 45    # Change duration (minutes)`}
-          language="bash"
-        />
-
-        <h3>track export</h3>
-        <CodeBlock
-          code={`devpulse track export                  # Export as CSV
-devpulse track export --format json    # Export as JSON
-devpulse track export --range 2026-01-01:2026-01-31`}
+          code={`devpulse config show                   # Show all config
+devpulse config show user.name         # Show specific key
+devpulse config set theme dark
+devpulse config get theme
+devpulse config import-config config.json`}
           language="bash"
         />
       </div>
 
+      {/* Export Commands */}
+      <div>
+        <h2 id="export-commands">📤 Export Command Group</h2>
+        <p>Export data in various formats</p>
+
+        <CodeBlock
+          code={`devpulse export all                    # Export as CSV
+devpulse export all --format json
+devpulse export all --range 2026-01-01:2026-01-31
+devpulse export sessions
+devpulse export projects
+devpulse export notes`}
+          language="bash"
+        />
+      </div>
+            </div>
+          </TabsContent>
+
+          {/* GitHub & Git Tab */}
+          <TabsContent value="github" className="prose-docs">
+            <div className="space-y-8">
+          {/* GitHub & Git Tab */}
+          <TabsContent value="github" className="prose-docs">
+            <div className="space-y-8">
+
       {/* GitHub Commands */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+      <div>
         <h2 id="github-commands">🔗 GitHub Command Group</h2>
         <p>GitHub integration, analytics, and PR management</p>
 
@@ -280,11 +284,11 @@ devpulse github pr merge owner/repo 123 --strategy squash --confirm --force`}
         </Callout>
       </div>
 
-      {/* Other Command Groups */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.35s" }}>
-        <h2 id="other-commands">Other Command Groups</h2>
+      {/* Logs Commands */}
+      <div>
+        <h2 id="logs-commands">📝 Logs Command Group</h2>
+        <p>Analyze and search logs</p>
 
-        <h3>📝 Logs Command Group</h3>
         <CodeBlock
           code={`devpulse logs analyze [FILE]           # Analyze log file
 devpulse logs search "error"           # Search for keyword
@@ -294,8 +298,13 @@ devpulse logs errors                   # Show all errors
 devpulse logs stats                    # Log statistics`}
           language="bash"
         />
+      </div>
 
-        <h3>🔐 Secrets Command Group</h3>
+      {/* Secrets Commands */}
+      <div>
+        <h2 id="secrets-commands">🔐 Secrets Command Group</h2>
+        <p>Scan and manage secrets</p>
+
         <CodeBlock
           code={`devpulse secrets scan                  # Scan current directory
 devpulse secrets scan --path /src      # Scan specific path
@@ -305,8 +314,13 @@ devpulse secrets report                # Generate report
 devpulse secrets report --severity high`}
           language="bash"
         />
+      </div>
 
-        <h3>🔄 Sync Command Group</h3>
+      {/* Sync Commands */}
+      <div>
+        <h2 id="sync-commands">🔄 Sync Command Group</h2>
+        <p>Synchronize data with cloud</p>
+
         <CodeBlock
           code={`devpulse sync push                     # Push to cloud
 devpulse sync pull                     # Pull from cloud
@@ -316,28 +330,22 @@ devpulse sync history                  # Show all sync events
 devpulse sync conflicts --resolve      # Attempt resolve`}
           language="bash"
         />
+      </div>
+            </div>
+          </TabsContent>
 
-        <h3>💊 Health Command Group</h3>
-        <CodeBlock
-          code={`devpulse health check                  # Check all metrics
-devpulse health check --cpu            # CPU only
-devpulse health check --memory         # Memory only
-devpulse health processes --top 20     # Top 20 processes
-devpulse health alert --cpu 80         # Alert if CPU > 80%`}
-          language="bash"
-        />
+          {/* Productivity Tab */}
+          <TabsContent value="productivity" className="prose-docs">
+            <div className="space-y-8">
+          {/* Productivity Tab */}
+          <TabsContent value="productivity" className="prose-docs">
+            <div className="space-y-8">
 
-        <h3>📦 Project Command Group ✨ NEW</h3>
-        <CodeBlock
-          code={`devpulse project create "my-project"   # Create new project
-devpulse project list                  # Show all projects
-devpulse project switch "my-project"   # Switch to project
-devpulse project delete "my-project"
-devpulse project archive "my-project"`}
-          language="bash"
-        />
+      {/* Timer Commands */}
+      <div>
+        <h2 id="timer-commands">⏰ Timer Command Group</h2>
+        <p>Pomodoro and time management</p>
 
-        <h3>⏰ Timer Command Group ✨ NEW</h3>
         <CodeBlock
           code={`devpulse timer start                   # 25-min Pomodoro
 devpulse timer start 45                # 45-minute timer
@@ -347,19 +355,13 @@ devpulse timer status
 devpulse timer history`}
           language="bash"
         />
+      </div>
 
-        <h3>📝 Notes Command Group ✨ NEW</h3>
-        <CodeBlock
-          code={`devpulse notes add "Remember to review PR"
-devpulse notes add "Fix bug" --tag bugs
-devpulse notes list
-devpulse notes search "meeting"
-devpulse notes delete 1
-devpulse notes tags`}
-          language="bash"
-        />
+      {/* Focus Commands */}
+      <div>
+        <h2 id="focus-commands">🎯 Focus Command Group</h2>
+        <p>Focus sessions and website blocking</p>
 
-        <h3>🎯 Focus Command Group ✨ NEW</h3>
         <CodeBlock
           code={`devpulse focus start                   # 60-minute focus
 devpulse focus start --duration 90
@@ -369,8 +371,13 @@ devpulse focus history
 devpulse focus stats`}
           language="bash"
         />
+      </div>
 
-        <h3>☕ Breaks Command Group ✨ NEW</h3>
+      {/* Breaks Commands */}
+      <div>
+        <h2 id="breaks-commands">☕ Breaks Command Group</h2>
+        <p>Schedule and track breaks</p>
+
         <CodeBlock
           code={`devpulse breaks schedule               # Default schedule
 devpulse breaks schedule --interval 45 --duration 10
@@ -379,40 +386,44 @@ devpulse breaks skip
 devpulse breaks history`}
           language="bash"
         />
+      </div>
 
-        <h3>📊 Report Command Group ✨ NEW</h3>
+      {/* Notes Commands */}
+      <div>
+        <h2 id="notes-commands">📝 Notes Command Group</h2>
+        <p>Quick note-taking and organization</p>
+
         <CodeBlock
-          code={`devpulse report daily                  # Daily report
-devpulse report daily --detailed
-devpulse report weekly
-devpulse report monthly
-devpulse report summary
-devpulse report insights`}
+          code={`devpulse notes add "Remember to review PR"
+devpulse notes add "Fix bug" --tag bugs
+devpulse notes list
+devpulse notes search "meeting"
+devpulse notes delete 1
+devpulse notes tags`}
           language="bash"
         />
+      </div>
 
-        <h3>⚙️ Config Command Group ✨ NEW</h3>
+      {/* Project Commands */}
+      <div>
+        <h2 id="project-commands">📦 Project Command Group</h2>
+        <p>Project management and organization</p>
+
         <CodeBlock
-          code={`devpulse config show                   # Show all config
-devpulse config show user.name         # Show specific key
-devpulse config set theme dark
-devpulse config get theme
-devpulse config import-config config.json`}
+          code={`devpulse project create "my-project"   # Create new project
+devpulse project list                  # Show all projects
+devpulse project switch "my-project"   # Switch to project
+devpulse project delete "my-project"
+devpulse project archive "my-project"`}
           language="bash"
         />
+      </div>
 
-        <h3>📤 Export Command Group ✨ NEW</h3>
-        <CodeBlock
-          code={`devpulse export all                    # Export as CSV
-devpulse export all --format json
-devpulse export all --range 2026-01-01:2026-01-31
-devpulse export sessions
-devpulse export projects
-devpulse export notes`}
-          language="bash"
-        />
+      {/* Habits Commands */}
+      <div>
+        <h2 id="habits-commands">🔗 Habits Command Group</h2>
+        <p>Build and track habits</p>
 
-        <h3>🔗 Habits Command Group ✨ NEW</h3>
         <CodeBlock
           code={`devpulse habits create meditate
 devpulse habits create exercise --frequency weekly
@@ -423,8 +434,13 @@ devpulse habits progress meditate
 devpulse habits stats`}
           language="bash"
         />
+      </div>
 
-        <h3>📱 Dashboard Command Group ✨ NEW</h3>
+      {/* Dashboard Commands */}
+      <div>
+        <h2 id="dashboard-commands">📱 Dashboard Command Group</h2>
+        <p>Visualize your productivity data</p>
+
         <CodeBlock
           code={`devpulse dashboard show                # Show dashboard
 devpulse dashboard show --period week
@@ -434,6 +450,155 @@ devpulse dashboard projects
 devpulse dashboard stats`}
           language="bash"
         />
+      </div>
+
+      {/* Report Commands */}
+      <div>
+        <h2 id="report-commands">📊 Report Command Group</h2>
+        <p>Generate productivity reports</p>
+
+        <CodeBlock
+          code={`devpulse report daily                  # Daily report
+devpulse report daily --detailed
+devpulse report weekly
+devpulse report monthly
+devpulse report summary
+devpulse report insights`}
+          language="bash"
+        />
+      </div>
+            </div>
+          </TabsContent>
+
+          {/* Advanced Tab */}
+          <TabsContent value="advanced" className="prose-docs">
+            <div className="space-y-8">
+
+      {/* AI Commands */}
+      <div>
+        <h2 id="ai-commands">🔍 AI Command Group</h2>
+
+      {/* AI Commands */}
+      <div>
+        <h2 id="ai-commands">🔍 AI Command Group</h2>
+        <p>AI-powered insights and suggestions</p>
+
+        <h3>ai suggest</h3>
+        <CodeBlock
+          code={`devpulse ai suggest                    # Get AI suggestion
+devpulse ai suggest --context "task"   # Suggest with context`}
+          language="bash"
+        />
+        <p>Generates smart suggestions based on your activity patterns.</p>
+
+        <h3>ai analyze</h3>
+        <CodeBlock
+          code={`devpulse ai analyze [FILE]`}
+          language="bash"
+        />
+        <p>Analyzes logs or code for improvements.</p>
+
+        <h3>ai chat</h3>
+        <CodeBlock
+          code={`devpulse ai chat                       # Interactive AI chat
+devpulse ai chat "your question"       # Ask specific question
+devpulse ai chat --interactive         # Start chat session`}
+          language="bash"
+        />
+
+        <h3>ai recommend</h3>
+        <CodeBlock
+          code={`devpulse ai recommend                  # Get recommendations
+devpulse ai recommend --category "code"`}
+          language="bash"
+        />
+
+        <h3>ai insights</h3>
+        <CodeBlock
+          code={`devpulse ai insights                   # Show AI insights
+devpulse ai insights --detailed        # Detailed breakdown
+devpulse ai insights --export file.json`}
+          language="bash"
+        />
+
+        <h3>ai predict</h3>
+        <CodeBlock
+          code={`devpulse ai predict                    # Predict trends (7 days)
+devpulse ai predict --days 30          # Predict 30 days ahead`}
+          language="bash"
+        />
+
+        <h3>ai optimize</h3>
+        <CodeBlock
+          code={`devpulse ai optimize                   # Get optimization suggestions
+devpulse ai optimize --apply           # Apply recommendations`}
+          language="bash"
+        />
+      </div>
+
+      {/* Health Commands */}
+      <div>
+        <h2 id="health-commands">💊 Health Command Group</h2>
+        <p>System health and monitoring</p>
+
+        <CodeBlock
+          code={`devpulse health check                  # Check all metrics
+devpulse health check --cpu            # CPU only
+devpulse health check --memory         # Memory only
+devpulse health processes --top 20     # Top 20 processes
+devpulse health alert --cpu 80         # Alert if CPU > 80%`}
+          language="bash"
+        />
+      </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+        <CodeBlock
+          code={`devpulse ai suggest                    # Get AI suggestion
+devpulse ai suggest --context "task"   # Suggest with context`}
+          language="bash"
+        />
+        <p>Generates smart suggestions based on your activity patterns.</p>
+
+        <h3>ai analyze</h3>
+        <CodeBlock
+          code={`devpulse ai analyze [FILE]`}
+          language="bash"
+        />
+        <p>Analyzes logs or code for improvements.</p>
+
+        <h3>ai chat</h3>
+        <CodeBlock
+          code={`devpulse ai chat                       # Interactive AI chat
+devpulse ai chat "your question"       # Ask specific question
+devpulse ai chat --interactive         # Start chat session`}
+          language="bash"
+        />
+
+        <h3>ai recommend</h3>
+        <CodeBlock
+          code={`devpulse ai recommend                  # Get recommendations
+devpulse ai recommend --category "code"`}
+          language="bash"
+        />
+
+        <h3>ai insights</h3>
+        <CodeBlock
+          code={`devpulse ai insights                   # Show AI insights
+devpulse ai insights --detailed        # Detailed breakdown
+devpulse ai insights --export file.json`}
+          language="bash"
+        />
+
+        <h3>ai predict</h3>
+        <CodeBlock
+          code={`devpulse ai predict                    # Predict trends (7 days)
+devpulse ai predict --days 30          # Predict 30 days ahead`}
+          language="bash"
+        />
+
+        </Tabs>
       </div>
 
       {/* Common Patterns */}

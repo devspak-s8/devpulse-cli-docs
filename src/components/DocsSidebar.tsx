@@ -59,11 +59,10 @@ const navigation: NavItem[] = [
     icon: Terminal,
     items: [
       { title: "Overview", href: "/docs/commands" },
-      { title: "GitHub Stats", href: "/docs/commands/github-stats" },
-      { title: "GitHub Activity", href: "/docs/commands/github-activity" },
-      { title: "GitHub Languages", href: "/docs/commands/github-languages" },
-      { title: "GitHub Contributors", href: "/docs/commands/github-contributors" },
-      { title: "GitHub Issues", href: "/docs/commands/github-issues" },
+      { title: "Core Commands", href: "/docs/commands#track-commands" },
+      { title: "GitHub & Git", href: "/docs/commands#github-commands" },
+      { title: "Productivity", href: "/docs/commands#timer-commands" },
+      { title: "Advanced", href: "/docs/commands#ai-commands" },
     ],
   },
   {
