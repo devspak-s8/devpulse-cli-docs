@@ -87,7 +87,7 @@ export function NetworkAnimation() {
               .getPropertyValue("--primary")
               .trim();
             
-            ctx.strokeStyle = `hsla(${primaryColor}, ${opacity * 0.3})`;
+            ctx.strokeStyle = `hsl(${primaryColor} / ${opacity * 0.3})`;
             ctx.lineWidth = opacity * 1.5;
             ctx.stroke();
           }
@@ -112,10 +112,10 @@ export function NetworkAnimation() {
           node.y,
           node.radius * 3
         );
-        gradient.addColorStop(0, `hsla(${primaryColor}, 0.8)`);
-        gradient.addColorStop(1, `hsla(${primaryColor}, 0)`);
+        gradient.addColorStop(0, `hsl(${primaryColor} / 0.8)`);
+        gradient.addColorStop(1, `hsl(${primaryColor} / 0)`);
         
-        ctx.fillStyle = `hsla(${primaryColor}, 0.6)`;
+        ctx.fillStyle = `hsl(${primaryColor} / 0.6)`;
         ctx.fill();
         
         // Draw glow
