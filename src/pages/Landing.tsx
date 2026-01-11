@@ -155,7 +155,7 @@ export default function Landing() {
                 <Heart className="h-3.5 w-3.5 fill-current" />
                 <span>Open-Source Software</span>
                 <span className="text-primary/60">•</span>
-                <span>v0.1.3</span>
+                <span>v0.2.1</span>
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
@@ -251,7 +251,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Features Section - scroll triggered */}
+      {/* Features Section - animated marquee */}
       <section className="py-20 md:py-28">
         <div className="container">
           <ScrollReveal direction="up" className="text-center mb-12">
@@ -264,16 +264,36 @@ export default function Landing() {
             </p>
           </ScrollReveal>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <ScrollReveal
-                key={feature.title}
-                direction={index % 2 === 0 ? "left" : "right"}
-                delay={100 + index * 100}
-              >
-                <FeatureCard {...feature} />
-              </ScrollReveal>
-            ))}
+          <div className="space-y-4">
+            <div
+              className="relative overflow-hidden
+              [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]
+              [-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
+            >
+              <div className="flex gap-6 w-max animate-marquee">
+                {[...features, ...features].map((feature, index) => (
+                  <div
+                    key={`${feature.title}-${index}`}
+                    className="flex items-start gap-4 px-6 py-4 rounded-xl w-80
+                    bg-card border border-border
+                    hover:border-primary/50 hover:bg-primary/5
+                    transition-all flex-shrink-0"
+                  >
+                    <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <feature.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-foreground mb-1 whitespace-nowrap">
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm line-clamp-2">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

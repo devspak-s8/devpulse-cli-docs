@@ -397,6 +397,7 @@
 
   /* Fade mask for grid */
   .fade-mask {
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 70%);
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 70%);
   }
 
@@ -514,5 +515,23 @@
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Marquee animation */
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
   }
 }
