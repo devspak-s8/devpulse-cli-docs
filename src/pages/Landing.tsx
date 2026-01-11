@@ -24,7 +24,8 @@ import { Footer } from "@/components/Footer";
 import { FeatureCard } from "@/components/FeatureCard";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { TerminalDemo } from "@/components/TerminalDemo";
-import { NetworkAnimation } from "@/components/NetworkAnimation";
+import { StarfieldAnimation } from "@/components/StarfieldAnimation";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 const features = [
   {
@@ -101,21 +102,17 @@ export default function Landing() {
     <div className="min-h-screen flex flex-col">
       <Header variant="landing" />
 
-      {/* Hero Section */}
+      {/* Hero Section - keeps initial animations */}
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-        {/* Network animation background */}
         <div className="absolute inset-0">
-          <NetworkAnimation />
+          <StarfieldAnimation />
         </div>
         
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
         
         <div className="container relative py-20 md:py-28 lg:py-36">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left side - Text content */}
             <div className="max-w-xl">
-              {/* Open Source Badge */}
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 animate-slide-in-left">
                 <Heart className="h-3.5 w-3.5 fill-current" />
                 <span>Open-Source Software</span>
@@ -123,19 +120,16 @@ export default function Landing() {
                 <span>v0.1.3</span>
               </div>
 
-              {/* Headline */}
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
                 Developer productivity &{" "}
                 <span className="gradient-text">GitHub analytics</span> CLI
               </h1>
 
-              {/* Subheadline */}
               <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-slide-in-left" style={{ animationDelay: "0.2s" }}>
                 Track your coding time, analyze GitHub activity, and optimize your
                 workflow. API-first, built for developers who live in the terminal.
               </p>
 
-              {/* CTAs */}
               <div className="flex flex-col sm:flex-row items-start gap-4 animate-slide-in-left" style={{ animationDelay: "0.3s" }}>
                 <Button variant="hero" size="xl" asChild>
                   <Link to="/docs">
@@ -155,7 +149,6 @@ export default function Landing() {
                 </Button>
               </div>
 
-              {/* Stats */}
               <div className="flex items-center gap-6 mt-8 pt-8 border-t border-border animate-slide-in-left" style={{ animationDelay: "0.4s" }}>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Star className="h-4 w-4 text-yellow-500" />
@@ -175,7 +168,6 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Right side - Terminal Demo */}
             <div className="hidden lg:block animate-slide-in-right" style={{ animationDelay: "0.3s" }}>
               <TerminalDemo />
             </div>
@@ -188,31 +180,29 @@ export default function Landing() {
         <TerminalDemo />
       </section>
 
-      {/* Stats Section */}
+      {/* Stats Section - scroll triggered */}
       <section className="py-16 border-y border-border bg-muted/20">
         <div className="container">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div
-                key={stat.label}
-                className={`text-center animate-fade-in-up`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
-                <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
-                  {stat.value}
+              <ScrollReveal key={stat.label} direction="up" delay={index * 100}>
+                <div className="text-center">
+                  <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
+                  <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Section - scroll triggered */}
       <section className="py-20 md:py-28">
         <div className="container">
-          <div className="text-center mb-12 animate-slide-in-left">
+          <ScrollReveal direction="up" className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Built for developers
             </h2>
@@ -220,59 +210,59 @@ export default function Landing() {
               Everything you need to track, analyze, and improve your development
               workflow.
             </p>
-          </div>
+          </ScrollReveal>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {features.map((feature, index) => (
-              <div
+              <ScrollReveal
                 key={feature.title}
-                className={index % 2 === 0 ? "animate-slide-in-left" : "animate-slide-in-right"}
-                style={{ animationDelay: `${0.1 + index * 0.1}s` }}
+                direction={index % 2 === 0 ? "left" : "right"}
+                delay={100 + index * 100}
               >
                 <FeatureCard {...feature} />
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Use Cases Section */}
+      {/* Use Cases Section - scroll triggered */}
       <section className="py-20 md:py-28 bg-muted/30">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="animate-slide-in-left">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Built for every workflow
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Whether you're a solo developer or part of a large team, DevPulse
-                adapts to your needs.
-              </p>
+            <div>
+              <ScrollReveal direction="left">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Built for every workflow
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8">
+                  Whether you're a solo developer or part of a large team, DevPulse
+                  adapts to your needs.
+                </p>
+              </ScrollReveal>
 
               <div className="space-y-6">
                 {useCases.map((useCase, index) => (
-                  <div
-                    key={useCase.title}
-                    className="flex gap-4 animate-slide-in-left"
-                    style={{ animationDelay: `${0.2 + index * 0.15}s` }}
-                  >
-                    <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <useCase.icon className="h-6 w-6 text-primary" />
+                  <ScrollReveal key={useCase.title} direction="left" delay={200 + index * 150}>
+                    <div className="flex gap-4">
+                      <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <useCase.icon className="h-6 w-6 text-primary" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-foreground mb-1">
+                          {useCase.title}
+                        </h3>
+                        <p className="text-muted-foreground text-sm">
+                          {useCase.description}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">
-                        {useCase.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm">
-                        {useCase.description}
-                      </p>
-                    </div>
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
             </div>
 
-            <div className="animate-slide-in-right" style={{ animationDelay: "0.2s" }}>
+            <ScrollReveal direction="right" delay={200}>
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/5 rounded-2xl blur-3xl" />
                 <div className="relative bg-card border border-border rounded-2xl p-8">
@@ -311,31 +301,33 @@ export default function Landing() {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Benefits Section - scroll triggered */}
       <section className="py-20 md:py-28">
         <div className="container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1 animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
+            <div className="order-2 lg:order-1">
               <div className="grid grid-cols-2 gap-4">
                 {benefits.map((benefit, index) => (
-                  <div
+                  <ScrollReveal
                     key={benefit}
-                    className={`flex items-center gap-2 ${index % 2 === 0 ? "animate-slide-in-left" : "animate-slide-in-right"}`}
-                    style={{ animationDelay: `${0.2 + index * 0.08}s` }}
+                    direction={index % 2 === 0 ? "left" : "right"}
+                    delay={200 + index * 80}
                   >
-                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm text-foreground">{benefit}</span>
-                  </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="text-sm text-foreground">{benefit}</span>
+                    </div>
+                  </ScrollReveal>
                 ))}
               </div>
             </div>
 
-            <div className="order-1 lg:order-2 animate-slide-in-right">
+            <ScrollReveal direction="right" className="order-1 lg:order-2">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Why developers choose DevPulse
               </h2>
@@ -349,113 +341,122 @@ export default function Landing() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Integrations Section */}
+      {/* Integrations Section - scroll triggered */}
       <section className="py-20 md:py-28 bg-muted/30">
         <div className="container">
-          <div className="text-center mb-12 animate-slide-in-right">
+          <ScrollReveal direction="up" className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Works with your stack
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Seamless integrations with the tools you already use.
             </p>
-          </div>
+          </ScrollReveal>
 
           <div className="flex flex-wrap justify-center gap-6">
             {integrations.map((integration, index) => (
-              <div
+              <ScrollReveal
                 key={integration.name}
-                className={`flex items-center gap-3 px-6 py-4 bg-card border border-border rounded-xl ${index % 2 === 0 ? "animate-slide-in-left" : "animate-slide-in-right"}`}
-                style={{ animationDelay: `${0.1 + index * 0.08}s` }}
+                direction="scale"
+                delay={100 + index * 80}
               >
-                <integration.icon className="h-6 w-6 text-primary" />
-                <span className="font-medium text-foreground">{integration.name}</span>
-              </div>
+                <div className="flex items-center gap-3 px-6 py-4 bg-card border border-border rounded-xl">
+                  <integration.icon className="h-6 w-6 text-primary" />
+                  <span className="font-medium text-foreground">{integration.name}</span>
+                </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Install Section */}
+      {/* Install Section - scroll triggered */}
       <section className="py-20 md:py-28">
         <div className="container">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10 animate-slide-in-left">
+            <ScrollReveal direction="up" className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Up and running in seconds
               </h2>
               <p className="text-lg text-muted-foreground">
                 Install DevPulse with a single command and start tracking immediately.
               </p>
-            </div>
+            </ScrollReveal>
 
-            <div className="code-block animate-scale-in" style={{ animationDelay: "0.2s" }}>
-              <div className="code-block-header">
-                <span className="text-xs text-muted-foreground font-mono">terminal</span>
+            <ScrollReveal direction="scale" delay={200}>
+              <div className="code-block">
+                <div className="code-block-header">
+                  <span className="text-xs text-muted-foreground font-mono">terminal</span>
+                </div>
+                <pre className="p-4 font-mono text-sm overflow-x-auto">
+                  <code>
+                    <span className="text-muted-foreground"># Install via pip</span>{"\n"}
+                    <span className="text-primary">pip install</span> devpulse-cli{"\n\n"}
+                    <span className="text-muted-foreground"># Verify installation</span>{"\n"}
+                    <span className="text-primary">devpulse</span> --version{"\n\n"}
+                    <span className="text-muted-foreground"># Get started</span>{"\n"}
+                    <span className="text-primary">devpulse</span> track start <span className="text-green-500">"my-project"</span>
+                  </code>
+                </pre>
               </div>
-              <pre className="p-4 font-mono text-sm overflow-x-auto">
-                <code>
-                  <span className="text-muted-foreground"># Install via pip</span>{"\n"}
-                  <span className="text-primary">pip install</span> devpulse-cli{"\n\n"}
-                  <span className="text-muted-foreground"># Verify installation</span>{"\n"}
-                  <span className="text-primary">devpulse</span> --version{"\n\n"}
-                  <span className="text-muted-foreground"># Get started</span>{"\n"}
-                  <span className="text-primary">devpulse</span> track start <span className="text-green-500">"my-project"</span>
-                </code>
-              </pre>
-            </div>
+            </ScrollReveal>
 
-            <div className="mt-8 text-center animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+            <ScrollReveal direction="up" delay={400} className="mt-8 text-center">
               <Button variant="outline" asChild>
                 <Link to="/docs/installation">
                   View full installation guide
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - scroll triggered */}
       <section className="py-20 md:py-28 bg-muted/30 relative overflow-hidden">
-        {/* Subtle network effect in background */}
         <div className="absolute inset-0 opacity-30">
-          <NetworkAnimation />
+          <StarfieldAnimation />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-muted/80 to-transparent" />
         
         <div className="container relative">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-slide-in-left">
-              Ready to optimize your workflow?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 animate-slide-in-right" style={{ animationDelay: "0.1s" }}>
-              Join thousands of developers using DevPulse to understand and improve
-              their productivity.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-              <Button variant="hero" size="xl" asChild>
-                <Link to="/docs">
-                  Read the docs
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="heroOutline" size="xl" asChild>
-                <a
-                  href="https://github.com/devpulse/cli"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Star on GitHub
-                </a>
-              </Button>
-            </div>
+            <ScrollReveal direction="up">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Ready to optimize your workflow?
+              </h2>
+              <p className="text-lg text-muted-foreground mb-8">
+                Join thousands of developers already using DevPulse to track their
+                productivity and improve their coding habits.
+              </p>
+            </ScrollReveal>
+            
+            <ScrollReveal direction="up" delay={200}>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <Button variant="hero" size="xl" asChild>
+                  <Link to="/docs">
+                    Get Started Free
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="heroOutline" size="xl" asChild>
+                  <a
+                    href="https://github.com/devpulse/cli"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="h-5 w-5" />
+                    Star on GitHub
+                  </a>
+                </Button>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
