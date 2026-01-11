@@ -20,17 +20,6 @@ export function useAnalytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Track current page view
-    if (typeof window !== 'undefined') {
-      const gtagWindow = window as GtagWindow;
-      if (gtagWindow.gtag) {
-        gtagWindow.gtag('event', 'page_view', {
-          page_location: window.location.href,
-          page_title: document.title,
-        });
-      }
-    }
-
     // Fetch analytics data from Google Analytics Reporting API
     // For now, we'll use localStorage to simulate real stats
     const fetchAnalyticsData = async () => {
