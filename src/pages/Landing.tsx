@@ -6,14 +6,16 @@ import {
   Terminal,
   Database,
   ArrowRight,
-  Sparkles,
+  Star,
+  GitFork,
+  Heart,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FeatureCard } from "@/components/FeatureCard";
-import { CodeBlock } from "@/components/CodeBlock";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { TerminalDemo } from "@/components/TerminalDemo";
 
 const features = [
   {
@@ -42,15 +44,6 @@ const features = [
   },
 ];
 
-const installCode = `# Install via pip
-pip install devpulse-cli
-
-# Verify installation
-devpulse --version
-
-# Get started
-devpulse track start "my-project"`;
-
 export default function Landing() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -61,50 +54,81 @@ export default function Landing() {
         {/* Grid background */}
         <div className="absolute inset-0 grid-pattern fade-mask opacity-50" />
         
-        <div className="container relative py-24 md:py-32 lg:py-40">
-          <div className="max-w-3xl mx-auto text-center">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6 animate-fade-in">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              v2.0 now available
+        <div className="container relative py-20 md:py-28 lg:py-36">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left side - Text content */}
+            <div className="max-w-xl">
+              {/* Open Source Badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 animate-fade-in">
+                <Heart className="h-3.5 w-3.5 fill-current" />
+                <span>Open-Source Software</span>
+                <span className="text-primary/60">•</span>
+                <span>v0.1.3</span>
+              </div>
+
+              {/* Headline */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in-up">
+                Developer productivity &{" "}
+                <span className="gradient-text">GitHub analytics</span> CLI
+              </h1>
+
+              {/* Subheadline */}
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+                Track your coding time, analyze GitHub activity, and optimize your
+                workflow. API-first, built for developers who live in the terminal.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row items-start gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+                <Button variant="hero" size="xl" asChild>
+                  <Link to="/docs">
+                    Get Started
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="heroOutline" size="xl" asChild>
+                  <a
+                    href="https://github.com/devpulse/cli"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github className="h-5 w-5" />
+                    View on GitHub
+                  </a>
+                </Button>
+              </div>
+
+              {/* Stats */}
+              <div className="flex items-center gap-6 mt-8 pt-8 border-t border-border animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Star className="h-4 w-4 text-yellow-500" />
+                  <span className="font-medium text-foreground">2.4k</span>
+                  <span>stars</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <GitFork className="h-4 w-4 text-primary" />
+                  <span className="font-medium text-foreground">340</span>
+                  <span>forks</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Terminal className="h-4 w-4 text-green-500" />
+                  <span className="font-medium text-foreground">MIT</span>
+                  <span>license</span>
+                </div>
+              </div>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-fade-in-up">
-              Developer productivity &{" "}
-              <span className="gradient-text">GitHub analytics</span> CLI
-            </h1>
-
-            {/* Subheadline */}
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-              Track your coding time, analyze GitHub activity, and optimize your
-              workflow. API-first, built for developers who live in the terminal.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-              <Button variant="hero" size="xl" asChild>
-                <Link to="/docs">
-                  Get Started
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="heroOutline" size="xl" asChild>
-                <a
-                  href="https://github.com/devpulse/cli"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Github className="h-5 w-5" />
-                  View on GitHub
-                </a>
-              </Button>
+            {/* Right side - Terminal Demo */}
+            <div className="hidden lg:block animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+              <TerminalDemo />
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Mobile Terminal Demo */}
+      <section className="lg:hidden py-8 px-4">
+        <TerminalDemo />
       </section>
 
       {/* Features Section */}
@@ -141,11 +165,21 @@ export default function Landing() {
               </p>
             </div>
 
-            <CodeBlock
-              code={installCode}
-              language="bash"
-              filename="terminal"
-            />
+            <div className="code-block">
+              <div className="code-block-header">
+                <span className="text-xs text-muted-foreground font-mono">terminal</span>
+              </div>
+              <pre className="p-4 font-mono text-sm overflow-x-auto">
+                <code>
+                  <span className="text-muted-foreground"># Install via pip</span>{"\n"}
+                  <span className="text-primary">pip install</span> devpulse-cli{"\n\n"}
+                  <span className="text-muted-foreground"># Verify installation</span>{"\n"}
+                  <span className="text-primary">devpulse</span> --version{"\n\n"}
+                  <span className="text-muted-foreground"># Get started</span>{"\n"}
+                  <span className="text-primary">devpulse</span> track start <span className="text-green-500">"my-project"</span>
+                </code>
+              </pre>
+            </div>
 
             <div className="mt-8 text-center">
               <Button variant="outline" asChild>
