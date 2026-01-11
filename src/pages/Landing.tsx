@@ -24,7 +24,7 @@ import { Footer } from "@/components/Footer";
 import { FeatureCard } from "@/components/FeatureCard";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { TerminalDemo } from "@/components/TerminalDemo";
-import { NetworkAnimation } from "@/components/NetworkAnimation";
+import { StarfieldAnimation } from "@/components/StarfieldAnimation";
 
 const features = [
   {
@@ -105,7 +105,7 @@ export default function Landing() {
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         {/* Network animation background */}
         <div className="absolute inset-0">
-          <NetworkAnimation />
+          <StarfieldAnimation />
         </div>
         
         {/* Gradient overlay */}
@@ -426,7 +426,7 @@ export default function Landing() {
       <section className="py-20 md:py-28 bg-muted/30 relative overflow-hidden">
         {/* Subtle network effect in background */}
         <div className="absolute inset-0 opacity-30">
-          <NetworkAnimation />
+          <StarfieldAnimation />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-muted/80 to-transparent" />
         
