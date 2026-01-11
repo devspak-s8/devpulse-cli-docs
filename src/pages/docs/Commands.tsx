@@ -41,12 +41,34 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
         <h2 className="text-2xl font-bold mb-6">Command Reference</h2>
         
         <Tabs defaultValue="core" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8">
-            <TabsTrigger value="core">Core Commands</TabsTrigger>
-            <TabsTrigger value="github">GitHub & Git</TabsTrigger>
-            <TabsTrigger value="productivity">Productivity</TabsTrigger>
-            <TabsTrigger value="advanced">Advanced</TabsTrigger>
-          </TabsList>
+          <div className="mb-8 relative overflow-x-auto scrollbar-hide">
+            <TabsList className="inline-flex w-auto min-w-full justify-start gap-2 bg-transparent p-0">
+              <TabsTrigger 
+                value="core"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
+              >
+                Core Commands
+              </TabsTrigger>
+              <TabsTrigger 
+                value="github"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
+              >
+                GitHub & Git
+              </TabsTrigger>
+              <TabsTrigger 
+                value="productivity"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
+              >
+                Productivity
+              </TabsTrigger>
+              <TabsTrigger 
+                value="advanced"
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
+              >
+                Advanced
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Core Commands Tab */}
           <TabsContent value="core" className="prose-docs">
