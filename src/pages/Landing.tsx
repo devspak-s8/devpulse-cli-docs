@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   Github,
   BarChart3,
@@ -26,6 +27,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { TerminalDemo } from "@/components/TerminalDemo";
 import { StarfieldAnimation } from "@/components/StarfieldAnimation";
 import { ScrollReveal } from "@/components/ScrollReveal";
+import { useAnalytics, useTrackEvent } from "@/hooks/useAnalytics";
 
 const features = [
   {
@@ -52,13 +54,6 @@ const features = [
     description:
       "Intelligent caching ensures you always have access to your data, even when offline.",
   },
-];
-
-const stats = [
-  { value: "50K+", label: "Active Users", icon: Users },
-  { value: "10M+", label: "Commands Run", icon: Cpu },
-  { value: "99.9%", label: "Uptime", icon: Zap },
-  { value: "150+", label: "Contributors", icon: Code2 },
 ];
 
 const useCases = [
@@ -98,6 +93,49 @@ const benefits = [
 ];
 
 export default function Landing() {
+  const { stats: analyticsStats, loading } = useAnalytics();
+  const trackEvent = useTrackEvent();
+  const [animatedStats, setAnimatedStats] = useState({
+    visitors: 0,
+    sessions: 0,
+    pageViews: 0,
+  });
+
+  // Animate stats from 0 to final value
+  useEffect(() => {
+    if (!analyticsStats || loading) return;
+
+    let animationFrames = 0;
+    const animationDuration = 2000; // 2 seconds
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / animationDuration, 1);
+
+      setAnimatedStats({
+        visitors: Math.floor(analyticsStats.visitors * progress),
+        sessions: Math.floor(analyticsStats.sessions * progress),
+        pageViews: Math.floor(analyticsStats.pageViews * progress),
+      });
+
+      if (progress < 1) {
+        animationFrames = requestAnimationFrame(animate);
+      }
+    };
+
+    animationFrames = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrames);
+  }, [analyticsStats, loading]);
+
+  const statsToDisplay = [
+    { value: animatedStats.visitors, label: "Active Visitors", icon: Users },
+    { value: animatedStats.sessions, label: "Sessions", icon: Cpu },
+    { value: analyticsStats?.bounceRate.toFixed(1) || "0", label: "Bounce Rate %", icon: Zap },
+    { value: animatedStats.pageViews, label: "Page Views", icon: Code2 },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header variant="landing" />
@@ -131,13 +169,23 @@ export default function Landing() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-start gap-4 animate-slide-in-left" style={{ animationDelay: "0.3s" }}>
-                <Button variant="hero" size="xl" asChild>
+                <Button 
+                  variant="hero" 
+                  size="xl" 
+                  asChild
+                  onClick={() => trackEvent('cta_get_started', { location: 'hero' })}
+                >
                   <Link to="/docs">
                     Get Started
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="heroOutline" size="xl" asChild>
+                <Button 
+                  variant="heroOutline" 
+                  size="xl" 
+                  asChild
+                  onClick={() => trackEvent('view_github', { location: 'hero' })}
+                >
                   <a
                     href="https://github.com/devpulse/cli"
                     target="_blank"
@@ -180,16 +228,20 @@ export default function Landing() {
         <TerminalDemo />
       </section>
 
-      {/* Stats Section - scroll triggered */}
+      {/* Stats Section - scroll triggered with real analytics data */}
       <section className="py-16 border-y border-border bg-muted/20">
         <div className="container">
+          <ScrollReveal direction="up" className="text-center mb-8">
+            <h3 className="text-sm font-semibold text-primary">Real-Time Analytics</h3>
+            <p className="text-muted-foreground text-sm mt-1">Powered by Google Analytics</p>
+          </ScrollReveal>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {statsToDisplay.map((stat, index) => (
               <ScrollReveal key={stat.label} direction="up" delay={index * 100}>
                 <div className="text-center">
                   <stat.icon className="h-6 w-6 text-primary mx-auto mb-2" />
                   <div className="text-3xl md:text-4xl font-bold text-foreground mb-1">
-                    {stat.value}
+                    {typeof stat.value === 'string' ? stat.value : (stat.value > 100 ? `${(stat.value / 1000).toFixed(1)}K` : stat.value)}
                   </div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
@@ -439,13 +491,23 @@ export default function Landing() {
             
             <ScrollReveal direction="up" delay={200}>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Button variant="hero" size="xl" asChild>
+                <Button 
+                  variant="hero" 
+                  size="xl" 
+                  asChild
+                  onClick={() => trackEvent('cta_get_started_bottom', { location: 'bottom' })}
+                >
                   <Link to="/docs">
                     Get Started Free
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="heroOutline" size="xl" asChild>
+                <Button 
+                  variant="heroOutline" 
+                  size="xl" 
+                  asChild
+                  onClick={() => trackEvent('star_github', { location: 'bottom' })}
+                >
                   <a
                     href="https://github.com/devpulse/cli"
                     target="_blank"
