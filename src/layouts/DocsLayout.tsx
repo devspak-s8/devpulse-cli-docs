@@ -6,6 +6,8 @@ import { Footer } from "@/components/Footer";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { FloatingTOC } from "@/components/TableOfContents";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { DocsNavigation, getDocsNavigation } from "@/components/DocsNavigation";
 import { useScrollToHash, useScrollToTop } from "@/hooks/useScrollBehavior";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -50,6 +52,9 @@ export function DocsLayout() {
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
+  // Get prev/next navigation
+  const { previous, next } = getDocsNavigation(location.pathname);
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header variant="docs" />
@@ -84,7 +89,9 @@ export function DocsLayout() {
 
         {/* Main content */}
         <main className="flex-1 min-w-0 py-8 px-4 sm:px-6 lg:px-12">
+          <Breadcrumbs />
           <Outlet />
+          <DocsNavigation previous={previous} next={next} />
         </main>
 
         {/* Floating TOC */}
