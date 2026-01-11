@@ -595,13 +595,13 @@ pip install --upgrade devpulse-cli`}
 
       {/* Navigation */}
       <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
-        <Button variant="outline" asChild>
+        <Button variant="outline" asChild className="text-foreground">
           <Link to="/docs/quick-start">
             <ArrowLeft className="h-4 w-4" />
             Quick Start
           </Link>
         </Button>
-        <Button asChild>
+        <Button asChild className="text-foreground">
           <Link to="/docs/api-reference">
             API Reference
             <ArrowRight className="h-4 w-4" />
