@@ -281,50 +281,90 @@ export function Header({ variant = "landing" }: HeaderProps) {
         )}
       </header>
 
-      {/* Command palette search */}
+      {/* Command palette search - redesigned */}
       <CommandDialog open={searchOpen} onOpenChange={setSearchOpen}>
-        <CommandInput placeholder="Search documentation..." />
-        <CommandList>
-          <CommandEmpty>
-            <div className="flex flex-col items-center gap-2 py-6">
-              <Search className="h-10 w-10 text-muted-foreground/50" />
-              <p className="text-muted-foreground">No results found.</p>
-              <p className="text-sm text-muted-foreground/70">
-                Try searching for commands, API, or configuration
-              </p>
+        <div className="flex flex-col max-h-[80vh]">
+          {/* Search header */}
+          <div className="px-4 py-3 border-b border-border">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                <Search className="h-5 w-5 text-primary" />
+              </div>
+              <div className="flex-1">
+                <CommandInput 
+                  placeholder="Search documentation..." 
+                  className="border-0 focus:ring-0 px-0 h-auto text-base"
+                />
+              </div>
+              <kbd className="pointer-events-none inline-flex h-6 select-none items-center gap-1 rounded-lg border bg-muted px-2 font-mono text-[10px] font-medium text-muted-foreground">
+                ESC
+              </kbd>
             </div>
-          </CommandEmpty>
-          {categories.map((category, index) => (
-            <div key={category}>
-              {index > 0 && <CommandSeparator />}
-              <CommandGroup heading={category}>
-                {searchItems
-                  .filter((item) => item.category === category)
-                  .map((item) => (
-                    <CommandItem
-                      key={item.href + item.title}
-                      value={`${item.title} ${item.description} ${item.keywords?.join(" ")}`}
-                      onSelect={() => handleSelect(item.href)}
-                      className="flex items-center gap-3 py-3"
-                    >
-                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-muted">
-                        <item.icon className="h-4 w-4 text-muted-foreground" />
-                      </div>
-                      <div className="flex-1 overflow-hidden">
-                        <p className="font-medium truncate">{item.title}</p>
-                        {item.description && (
-                          <p className="text-sm text-muted-foreground truncate">
-                            {item.description}
-                          </p>
-                        )}
-                      </div>
-                      <ArrowRight className="h-4 w-4 text-muted-foreground/50" />
-                    </CommandItem>
-                  ))}
-              </CommandGroup>
+          </div>
+
+          {/* Results */}
+          <CommandList className="max-h-[60vh] overflow-y-auto p-2">
+            <CommandEmpty>
+              <div className="flex flex-col items-center gap-3 py-12">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-muted">
+                  <Search className="h-8 w-8 text-muted-foreground/50" />
+                </div>
+                <div className="text-center">
+                  <p className="font-medium text-foreground">No results found</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Try searching for commands, API, or configuration
+                  </p>
+                </div>
+              </div>
+            </CommandEmpty>
+            {categories.map((category, index) => (
+              <div key={category} className="mb-2">
+                {index > 0 && <CommandSeparator className="my-2" />}
+                <CommandGroup heading={category} className="px-1">
+                  {searchItems
+                    .filter((item) => item.category === category)
+                    .map((item) => (
+                      <CommandItem
+                        key={item.href + item.title}
+                        value={`${item.title} ${item.description} ${item.keywords?.join(" ")}`}
+                        onSelect={() => handleSelect(item.href)}
+                        className="flex items-center gap-3 py-3 px-3 rounded-xl cursor-pointer data-[selected=true]:bg-primary/10"
+                      >
+                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-muted group-data-[selected=true]:bg-primary/20 transition-colors">
+                          <item.icon className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                        <div className="flex-1 overflow-hidden">
+                          <p className="font-medium truncate">{item.title}</p>
+                          {item.description && (
+                            <p className="text-sm text-muted-foreground truncate">
+                              {item.description}
+                            </p>
+                          )}
+                        </div>
+                        <ArrowRight className="h-4 w-4 text-muted-foreground/50 opacity-0 group-data-[selected=true]:opacity-100 transition-opacity" />
+                      </CommandItem>
+                    ))}
+                </CommandGroup>
+              </div>
+            ))}
+          </CommandList>
+
+          {/* Footer */}
+          <div className="flex items-center justify-between px-4 py-2 border-t border-border text-xs text-muted-foreground">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↑</kbd>
+                <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↓</kbd>
+                <span>navigate</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono">↵</kbd>
+                <span>select</span>
+              </div>
             </div>
-          ))}
-        </CommandList>
+            <span>Powered by DevPulse</span>
+          </div>
+        </div>
       </CommandDialog>
     </>
   );
