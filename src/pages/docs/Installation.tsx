@@ -50,17 +50,31 @@ source .venv/bin/activate`}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
         <h2 id="basic-install">Install DevPulse</h2>
 
-        <p>Install from PyPI:</p>
-
+        <h3>Standard Installation</h3>
         <CodeBlock
           code="pip install devpulse-cli"
           language="bash"
         />
 
-        <p>Or install from source (this repository):</p>
-
+        <h3>Full Installation (All Dependencies)</h3>
         <CodeBlock
-          code={`pip install -U pip
+          code="pip install devpulse-cli[full]"
+          language="bash"
+        />
+
+        <h3>Feature-Specific Installation</h3>
+        <CodeBlock
+          code={`pip install devpulse-cli[ai]      # AI features
+pip install devpulse-cli[data]    # Data analysis
+pip install devpulse-cli[http]    # GitHub integration`}
+          language="bash"
+        />
+
+        <h3>Development Installation</h3>
+        <p>Install from source (this repository):</p>
+        <CodeBlock
+          code={`git clone https://github.com/devspak-s8/devpulse-cli.git
+cd devpulse-cli
 pip install -e .`}
           language="bash"
         />
