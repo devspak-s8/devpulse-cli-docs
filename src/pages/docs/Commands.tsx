@@ -52,10 +52,6 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
           <TabsContent value="core" className="prose-docs">
             <div className="space-y-8">
 
-          {/* Core Commands Tab */}
-          <TabsContent value="core" className="prose-docs">
-            <div className="space-y-8">
-
       {/* Track Commands */}
       <div>
         <h2 id="track-commands">⏱️ Track Command Group</h2>
@@ -189,9 +185,6 @@ devpulse export notes`}
             </div>
           </TabsContent>
 
-          {/* GitHub & Git Tab */}
-          <TabsContent value="github" className="prose-docs">
-            <div className="space-y-8">
           {/* GitHub & Git Tab */}
           <TabsContent value="github" className="prose-docs">
             <div className="space-y-8">
@@ -337,9 +330,6 @@ devpulse sync conflicts --resolve      # Attempt resolve`}
           {/* Productivity Tab */}
           <TabsContent value="productivity" className="prose-docs">
             <div className="space-y-8">
-          {/* Productivity Tab */}
-          <TabsContent value="productivity" className="prose-docs">
-            <div className="space-y-8">
 
       {/* Timer Commands */}
       <div>
@@ -477,10 +467,6 @@ devpulse report insights`}
       {/* AI Commands */}
       <div>
         <h2 id="ai-commands">🔍 AI Command Group</h2>
-
-      {/* AI Commands */}
-      <div>
-        <h2 id="ai-commands">🔍 AI Command Group</h2>
         <p>AI-powered insights and suggestions</p>
 
         <h3>ai suggest</h3>
@@ -552,52 +538,6 @@ devpulse health alert --cpu 80         # Alert if CPU > 80%`}
       </div>
             </div>
           </TabsContent>
-        </Tabs>
-      </div>
-        <CodeBlock
-          code={`devpulse ai suggest                    # Get AI suggestion
-devpulse ai suggest --context "task"   # Suggest with context`}
-          language="bash"
-        />
-        <p>Generates smart suggestions based on your activity patterns.</p>
-
-        <h3>ai analyze</h3>
-        <CodeBlock
-          code={`devpulse ai analyze [FILE]`}
-          language="bash"
-        />
-        <p>Analyzes logs or code for improvements.</p>
-
-        <h3>ai chat</h3>
-        <CodeBlock
-          code={`devpulse ai chat                       # Interactive AI chat
-devpulse ai chat "your question"       # Ask specific question
-devpulse ai chat --interactive         # Start chat session`}
-          language="bash"
-        />
-
-        <h3>ai recommend</h3>
-        <CodeBlock
-          code={`devpulse ai recommend                  # Get recommendations
-devpulse ai recommend --category "code"`}
-          language="bash"
-        />
-
-        <h3>ai insights</h3>
-        <CodeBlock
-          code={`devpulse ai insights                   # Show AI insights
-devpulse ai insights --detailed        # Detailed breakdown
-devpulse ai insights --export file.json`}
-          language="bash"
-        />
-
-        <h3>ai predict</h3>
-        <CodeBlock
-          code={`devpulse ai predict                    # Predict trends (7 days)
-devpulse ai predict --days 30          # Predict 30 days ahead`}
-          language="bash"
-        />
-
         </Tabs>
       </div>
 
