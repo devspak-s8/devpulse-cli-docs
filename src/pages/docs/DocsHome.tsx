@@ -44,7 +44,7 @@ export default function DocsHome() {
       <div className="animate-fade-in">
         <div className="flex items-center gap-2 mb-4">
           <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-            Version 0.1.3
+            Version 0.3.0
           </span>
         </div>
         <h1>DevPulse Documentation</h1>
