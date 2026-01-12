@@ -13,7 +13,7 @@ import {
   Timer,
   Target,
   Coffee,
-  Sticky,
+  StickyNote,
   Package,
   TrendingUp,
   Smartphone,
@@ -270,7 +270,7 @@ devpulse github top-languages owner/repo --json      # JSON output`}
           language="bash"
         />
 
-        <h3>github prs <span className=\"text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded\">NEW</span></h3>
+        <h3>github prs <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
         <CodeBlock
           code={`devpulse github prs owner/repo                       # List open PRs
 devpulse github prs owner/repo --state all           # All PRs (open + closed)
@@ -534,7 +534,7 @@ devpulse breaks history`}
 
       {/* Notes Commands */}
       <div>
-        <h2 id="notes-commands" className="flex items-center gap-2"><Sticky className="h-6 w-6" /> Notes Command Group</h2>
+        <h2 id="notes-commands" className="flex items-center gap-2"><StickyNote className="h-6 w-6" /> Notes Command Group</h2>
         <p>Quick note-taking and organization</p>
 
         <CodeBlock
