@@ -86,7 +86,7 @@ devpulse github contributors owner/repo --json`}
 
       {/* PR Management */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-        <h2 id="pr-management">✨ Pull Request Management</h2>
+        <h2 id="pr-management"><Zap className=\"inline mr-2 h-5 w-5\" /> Pull Request Management</h2>
 
         <h3>List Pull Requests</h3>
         <CodeBlock

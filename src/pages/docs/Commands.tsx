@@ -1,5 +1,26 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { 
+  ArrowLeft, 
+  ArrowRight,
+  Clock,
+  BarChart3,
+  Settings,
+  Download,
+  Github,
+  FileText,
+  Lock,
+  RefreshCw,
+  Timer,
+  Target,
+  Coffee,
+  Sticky,
+  Package,
+  TrendingUp,
+  Smartphone,
+  Zap,
+  Brain,
+  Activity,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Callout } from "@/components/Callout";
@@ -76,7 +97,7 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
 
       {/* Track Commands */}
       <div>
-        <h2 id="track-commands">⏱️ Track Command Group</h2>
+        <h2 id="track-commands" className="flex items-center gap-2"><Clock className="h-6 w-6" /> Track Command Group</h2>
         <p>Track time and commands</p>
 
         <h3>track start</h3>
@@ -115,7 +136,7 @@ devpulse track export --range 2026-01-01:2026-01-31`}
 
       {/* Stats Commands */}
       <div>
-        <h2 id="stats-commands">📊 Stats Command Group</h2>
+        <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Stats Command Group</h2>
         <p>View analytics and statistics</p>
 
         <h3>stats show</h3>
@@ -176,7 +197,7 @@ devpulse stats goals set "Goal Name"   # Set new goal`}
 
       {/* Config Commands */}
       <div>
-        <h2 id="config-commands">⚙️ Config Command Group</h2>
+        <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6" /> Config Command Group</h2>
         <p>Manage configuration settings</p>
 
         <CodeBlock
@@ -191,7 +212,7 @@ devpulse config import-config config.json`}
 
       {/* Export Commands */}
       <div>
-        <h2 id="export-commands">📤 Export Command Group</h2>
+        <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6" /> Export Command Group</h2>
         <p>Export data in various formats</p>
 
         <CodeBlock
@@ -213,7 +234,7 @@ devpulse export notes`}
 
       {/* GitHub Commands */}
       <div>
-        <h2 id="github-commands">🔗 GitHub Command Group</h2>
+        <h2 id="github-commands" className="flex items-center gap-2"><Github className="h-6 w-6" /> GitHub Command Group</h2>
         <p>GitHub integration, analytics, and PR management</p>
 
         <h3>github stats</h3>
@@ -249,7 +270,7 @@ devpulse github top-languages owner/repo --json      # JSON output`}
           language="bash"
         />
 
-        <h3>github prs (List Pull Requests) ✨ NEW</h3>
+        <h3>github prs <span className=\"text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded\">NEW</span></h3>
         <CodeBlock
           code={`devpulse github prs owner/repo                       # List open PRs
 devpulse github prs owner/repo --state all           # All PRs (open + closed)
@@ -260,7 +281,7 @@ devpulse github prs owner/repo --force-refresh       # Bypass cache`}
           language="bash"
         />
 
-        <h3>github pr view (View Single PR) ✨ NEW</h3>
+        <h3>github pr view <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
         <CodeBlock
           code={`devpulse github pr view owner/repo 123               # View PR details
 devpulse github pr view owner/repo 123 --json        # JSON output
@@ -268,7 +289,7 @@ devpulse github pr view owner/repo 123 --force-refresh`}
           language="bash"
         />
 
-        <h3>github pr merge (Merge Pull Request) ✨ NEW</h3>
+        <h3>github pr merge <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
         <CodeBlock
           code={`# Preview merge (no token needed if env var set)
 devpulse github pr merge owner/repo 123 --dry-run --json
@@ -298,7 +319,7 @@ devpulse github pr merge owner/repo 123 --strategy squash --confirm --force`}
           </ul>
         </Callout>
 
-        <h3>github readme (Generate README) ✨ NEW</h3>
+        <h3>github readme <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
         <CodeBlock
           code={`# Generate and preview README
 devpulse github readme --preview
@@ -331,7 +352,7 @@ devpulse github readme --force`}
           </ul>
         </Callout>
 
-        <h3>github commit (Generate Commit Message) ✨ NEW</h3>
+        <h3>github commit <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
         <CodeBlock
           code={`# Simple feature commit
 devpulse github commit --type feat
@@ -412,7 +433,7 @@ git add my_changes.py`}
 
       {/* Logs Commands */}
       <div>
-        <h2 id="logs-commands">📝 Logs Command Group</h2>
+        <h2 id="logs-commands" className="flex items-center gap-2"><FileText className="h-6 w-6" /> Logs Command Group</h2>
         <p>Analyze and search logs</p>
 
         <CodeBlock
@@ -428,7 +449,7 @@ devpulse logs stats                    # Log statistics`}
 
       {/* Secrets Commands */}
       <div>
-        <h2 id="secrets-commands">🔐 Secrets Command Group</h2>
+        <h2 id="secrets-commands" className="flex items-center gap-2"><Lock className="h-6 w-6" /> Secrets Command Group</h2>
         <p>Scan and manage secrets</p>
 
         <CodeBlock
@@ -444,7 +465,7 @@ devpulse secrets report --severity high`}
 
       {/* Sync Commands */}
       <div>
-        <h2 id="sync-commands">🔄 Sync Command Group</h2>
+        <h2 id="sync-commands" className="flex items-center gap-2"><RefreshCw className="h-6 w-6" /> Sync Command Group</h2>
         <p>Synchronize data with cloud</p>
 
         <CodeBlock
@@ -466,7 +487,7 @@ devpulse sync conflicts --resolve      # Attempt resolve`}
 
       {/* Timer Commands */}
       <div>
-        <h2 id="timer-commands">⏰ Timer Command Group</h2>
+        <h2 id="timer-commands" className="flex items-center gap-2"><Timer className="h-6 w-6" /> Timer Command Group</h2>
         <p>Pomodoro and time management</p>
 
         <CodeBlock
@@ -482,7 +503,7 @@ devpulse timer history`}
 
       {/* Focus Commands */}
       <div>
-        <h2 id="focus-commands">🎯 Focus Command Group</h2>
+        <h2 id="focus-commands" className="flex items-center gap-2"><Target className="h-6 w-6" /> Focus Command Group</h2>
         <p>Focus sessions and website blocking</p>
 
         <CodeBlock
@@ -498,7 +519,7 @@ devpulse focus stats`}
 
       {/* Breaks Commands */}
       <div>
-        <h2 id="breaks-commands">☕ Breaks Command Group</h2>
+        <h2 id="breaks-commands" className="flex items-center gap-2"><Coffee className="h-6 w-6" /> Breaks Command Group</h2>
         <p>Schedule and track breaks</p>
 
         <CodeBlock
@@ -513,7 +534,7 @@ devpulse breaks history`}
 
       {/* Notes Commands */}
       <div>
-        <h2 id="notes-commands">📝 Notes Command Group</h2>
+        <h2 id="notes-commands" className="flex items-center gap-2"><Sticky className="h-6 w-6" /> Notes Command Group</h2>
         <p>Quick note-taking and organization</p>
 
         <CodeBlock
@@ -529,7 +550,7 @@ devpulse notes tags`}
 
       {/* Project Commands */}
       <div>
-        <h2 id="project-commands">📦 Project Command Group</h2>
+        <h2 id="project-commands" className="flex items-center gap-2"><Package className="h-6 w-6" /> Project Command Group</h2>
         <p>Project management and organization</p>
 
         <CodeBlock
@@ -544,7 +565,7 @@ devpulse project archive "my-project"`}
 
       {/* Habits Commands */}
       <div>
-        <h2 id="habits-commands">🔗 Habits Command Group</h2>
+        <h2 id="habits-commands" className="flex items-center gap-2"><TrendingUp className="h-6 w-6" /> Habits Command Group</h2>
         <p>Build and track habits</p>
 
         <CodeBlock
@@ -561,7 +582,7 @@ devpulse habits stats`}
 
       {/* Dashboard Commands */}
       <div>
-        <h2 id="dashboard-commands">📱 Dashboard Command Group</h2>
+        <h2 id="dashboard-commands" className="flex items-center gap-2"><Smartphone className="h-6 w-6" /> Dashboard Command Group</h2>
         <p>Visualize your productivity data</p>
 
         <CodeBlock
@@ -577,7 +598,7 @@ devpulse dashboard stats`}
 
       {/* Report Commands */}
       <div>
-        <h2 id="report-commands">📊 Report Command Group</h2>
+        <h2 id="report-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Report Command Group</h2>
         <p>Generate productivity reports</p>
 
         <CodeBlock
@@ -599,7 +620,7 @@ devpulse report insights`}
 
       {/* AI Commands */}
       <div>
-        <h2 id="ai-commands">🔍 AI Command Group</h2>
+        <h2 id="ai-commands" className="flex items-center gap-2"><Brain className="h-6 w-6" /> AI Command Group</h2>
         <p>AI-powered insights and suggestions</p>
 
         <h3>ai suggest</h3>
@@ -657,7 +678,7 @@ devpulse ai optimize --apply           # Apply recommendations`}
 
       {/* Health Commands */}
       <div>
-        <h2 id="health-commands">💊 Health Command Group</h2>
+        <h2 id="health-commands" className="flex items-center gap-2"><Activity className="h-6 w-6" /> Health Command Group</h2>
         <p>System health and monitoring</p>
 
         <CodeBlock
