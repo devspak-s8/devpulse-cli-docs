@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { 
   ArrowLeft, 
@@ -29,6 +29,8 @@ import { CodeBlock } from "@/components/CodeBlock";
 import { Callout } from "@/components/Callout";
 
 export default function Commands() {
+  const { group } = useParams<{ group?: string }>();
+  const navigate = useNavigate();
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
@@ -88,6 +90,10 @@ export default function Commands() {
     });
   };
 
+  const shouldRender = (id: string) => {
+    return group ? group === id : isVisible(id);
+  };
+
   return (
     <div className="prose-docs max-w-6xl">
       <div className="animate-fade-in">
@@ -98,7 +104,8 @@ export default function Commands() {
         </p>
       </div>
 
-      {/* Quick Start */}
+      {/* Quick Start (overview only) */}
+      {!group && (
       <div className="animate-fade-in-up animate-stagger-1 mb-12">
         <h2 id="quick-start">Quick Start</h2>
 
@@ -116,8 +123,19 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
           language="bash"
         />
       </div>
+      )}
 
-      {/* Command Grid with Search */}
+      {/* Back to overview (subpage only) */}
+      {group && (
+        <div className="not-prose mb-6">
+          <Button variant="outline" asChild>
+            <Link to="/docs/commands">← All Commands</Link>
+          </Button>
+        </div>
+      )}
+
+      {/* Command Grid with Search (overview only) */}
+      {!group && (
       <div className="animate-fade-in-up animate-stagger-2 not-prose mb-12">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold">All Commands</h2>
@@ -139,11 +157,11 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
             return (
               <Link
                 key={cmd.id}
-                to={`#${cmd.id}-commands`}
+                to={`/docs/commands/${cmd.id}`}
                 className="group block p-4 rounded-lg border border-border hover:border-primary hover:bg-primary/5 transition-all"
                 onClick={(e) => {
                   e.preventDefault();
-                  goToSection(cmd.id);
+                  navigate(`/docs/commands/${cmd.id}`);
                 }}
               >
                 <div className="flex items-start gap-3">
@@ -164,8 +182,10 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
           })}
         </div>
       </div>
+      )}
 
-      {/* Pagination Controls (Top) */}
+      {/* Pagination Controls (Top, overview only) */}
+      {!group && (
       <div className="not-prose mb-6 flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
           Showing {startIndex + 1}-{endIndex} of {totalSections}
@@ -189,9 +209,10 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
           </Button>
         </div>
       </div>
+      )}
 
       {/* Track Commands */}
-      {isVisible("track") && (
+      {shouldRender("track") && (
       <div>
         <h2 id="track-commands" className="flex items-center gap-2"><Clock className="h-6 w-6" /> Track Command Group</h2>
         <p>Track time and commands</p>
@@ -232,7 +253,7 @@ devpulse track export --range 2026-01-01:2026-01-31`}
       )}
 
       {/* Stats Commands */}
-      {isVisible("stats") && (
+      {shouldRender("stats") && (
       <div>
         <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Stats Command Group</h2>
         <p>View analytics and statistics</p>
@@ -295,7 +316,7 @@ devpulse stats goals set "Goal Name"   # Set new goal`}
       )}
 
       {/* Config Commands */}
-      {isVisible("config") && (
+      {shouldRender("config") && (
       <div>
         <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6" /> Config Command Group</h2>
         <p>Manage configuration settings</p>
@@ -312,7 +333,7 @@ devpulse config import-config config.json`}
       )}
 
       {/* Export Commands */}
-      {isVisible("export") && (
+      {shouldRender("export") && (
       <div>
         <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6" /> Export Command Group</h2>
         <p>Export data in various formats</p>
@@ -330,7 +351,7 @@ devpulse export notes`}
       )}
 
       {/* GitHub Commands */}
-      {isVisible("github") && (
+      {shouldRender("github") && (
       <div>
         <h2 id="github-commands" className="flex items-center gap-2"><Github className="h-6 w-6" /> GitHub Command Group</h2>
         <p>GitHub integration, analytics, and PR management</p>
@@ -531,7 +552,7 @@ git add my_changes.py`}
       </div>
 
       {/* Logs Commands */}
-      {isVisible("logs") && (
+      {shouldRender("logs") && (
       <div>
         <h2 id="logs-commands" className="flex items-center gap-2"><FileText className="h-6 w-6" /> Logs Command Group</h2>
         <p>Analyze and search logs</p>
@@ -549,7 +570,7 @@ devpulse logs stats                    # Log statistics`}
       )}
 
       {/* Secrets Commands */}
-      {isVisible("secrets") && (
+      {shouldRender("secrets") && (
       <div>
         <h2 id="secrets-commands" className="flex items-center gap-2"><Lock className="h-6 w-6" /> Secrets Command Group</h2>
         <p>Scan and manage secrets</p>
@@ -567,7 +588,7 @@ devpulse secrets report --severity high`}
       )}
 
       {/* Sync Commands */}
-      {isVisible("sync") && (
+      {shouldRender("sync") && (
       <div>
         <h2 id="sync-commands" className="flex items-center gap-2"><RefreshCw className="h-6 w-6" /> Sync Command Group</h2>
         <p>Synchronize data with cloud</p>
@@ -585,7 +606,7 @@ devpulse sync conflicts --resolve      # Attempt resolve`}
       )}
 
       {/* Timer Commands */}
-      {isVisible("timer") && (
+      {shouldRender("timer") && (
       <div>
         <h2 id="timer-commands" className="flex items-center gap-2"><Timer className="h-6 w-6" /> Timer Command Group</h2>
         <p>Pomodoro and time management</p>
@@ -603,7 +624,7 @@ devpulse timer history`}
       )}
 
       {/* Focus Commands */}
-      {isVisible("focus") && (
+      {shouldRender("focus") && (
       <div>
         <h2 id="focus-commands" className="flex items-center gap-2"><Target className="h-6 w-6" /> Focus Command Group</h2>
         <p>Focus sessions and website blocking</p>
@@ -621,7 +642,7 @@ devpulse focus stats`}
       )}
 
       {/* Breaks Commands */}
-      {isVisible("breaks") && (
+      {shouldRender("breaks") && (
       <div>
         <h2 id="breaks-commands" className="flex items-center gap-2"><Coffee className="h-6 w-6" /> Breaks Command Group</h2>
         <p>Schedule and track breaks</p>
@@ -638,7 +659,7 @@ devpulse breaks history`}
       )}
 
       {/* Notes Commands */}
-      {isVisible("notes") && (
+      {shouldRender("notes") && (
       <div>
         <h2 id="notes-commands" className="flex items-center gap-2"><StickyNote className="h-6 w-6" /> Notes Command Group</h2>
         <p>Quick note-taking and organization</p>
@@ -656,7 +677,7 @@ devpulse notes tags`}
       )}
 
       {/* Project Commands */}
-      {isVisible("project") && (
+      {shouldRender("project") && (
       <div>
         <h2 id="project-commands" className="flex items-center gap-2"><Package className="h-6 w-6" /> Project Command Group</h2>
         <p>Project management and organization</p>
@@ -673,7 +694,7 @@ devpulse project archive "my-project"`}
       )}
 
       {/* Habits Commands */}
-      {isVisible("habits") && (
+      {shouldRender("habits") && (
       <div>
         <h2 id="habits-commands" className="flex items-center gap-2"><TrendingUp className="h-6 w-6" /> Habits Command Group</h2>
         <p>Build and track habits</p>
@@ -692,7 +713,7 @@ devpulse habits stats`}
       )}
 
       {/* Dashboard Commands */}
-      {isVisible("dashboard") && (
+      {shouldRender("dashboard") && (
       <div>
         <h2 id="dashboard-commands" className="flex items-center gap-2"><Smartphone className="h-6 w-6" /> Dashboard Command Group</h2>
         <p>Visualize your productivity data</p>
@@ -710,7 +731,7 @@ devpulse dashboard stats`}
       )}
 
       {/* Report Commands */}
-      {isVisible("report") && (
+      {shouldRender("report") && (
       <div>
         <h2 id="report-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Report Command Group</h2>
         <p>Generate productivity reports</p>
@@ -728,7 +749,7 @@ devpulse report insights`}
       )}
 
       {/* AI Commands */}
-      {isVisible("ai") && (
+      {shouldRender("ai") && (
       <div>
         <h2 id="ai-commands" className="flex items-center gap-2"><Brain className="h-6 w-6" /> AI Command Group</h2>
         <p>AI-powered insights and suggestions</p>
@@ -788,7 +809,7 @@ devpulse ai optimize --apply           # Apply recommendations`}
       )}
 
       {/* Health Commands */}
-      {isVisible("health") && (
+      {shouldRender("health") && (
       <div>
         <h2 id="health-commands" className="flex items-center gap-2"><Activity className="h-6 w-6" /> Health Command Group</h2>
         <p>System health and monitoring</p>
@@ -1021,16 +1042,8 @@ pip install --upgrade devpulse-cli`}
                       onClick={() => {
                         setSearchOpen(false);
                         setSearchQuery("");
-                        const targetPage = pageForId(cmd.id);
-                        if (targetPage !== page) setPage(targetPage);
-                        requestAnimationFrame(() => {
-                          document.getElementById(`${cmd.id}-commands`)?.scrollIntoView({
-                            behavior: "smooth",
-                          });
-                          if (typeof window !== "undefined") {
-                            history.replaceState(null, "", `#${cmd.id}-commands`);
-                          }
-                        });
+                        // Navigate to dedicated subpage
+                        navigate(`/docs/commands/${cmd.id}`);
                       }}
                       className="w-full flex items-start gap-3 p-3 rounded-lg hover:bg-muted transition-colors text-left"
                     >
