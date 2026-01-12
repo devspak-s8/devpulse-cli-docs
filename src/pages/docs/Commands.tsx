@@ -297,6 +297,117 @@ devpulse github pr merge owner/repo 123 --strategy squash --confirm --force`}
             <li>✅ <code>--dry-run</code> shows what would happen without merging</li>
           </ul>
         </Callout>
+
+        <h3>github readme (Generate README) ✨ NEW</h3>
+        <CodeBlock
+          code={`# Generate and preview README
+devpulse github readme --preview
+
+# Generate minimal style
+devpulse github readme --template minimal
+
+# Generate standard style (recommended)
+devpulse github readme --template standard
+
+# Generate detailed style
+devpulse github readme --template detailed
+
+# Custom output file
+devpulse github readme --output ./docs/SETUP.md
+
+# Force write without confirmation
+devpulse github readme --force`}
+          language="bash"
+        />
+
+        <Callout type="tip">
+          <strong>README Generator Features:</strong>
+          <ul>
+            <li>Detects languages (Python, JavaScript, TypeScript, Go, Rust, etc.)</li>
+            <li>Identifies frameworks and dependencies</li>
+            <li>Reads config files (package.json, pyproject.toml, etc.)</li>
+            <li>Detects license and repository metadata</li>
+            <li>Generates professional, customizable README</li>
+          </ul>
+        </Callout>
+
+        <h3>github commit (Generate Commit Message) ✨ NEW</h3>
+        <CodeBlock
+          code={`# Simple feature commit
+devpulse github commit --type feat
+
+# Feature with scope
+devpulse github commit --type feat --scope auth
+
+# Bug fix
+devpulse github commit --type fix --scope api
+
+# Breaking change
+devpulse github commit --type feat --scope db --breaking
+
+# Documentation update
+devpulse github commit --type docs
+
+# Dry run (preview only)
+devpulse github commit --type feat --dry-run
+
+# Force commit without confirmation
+devpulse github commit --type feat --force`}
+          language="bash"
+        />
+
+        <Callout type="info">
+          <strong>Valid Commit Types:</strong>
+          <ul>
+            <li><code>feat</code> - New feature</li>
+            <li><code>fix</code> - Bug fix</li>
+            <li><code>docs</code> - Documentation</li>
+            <li><code>style</code> - Code style changes</li>
+            <li><code>refactor</code> - Code refactoring</li>
+            <li><code>perf</code> - Performance improvements</li>
+            <li><code>test</code> - Test additions</li>
+            <li><code>chore</code> - Build, CI, dependencies</li>
+            <li><code>ci</code> - CI/CD changes</li>
+            <li><code>build</code> - Build system changes</li>
+          </ul>
+        </Callout>
+      </div>
+
+      {/* GitHub Generators Workflow */}
+      <div>
+        <h2 id="github-workflow">Complete Generator Workflow</h2>
+        
+        <h3>Step 1: Make Changes</h3>
+        <CodeBlock
+          code={`# Edit some files...
+git add my_changes.py`}
+          language="bash"
+        />
+
+        <h3>Step 2: Generate Commit Message</h3>
+        <CodeBlock
+          code={`devpulse github commit generate --type feat --scope core
+
+# The CLI will:
+# 1. ✅ Detect your changes
+# 2. ✅ Generate a conventional commit message
+# 3. ✅ Show you a preview
+# 4. ✅ Ask for confirmation`}
+          language="bash"
+        />
+
+        <h3>Step 3: Generate README (Optional)</h3>
+        <CodeBlock
+          code={`devpulse github readme --template standard
+
+# The CLI will:
+# 1. ✅ Analyze your repository
+# 2. ✅ Detect technologies and frameworks
+# 3. ✅ Generate a professional README
+# 4. ✅ Show you a preview
+# 5. ✅ Ask for confirmation before saving`}
+          language="bash"
+        />
       </div>
 
       {/* Logs Commands */}
