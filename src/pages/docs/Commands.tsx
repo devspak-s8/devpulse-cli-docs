@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { 
   ArrowLeft, 
   ArrowRight,
@@ -20,16 +21,45 @@ import {
   Zap,
   Brain,
   Activity,
+  Search,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CodeBlock } from "@/components/CodeBlock";
 import { Callout } from "@/components/Callout";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card } from "@/components/ui/card";
 
 export default function Commands() {
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const commands = [
+    { id: "track", name: "Track", icon: Clock, description: "Track time and commands" },
+    { id: "stats", name: "Stats", icon: BarChart3, description: "View analytics and statistics" },
+    { id: "config", name: "Config", icon: Settings, description: "Manage configuration settings" },
+    { id: "export", name: "Export", icon: Download, description: "Export data in various formats" },
+    { id: "github", name: "GitHub", icon: Github, description: "GitHub integration and analytics" },
+    { id: "logs", name: "Logs", icon: FileText, description: "Analyze and search logs" },
+    { id: "secrets", name: "Secrets", icon: Lock, description: "Scan and manage secrets" },
+    { id: "sync", name: "Sync", icon: RefreshCw, description: "Synchronize data with cloud" },
+    { id: "timer", name: "Timer", icon: Timer, description: "Pomodoro and time management" },
+    { id: "focus", name: "Focus", icon: Target, description: "Focus sessions and website blocking" },
+    { id: "breaks", name: "Breaks", icon: Coffee, description: "Schedule and track breaks" },
+    { id: "notes", name: "Notes", icon: StickyNote, description: "Quick note-taking and organization" },
+    { id: "project", name: "Project", icon: Package, description: "Project management and organization" },
+    { id: "habits", name: "Habits", icon: TrendingUp, description: "Build and track habits" },
+    { id: "dashboard", name: "Dashboard", icon: Smartphone, description: "Visualize your productivity data" },
+    { id: "report", name: "Report", icon: BarChart3, description: "Generate productivity reports" },
+    { id: "ai", name: "AI", icon: Brain, description: "AI-powered insights and suggestions" },
+    { id: "health", name: "Health", icon: Activity, description: "System health and monitoring" },
+  ];
+
+  const filteredCommands = commands.filter(cmd =>
+    cmd.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    cmd.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="prose-docs max-w-4xl">
+    <div className="prose-docs max-w-6xl">
       <div className="animate-fade-in">
         <h1>DevPulse CLI Commands</h1>
 
@@ -39,7 +69,7 @@ export default function Commands() {
       </div>
 
       {/* Quick Start */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
+      <div className="animate-fade-in-up animate-stagger-1 mb-12">
         <h2 id="quick-start">Quick Start</h2>
 
         <h3>Installation</h3>
@@ -57,43 +87,49 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
         />
       </div>
 
-      {/* Tabbed Command Groups */}
-      <div className="animate-fade-in-up not-prose my-8" style={{ animationDelay: "0.15s" }}>
-        <h2 className="text-2xl font-bold mb-6">Command Reference</h2>
-        
-        <Tabs defaultValue="core" className="w-full">
-          <div className="mb-8 relative overflow-x-auto scrollbar-hide">
-            <TabsList className="inline-flex w-auto min-w-full justify-start gap-2 bg-transparent p-0">
-              <TabsTrigger 
-                value="core"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
-              >
-                Core Commands
-              </TabsTrigger>
-              <TabsTrigger 
-                value="github"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
-              >
-                GitHub & Git
-              </TabsTrigger>
-              <TabsTrigger 
-                value="productivity"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
-              >
-                Productivity
-              </TabsTrigger>
-              <TabsTrigger 
-                value="advanced"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground rounded-lg px-4 py-2 whitespace-nowrap transition-all"
-              >
-                Advanced
-              </TabsTrigger>
-            </TabsList>
-          </div>
+      {/* Command Grid with Search */}
+      <div className="animate-fade-in-up animate-stagger-2 not-prose mb-12">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold">All Commands</h2>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setSearchOpen(true)}
+            className="gap-2"
+          >
+            <Search className="h-4 w-4" />
+            Search Commands
+          </Button>
+        </div>
 
-          {/* Core Commands Tab */}
-          <TabsContent value="core" className="prose-docs">
-            <div className="space-y-8">
+        {/* Command Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {commands.map((cmd) => {
+            const IconComponent = cmd.icon;
+            return (
+              <Link
+                key={cmd.id}
+                to={`#${cmd.id}-commands`}
+                className="group block p-4 rounded-lg border border-border hover:border-primary hover:bg-primary/5 transition-all"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                    <IconComponent className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {cmd.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {cmd.description}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
 
       {/* Track Commands */}
       <div>
@@ -225,12 +261,6 @@ devpulse export notes`}
           language="bash"
         />
       </div>
-            </div>
-          </TabsContent>
-
-          {/* GitHub & Git Tab */}
-          <TabsContent value="github" className="prose-docs">
-            <div className="space-y-8">
 
       {/* GitHub Commands */}
       <div>
@@ -478,12 +508,6 @@ devpulse sync conflicts --resolve      # Attempt resolve`}
           language="bash"
         />
       </div>
-            </div>
-          </TabsContent>
-
-          {/* Productivity Tab */}
-          <TabsContent value="productivity" className="prose-docs">
-            <div className="space-y-8">
 
       {/* Timer Commands */}
       <div>
@@ -611,12 +635,6 @@ devpulse report insights`}
           language="bash"
         />
       </div>
-            </div>
-          </TabsContent>
-
-          {/* Advanced Tab */}
-          <TabsContent value="advanced" className="prose-docs">
-            <div className="space-y-8">
 
       {/* AI Commands */}
       <div>
@@ -690,13 +708,9 @@ devpulse health alert --cpu 80         # Alert if CPU > 80%`}
           language="bash"
         />
       </div>
-            </div>
-          </TabsContent>
-        </Tabs>
-      </div>
 
       {/* Common Patterns */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
+      <div className="animate-fade-in-up animate-stagger-4">
         <h2 id="common-patterns">Common Patterns</h2>
 
         <h3>Output Formats</h3>
@@ -734,7 +748,7 @@ devpulse stats report --format text    # Plain text (default)`}
       </div>
 
       {/* Workflow Examples */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.45s" }}>
+      <div className="animate-fade-in-up animate-stagger-5">
         <h2 id="examples">Examples</h2>
 
         <h3>Daily Workflow</h3>
@@ -788,7 +802,7 @@ devpulse stats report --format html --output week-report.html`}
       </div>
 
       {/* Tips & Tricks */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
+      <div className="animate-fade-in-up animate-stagger-5">
         <h2 id="tips">Tips & Tricks</h2>
 
         <ol>
@@ -820,7 +834,7 @@ alias dps='devpulse stats'`}
       </div>
 
       {/* Troubleshooting */}
-      <div className="animate-fade-in-up" style={{ animationDelay: "0.55s" }}>
+      <div className="animate-fade-in-up animate-stagger-5">
         <h2 id="troubleshooting">Troubleshooting</h2>
 
         <h3>Command not found</h3>
@@ -867,6 +881,81 @@ pip install --upgrade devpulse-cli`}
           </Link>
         </Button>
       </div>
+
+      {/* Search Modal */}
+      {searchOpen && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setSearchOpen(false)}
+          />
+
+          {/* Modal Content */}
+          <div className="relative w-full max-w-2xl bg-background border border-border rounded-xl shadow-lg p-6 space-y-4">
+            {/* Close Button */}
+            <button
+              onClick={() => setSearchOpen(false)}
+              className="absolute top-4 right-4 p-1 hover:bg-muted rounded-lg transition-colors"
+                          aria-label="Close search modal"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            {/* Search Input */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="Search commands by name or description..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                autoFocus
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-border bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+
+            {/* Search Results */}
+            <div className="max-h-96 overflow-y-auto space-y-2">
+              {filteredCommands.length > 0 ? (
+                filteredCommands.map((cmd) => {
+                  const IconComponent = cmd.icon;
+                  return (
+                    <button
+                      key={cmd.id}
+                      onClick={() => {
+                        setSearchOpen(false);
+                        setSearchQuery("");
+                        // Scroll to section
+                        document.getElementById(`${cmd.id}-commands`)?.scrollIntoView({
+                          behavior: "smooth",
+                        });
+                      }}
+                      className="w-full flex items-start gap-3 p-3 rounded-lg hover:bg-muted transition-colors text-left"
+                    >
+                      <div className="flex-shrink-0 h-8 w-8 rounded bg-primary/10 flex items-center justify-center">
+                        <IconComponent className="h-4 w-4 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground">
+                          {cmd.name}
+                        </h4>
+                        <p className="text-xs text-muted-foreground line-clamp-1">
+                          {cmd.description}
+                        </p>
+                      </div>
+                    </button>
+                  );
+                })
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No commands found</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
