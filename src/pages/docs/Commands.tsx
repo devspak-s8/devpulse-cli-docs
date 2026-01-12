@@ -31,6 +31,8 @@ import { Callout } from "@/components/Callout";
 export default function Commands() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [page, setPage] = useState(1);
+  const perPage = 6;
 
   const commands = [
     { id: "track", name: "Track", icon: Clock, description: "Track time and commands" },
@@ -57,6 +59,34 @@ export default function Commands() {
     cmd.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     cmd.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const totalSections = commands.length;
+  const totalPages = Math.ceil(totalSections / perPage);
+  const startIndex = (page - 1) * perPage;
+  const endIndex = Math.min(startIndex + perPage, totalSections);
+  const isVisible = (id: string) => {
+    const idx = commands.findIndex((c) => c.id === id);
+    return idx >= startIndex && idx < endIndex;
+  };
+
+  const pageForId = (id: string) => {
+    const idx = commands.findIndex((c) => c.id === id);
+    return idx === -1 ? 1 : Math.floor(idx / perPage) + 1;
+  };
+
+  const goToSection = (id: string) => {
+    const targetPage = pageForId(id);
+    if (targetPage !== page) setPage(targetPage);
+    // Defer scroll to after render
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`${id}-commands`);
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Update hash for deep link consistency
+      if (typeof window !== "undefined") {
+        history.replaceState(null, "", `#${id}-commands`);
+      }
+    });
+  };
 
   return (
     <div className="prose-docs max-w-6xl">
@@ -111,6 +141,10 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
                 key={cmd.id}
                 to={`#${cmd.id}-commands`}
                 className="group block p-4 rounded-lg border border-border hover:border-primary hover:bg-primary/5 transition-all"
+                onClick={(e) => {
+                  e.preventDefault();
+                  goToSection(cmd.id);
+                }}
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -131,7 +165,33 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
         </div>
       </div>
 
+      {/* Pagination Controls (Top) */}
+      <div className="not-prose mb-6 flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">
+          Showing {startIndex + 1}-{endIndex} of {totalSections}
+        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            <ArrowLeft className="h-4 w-4 mr-1" /> Prev
+          </Button>
+          <span className="text-sm text-muted-foreground">Page {page} / {totalPages}</span>
+          <Button
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Next <ArrowRight className="h-4 w-4 ml-1" />
+          </Button>
+        </div>
+      </div>
+
       {/* Track Commands */}
+      {isVisible("track") && (
       <div>
         <h2 id="track-commands" className="flex items-center gap-2"><Clock className="h-6 w-6" /> Track Command Group</h2>
         <p>Track time and commands</p>
@@ -169,8 +229,10 @@ devpulse track export --range 2026-01-01:2026-01-31`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Stats Commands */}
+      {isVisible("stats") && (
       <div>
         <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Stats Command Group</h2>
         <p>View analytics and statistics</p>
@@ -230,8 +292,10 @@ devpulse stats goals set "Goal Name"   # Set new goal`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Config Commands */}
+      {isVisible("config") && (
       <div>
         <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6" /> Config Command Group</h2>
         <p>Manage configuration settings</p>
@@ -245,8 +309,10 @@ devpulse config import-config config.json`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Export Commands */}
+      {isVisible("export") && (
       <div>
         <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6" /> Export Command Group</h2>
         <p>Export data in various formats</p>
@@ -261,8 +327,10 @@ devpulse export notes`}
           language="bash"
         />
       </div>
+      )}
 
       {/* GitHub Commands */}
+      {isVisible("github") && (
       <div>
         <h2 id="github-commands" className="flex items-center gap-2"><Github className="h-6 w-6" /> GitHub Command Group</h2>
         <p>GitHub integration, analytics, and PR management</p>
@@ -423,6 +491,7 @@ devpulse github commit --type feat --force`}
           </ul>
         </Callout>
       </div>
+      )}
 
       {/* GitHub Generators Workflow */}
       <div>
@@ -462,6 +531,7 @@ git add my_changes.py`}
       </div>
 
       {/* Logs Commands */}
+      {isVisible("logs") && (
       <div>
         <h2 id="logs-commands" className="flex items-center gap-2"><FileText className="h-6 w-6" /> Logs Command Group</h2>
         <p>Analyze and search logs</p>
@@ -476,8 +546,10 @@ devpulse logs stats                    # Log statistics`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Secrets Commands */}
+      {isVisible("secrets") && (
       <div>
         <h2 id="secrets-commands" className="flex items-center gap-2"><Lock className="h-6 w-6" /> Secrets Command Group</h2>
         <p>Scan and manage secrets</p>
@@ -492,8 +564,10 @@ devpulse secrets report --severity high`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Sync Commands */}
+      {isVisible("sync") && (
       <div>
         <h2 id="sync-commands" className="flex items-center gap-2"><RefreshCw className="h-6 w-6" /> Sync Command Group</h2>
         <p>Synchronize data with cloud</p>
@@ -508,8 +582,10 @@ devpulse sync conflicts --resolve      # Attempt resolve`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Timer Commands */}
+      {isVisible("timer") && (
       <div>
         <h2 id="timer-commands" className="flex items-center gap-2"><Timer className="h-6 w-6" /> Timer Command Group</h2>
         <p>Pomodoro and time management</p>
@@ -524,8 +600,10 @@ devpulse timer history`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Focus Commands */}
+      {isVisible("focus") && (
       <div>
         <h2 id="focus-commands" className="flex items-center gap-2"><Target className="h-6 w-6" /> Focus Command Group</h2>
         <p>Focus sessions and website blocking</p>
@@ -540,8 +618,10 @@ devpulse focus stats`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Breaks Commands */}
+      {isVisible("breaks") && (
       <div>
         <h2 id="breaks-commands" className="flex items-center gap-2"><Coffee className="h-6 w-6" /> Breaks Command Group</h2>
         <p>Schedule and track breaks</p>
@@ -555,8 +635,10 @@ devpulse breaks history`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Notes Commands */}
+      {isVisible("notes") && (
       <div>
         <h2 id="notes-commands" className="flex items-center gap-2"><StickyNote className="h-6 w-6" /> Notes Command Group</h2>
         <p>Quick note-taking and organization</p>
@@ -571,8 +653,10 @@ devpulse notes tags`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Project Commands */}
+      {isVisible("project") && (
       <div>
         <h2 id="project-commands" className="flex items-center gap-2"><Package className="h-6 w-6" /> Project Command Group</h2>
         <p>Project management and organization</p>
@@ -586,8 +670,10 @@ devpulse project archive "my-project"`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Habits Commands */}
+      {isVisible("habits") && (
       <div>
         <h2 id="habits-commands" className="flex items-center gap-2"><TrendingUp className="h-6 w-6" /> Habits Command Group</h2>
         <p>Build and track habits</p>
@@ -603,8 +689,10 @@ devpulse habits stats`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Dashboard Commands */}
+      {isVisible("dashboard") && (
       <div>
         <h2 id="dashboard-commands" className="flex items-center gap-2"><Smartphone className="h-6 w-6" /> Dashboard Command Group</h2>
         <p>Visualize your productivity data</p>
@@ -619,8 +707,10 @@ devpulse dashboard stats`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Report Commands */}
+      {isVisible("report") && (
       <div>
         <h2 id="report-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Report Command Group</h2>
         <p>Generate productivity reports</p>
@@ -635,8 +725,10 @@ devpulse report insights`}
           language="bash"
         />
       </div>
+      )}
 
       {/* AI Commands */}
+      {isVisible("ai") && (
       <div>
         <h2 id="ai-commands" className="flex items-center gap-2"><Brain className="h-6 w-6" /> AI Command Group</h2>
         <p>AI-powered insights and suggestions</p>
@@ -693,8 +785,10 @@ devpulse ai optimize --apply           # Apply recommendations`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Health Commands */}
+      {isVisible("health") && (
       <div>
         <h2 id="health-commands" className="flex items-center gap-2"><Activity className="h-6 w-6" /> Health Command Group</h2>
         <p>System health and monitoring</p>
@@ -708,6 +802,7 @@ devpulse health alert --cpu 80         # Alert if CPU > 80%`}
           language="bash"
         />
       </div>
+      )}
 
       {/* Common Patterns */}
       <div className="animate-fade-in-up animate-stagger-4">
@@ -926,9 +1021,15 @@ pip install --upgrade devpulse-cli`}
                       onClick={() => {
                         setSearchOpen(false);
                         setSearchQuery("");
-                        // Scroll to section
-                        document.getElementById(`${cmd.id}-commands`)?.scrollIntoView({
-                          behavior: "smooth",
+                        const targetPage = pageForId(cmd.id);
+                        if (targetPage !== page) setPage(targetPage);
+                        requestAnimationFrame(() => {
+                          document.getElementById(`${cmd.id}-commands`)?.scrollIntoView({
+                            behavior: "smooth",
+                          });
+                          if (typeof window !== "undefined") {
+                            history.replaceState(null, "", `#${cmd.id}-commands`);
+                          }
                         });
                       }}
                       className="w-full flex items-start gap-3 p-3 rounded-lg hover:bg-muted transition-colors text-left"
