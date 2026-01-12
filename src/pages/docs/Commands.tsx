@@ -91,7 +91,25 @@ export default function Commands() {
   };
 
   const shouldRender = (id: string) => {
-    return group ? group === id : isVisible(id);
+    // Only render command details when a specific group is selected
+    return group === id;
+  };
+
+  const getCurrentCommandIndex = () => {
+    if (!group) return -1;
+    return commands.findIndex(cmd => cmd.id === group);
+  };
+
+  const getNextCommand = () => {
+    const idx = getCurrentCommandIndex();
+    if (idx === -1 || idx >= commands.length - 1) return null;
+    return commands[idx + 1];
+  };
+
+  const getPrevCommand = () => {
+    const idx = getCurrentCommandIndex();
+    if (idx <= 0) return null;
+    return commands[idx - 1];
   };
 
   return (
@@ -184,32 +202,7 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
       </div>
       )}
 
-      {/* Pagination Controls (Top, overview only) */}
-      {!group && (
-      <div className="not-prose mb-6 flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Showing {startIndex + 1}-{endIndex} of {totalSections}
-        </p>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={page === 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-          >
-            <ArrowLeft className="h-4 w-4 mr-1" /> Prev
-          </Button>
-          <span className="text-sm text-muted-foreground">Page {page} / {totalPages}</span>
-          <Button
-            size="sm"
-            disabled={page === totalPages}
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-          >
-            Next <ArrowRight className="h-4 w-4 ml-1" />
-          </Button>
-        </div>
-      </div>
-      )}
+
 
       {/* Track Commands */}
       {shouldRender("track") && (
@@ -983,20 +976,55 @@ pip install --upgrade devpulse-cli`}
       </Callout>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
-        <Button variant="outline" asChild className="text-foreground">
-          <Link to="/docs/quick-start">
-            <ArrowLeft className="h-4 w-4" />
-            Quick Start
-          </Link>
-        </Button>
-        <Button asChild className="text-foreground">
-          <Link to="/docs/api-reference">
-            API Reference
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </Button>
-      </div>
+      {!group ? (
+        <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
+          <Button variant="outline" asChild className="text-foreground">
+            <Link to="/docs/quick-start">
+              <ArrowLeft className="h-4 w-4" />
+              Quick Start
+            </Link>
+          </Button>
+          <Button asChild className="text-foreground">
+            <Link to="/docs/api-reference">
+              API Reference
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
+          {getPrevCommand() ? (
+            <Button variant="outline" asChild>
+              <Link to={`/docs/commands/${getPrevCommand()!.id}`}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                {getPrevCommand()!.name}
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="outline" asChild>
+              <Link to="/docs/commands">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                All Commands
+              </Link>
+            </Button>
+          )}
+          {getNextCommand() ? (
+            <Button asChild>
+              <Link to={`/docs/commands/${getNextCommand()!.id}`}>
+                {getNextCommand()!.name}
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="outline" asChild>
+              <Link to="/docs/commands">
+                All Commands
+                <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
+            </Button>
+          )}
+        </div>
+      )}
 
       {/* Search Modal */}
       {searchOpen && (
