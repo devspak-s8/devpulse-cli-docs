@@ -44,12 +44,12 @@ const App = () => (
             <Route path="error-handling" element={<ErrorHandling />} />
             <Route path="configuration" element={<Configuration />} />
             <Route path="examples" element={<Examples />} />
-            <Route path="/terminal" element={<Terminal />} />
+   
+          </Route>
+         <Route path="/terminal" element={<Terminal />} />
             <Route path="/service/:serviceId" element={<ServiceDetail />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/index" element={<Index />} />
-          </Route>
-
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -98,6 +98,7 @@ export default function Landing() {
   const { stats: analyticsStats, loading } = useAnalytics();
   const trackEvent = useTrackEvent();
   const { step, startOnboarding, signInWithGitHub, importRepos } = useOnboarding();
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
   const [animatedStats, setAnimatedStats] = useState({
     visitors: 0,
     sessions: 0,
@@ -139,15 +140,32 @@ export default function Landing() {
     { value: animatedStats.pageViews, label: "Page Views", icon: Code2 },
   ];
 
+  const handleStartOnboarding = () => {
+    setOnboardingOpen(true);
+    startOnboarding();
+  };
+
+  const handleSignIn = () => {
+    setOnboardingOpen(true);
+    signInWithGitHub();
+  };
+
+  const handleImport = (repos: string[]) => {
+    importRepos(repos);
+    setOnboardingOpen(false);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header variant="landing" onGitHubClick={startOnboarding} />
-      <OnboardingOverlay
-        step={step}
-        onStart={startOnboarding}
-        onSignIn={signInWithGitHub}
-        onImport={importRepos}
-      />
+      <Header variant="landing" onGitHubClick={handleStartOnboarding} />
+      {onboardingOpen && (
+        <OnboardingOverlay
+          step={step}
+          onStart={handleStartOnboarding}
+          onSignIn={handleSignIn}
+          onImport={handleImport}
+        />
+      )}
 
       {/* Hero Section - keeps initial animations */}
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
