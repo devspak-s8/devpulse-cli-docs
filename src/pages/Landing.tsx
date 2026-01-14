@@ -28,6 +28,8 @@ import { TerminalDemo } from "@/components/TerminalDemo";
 import { StarfieldAnimation } from "@/components/StarfieldAnimation";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useAnalytics, useTrackEvent } from "@/hooks/useAnalytics";
+import { OnboardingOverlay } from "@/components/onboarding/OnboardingOverlay";
+import { useOnboarding } from "@/hooks/useOnboarding";
 
 const features = [
   {
@@ -95,6 +97,7 @@ const benefits = [
 export default function Landing() {
   const { stats: analyticsStats, loading } = useAnalytics();
   const trackEvent = useTrackEvent();
+  const { step, startOnboarding, signInWithGitHub, importRepos } = useOnboarding();
   const [animatedStats, setAnimatedStats] = useState({
     visitors: 0,
     sessions: 0,
@@ -138,7 +141,13 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header variant="landing" />
+      <Header variant="landing" onGitHubClick={startOnboarding} />
+      <OnboardingOverlay
+        step={step}
+        onStart={startOnboarding}
+        onSignIn={signInWithGitHub}
+        onImport={importRepos}
+      />
 
       {/* Hero Section - keeps initial animations */}
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">

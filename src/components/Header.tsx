@@ -25,6 +25,7 @@ import {
 
 interface HeaderProps {
   variant?: "landing" | "docs";
+  onGitHubClick?: () => void;
 }
 
 const searchItems = [
@@ -102,7 +103,7 @@ const searchItems = [
   },
 ];
 
-export function Header({ variant = "landing" }: HeaderProps) {
+export function Header({ variant = "landing", onGitHubClick }: HeaderProps) {
   const [isDark, setIsDark] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -217,16 +218,22 @@ export function Header({ variant = "landing" }: HeaderProps) {
             </Button>
 
             {/* GitHub */}
-            <Button variant="ghost" size="icon" asChild>
-              <a
-                href="https://github.com/devpulse/cli"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-              >
+            {onGitHubClick ? (
+              <Button variant="ghost" size="icon" onClick={onGitHubClick}>
                 <Github className="h-5 w-5" />
-              </a>
-            </Button>
+              </Button>
+            ) : (
+              <Button variant="ghost" size="icon" asChild>
+                <a
+                  href="https://github.com/devpulse/cli"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-5 w-5" />
+                </a>
+              </Button>
+            )}
 
             {/* Theme toggle */}
             <Button 

@@ -15,7 +15,10 @@ import ApiReference from "./pages/docs/ApiReference";
 import ErrorHandling from "./pages/docs/ErrorHandling";
 import Configuration from "./pages/docs/Configuration";
 import Examples from "./pages/docs/Examples";
-
+import Index from "./pages/Index";
+import Terminal from "./pages/Terminal";
+import ServiceDetail from "./pages/ServiceDetail";
+import Settings from "./pages/Settings";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -27,8 +30,9 @@ const App = () => (
         <AnalyticsTracker />
         <Routes>
           <Route path="/" element={<Landing />} />
-          
+
           {/* Documentation routes */}
+
           <Route path="/docs" element={<DocsLayout />}>
             <Route index element={<DocsHome />} />
             <Route path="installation" element={<Installation />} />
@@ -40,8 +44,12 @@ const App = () => (
             <Route path="error-handling" element={<ErrorHandling />} />
             <Route path="configuration" element={<Configuration />} />
             <Route path="examples" element={<Examples />} />
+            <Route path="/terminal" element={<Terminal />} />
+            <Route path="/service/:serviceId" element={<ServiceDetail />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/index" element={<Index />} />
           </Route>
-          
+
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
         </Routes>
