@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   Github,
@@ -99,6 +99,7 @@ export default function Landing() {
   const trackEvent = useTrackEvent();
   const { step, startOnboarding, signInWithGitHub, importRepos } = useOnboarding();
   const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const navigate = useNavigate();
   const [animatedStats, setAnimatedStats] = useState({
     visitors: 0,
     sessions: 0,
@@ -141,6 +142,10 @@ export default function Landing() {
   ];
 
   const handleStartOnboarding = () => {
+    if (step === "completed") {
+      navigate("/index");
+      return;
+    }
     setOnboardingOpen(true);
     startOnboarding();
   };
@@ -153,6 +158,7 @@ export default function Landing() {
   const handleImport = (repos: string[]) => {
     importRepos(repos);
     setOnboardingOpen(false);
+    navigate("/index");
   };
 
   return (

@@ -8,9 +8,7 @@ import { DottedWorldMap } from '@/components/dashboard/DottedMap';
 import { MetricsChart, MultiLineChart } from '@/components/dashboard/MetricsChart';
 import { LogsViewer } from '@/components/dashboard/LogsViewer';
 import { AlertsPanel } from '@/components/dashboard/AlertsPanel';
-import { OnboardingOverlay } from '@/components/onboarding/OnboardingOverlay';
 import { useWebSocketSimulation } from '@/hooks/useWebSocketSimulation';
-import { useOnboarding } from '@/hooks/useOnboarding';
 import { generateErrorMetrics, generateRequestMetrics } from '@/lib/mockData';
 import { cn } from '@/lib/utils';
 
@@ -18,13 +16,7 @@ const Index = () => {
   const navigate = useNavigate();
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const { services, logs, alerts, isConnected, lastUpdate, acknowledgeAlert, reconnect } = useWebSocketSimulation(3000);
-  const { 
-    step, 
-    showDashboard, 
-    startOnboarding, 
-    signInWithGitHub, 
-    importRepos, 
-  } = useOnboarding();
+  const showDashboard = true;
   
   const errorMetrics = useMemo(() => generateErrorMetrics(), []);
   const requestMetrics = useMemo(() => generateRequestMetrics(), []);
@@ -226,13 +218,6 @@ const Index = () => {
         </div>
       </footer>
 
-      {/* Onboarding Overlay */}
-      <OnboardingOverlay
-        step={step}
-        onStart={startOnboarding}
-        onSignIn={signInWithGitHub}
-        onImport={importRepos}
-      />
     </div>
   );
 };

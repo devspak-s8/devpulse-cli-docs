@@ -56,7 +56,7 @@ export const RepoImportPanel = ({ onImport, isVisible }: RepoImportPanelProps) =
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: '100%', opacity: 0 }}
       transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-      className="fixed right-0 top-0 h-full w-full md:w-[65%] lg:w-[55%] xl:w-[50%] z-50 flex items-start justify-center p-4 sm:p-6 overflow-y-auto"
+      className="fixed right-0 top-0 h-full w-full md:w-[65%] lg:w-[55%] xl:w-[50%] z-50 flex items-center md:items-start justify-center p-4 pt-12 sm:p-6 sm:pt-8 overflow-y-auto"
     >
       <motion.div
         initial={{ scale: 0.95 }}
