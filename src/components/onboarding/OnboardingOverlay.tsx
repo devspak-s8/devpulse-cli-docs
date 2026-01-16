@@ -1,20 +1,41 @@
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GitHubSignInPanel } from './GitHubSignInPanel';
 import { RepoImportPanel } from './RepoImportPanel';
+import { LoadingModal } from './LoadingModal';
 import { OnboardingStep } from '@/hooks/useOnboarding';
 
 interface OnboardingOverlayProps {
   step: OnboardingStep;
-  onSignIn: () => void;
+  onSignIn: (onProgress?: (progress: number) => void) => void;
   onImport: (repos: string[]) => void;
   onStart: () => void;
 }
 
 export const OnboardingOverlay = ({ step, onSignIn, onImport, onStart }: OnboardingOverlayProps) => {
   const isActive = step !== 'completed';
+  const [loadingType, setLoadingType] = useState<'signin' | 'repos' | 'import' | null>(null);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
+  const handleShowLoader = (type: 'signin' | 'repos' | 'import') => {
+    setLoadingType(type);
+    setLoadingProgress(0);
+    const interval = setInterval(() => {
+      setLoadingProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setTimeout(() => setLoadingType(null), 500);
+          return 100;
+        }
+        return prev + 5;
+      });
+    }, 100);
+  };
 
   return (
     <>
+      <LoadingModal isOpen={loadingType !== null} type={loadingType || 'signin'} progress={loadingProgress} />
+      
       {/* Blur overlay */}
       <AnimatePresence>
         {isActive && (
@@ -71,10 +92,11 @@ export const OnboardingOverlay = ({ step, onSignIn, onImport, onStart }: Onboard
       {/* Slide-in panels */}
       <AnimatePresence mode="wait">
         {step === 'github-signin' && (
-          <GitHubSignInPanel 
+          <GitHubSignInPanel
             key="github-signin"
-            onSignIn={onSignIn} 
-            isVisible={true} 
+            onSignIn={onSignIn}
+            isVisible={true}
+            onShowLoader={handleShowLoader}
           />
         )}
       </AnimatePresence>
@@ -91,10 +113,11 @@ export const OnboardingOverlay = ({ step, onSignIn, onImport, onStart }: Onboard
             >
               <div className="w-full max-w-sm bg-card border border-border rounded-2xl shadow-2xl h-[500px] opacity-50 blur-[2px]" />
             </motion.div>
-            <RepoImportPanel 
+            <RepoImportPanel
               key="repo-import"
-              onImport={onImport} 
-              isVisible={true} 
+              onImport={onImport}
+              isVisible={true}
+              onShowLoader={handleShowLoader}
             />
           </>
         )}

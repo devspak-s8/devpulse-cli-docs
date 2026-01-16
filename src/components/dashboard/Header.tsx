@@ -9,9 +9,12 @@ import {
   Menu, 
   X,
   Home,
-  ChevronUp
+  ChevronUp,
+  User
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { NotificationDropdown } from './NotificationDropdown';
+import { useWebSocketSimulation } from '@/hooks/useWebSocketSimulation';
 
 interface HeaderProps {
   notificationCount?: number;
@@ -20,6 +23,7 @@ interface HeaderProps {
 export const Header = ({ notificationCount = 2 }: HeaderProps) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { alerts } = useWebSocketSimulation();
 
   const navItems = [
     { to: '/', icon: Activity, label: 'Dashboard' },
@@ -63,26 +67,21 @@ export const Header = ({ notificationCount = 2 }: HeaderProps) => {
 
           {/* Right Section */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Notifications - Desktop */}
-            <button className="relative rounded-lg bg-secondary p-1.5 sm:p-2 text-muted-foreground hover:text-foreground transition-colors">
-              <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
-              {notificationCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-destructive/80 text-[10px] font-bold text-foreground">
-                  {notificationCount}
-                </span>
-              )}
-            </button>
+            {/* Notifications Dropdown */}
+            <NotificationDropdown alerts={alerts} />
             
             {/* User Avatar */}
-            <div className="flex items-center gap-2">
-              <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-secondary flex items-center justify-center">
-                <span className="text-[10px] sm:text-xs font-semibold text-muted-foreground">DP</span>
+            <Link to="/profile" className="flex items-center gap-2">
+              <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-colors">
+                <User className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
               </div>
-            </div>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button 
+              type="button"
               onClick={() => setIsMobileMenuOpen(true)}
+              title="Open menu"
               className="md:hidden p-1.5 rounded-lg bg-secondary text-muted-foreground hover:text-foreground transition-colors"
             >
               <Menu className="h-5 w-5" />
@@ -122,7 +121,9 @@ export const Header = ({ notificationCount = 2 }: HeaderProps) => {
                 <div className="flex items-center justify-between px-4 pb-2">
                   <span className="text-sm font-medium text-muted-foreground">Navigation</span>
                   <button 
+                    type="button"
                     onClick={() => setIsMobileMenuOpen(false)}
+                    title="Close menu"
                     className="p-1.5 rounded-lg hover:bg-secondary transition-colors"
                   >
                     <X className="h-5 w-5 text-muted-foreground" />
@@ -176,7 +177,9 @@ export const Header = ({ notificationCount = 2 }: HeaderProps) => {
             </Link>
           ))}
           <button
+            type="button"
             onClick={() => setIsMobileMenuOpen(true)}
+            title="More menu"
             className="flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-lg transition-colors flex-1 text-muted-foreground"
           >
             <ChevronUp className="h-5 w-5" />

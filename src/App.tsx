@@ -19,6 +19,8 @@ import Index from "./pages/Index";
 import Terminal from "./pages/Terminal";
 import ServiceDetail from "./pages/ServiceDetail";
 import Settings from "./pages/Settings";
+import Notifications from "./pages/Notifications";
+import Profile from "./pages/Profile";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -50,6 +52,8 @@ const App = () => (
             <Route path="/service/:serviceId" element={<ServiceDetail />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/index" element={<Index />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/profile" element={<Profile />} />
           {/* Catch-all */}
           <Route path="*" element={<NotFound />} />
         </Routes>

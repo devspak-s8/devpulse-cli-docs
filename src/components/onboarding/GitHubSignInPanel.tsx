@@ -3,15 +3,17 @@ import { Github, Terminal, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 
 interface GitHubSignInPanelProps {
-  onSignIn: () => void;
+  onSignIn: (onProgress?: (progress: number) => void) => void;
   isVisible: boolean;
+  onShowLoader?: (type: 'signin' | 'repos' | 'import') => void;
 }
 
-export const GitHubSignInPanel = ({ onSignIn, isVisible }: GitHubSignInPanelProps) => {
+export const GitHubSignInPanel = ({ onSignIn, isVisible, onShowLoader }: GitHubSignInPanelProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignIn = () => {
     setIsLoading(true);
+    onShowLoader?.('signin');
     onSignIn();
   };
 

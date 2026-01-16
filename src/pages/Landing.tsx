@@ -30,6 +30,8 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { useAnalytics, useTrackEvent } from "@/hooks/useAnalytics";
 import { OnboardingOverlay } from "@/components/onboarding/OnboardingOverlay";
 import { useOnboarding } from "@/hooks/useOnboarding";
+import { HeroSection } from "@/components/HeroSection";
+import { BentoGrid } from "@/components/BentoGrid";
 
 const features = [
   {
@@ -173,93 +175,8 @@ export default function Landing() {
         />
       )}
 
-      {/* Hero Section - keeps initial animations */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-        <div className="absolute inset-0">
-          <StarfieldAnimation />
-        </div>
-        
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
-        
-        <div className="container relative py-20 md:py-28 lg:py-36">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6 animate-slide-in-left">
-                <Heart className="h-3.5 w-3.5 fill-current" />
-                <span>Open-Source Software</span>
-                <span className="text-primary/60">•</span>
-                <span>v0.2.1</span>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
-                Developer productivity &{" "}
-                <span className="gradient-text">GitHub analytics</span> CLI
-              </h1>
-
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 animate-slide-in-left" style={{ animationDelay: "0.2s" }}>
-                Track your coding time, analyze GitHub activity, and optimize your
-                workflow. API-first, built for developers who live in the terminal.
-              </p>
-
-              <div className="flex flex-col sm:flex-row items-start gap-4 animate-slide-in-left" style={{ animationDelay: "0.3s" }}>
-                <Button 
-                  variant="hero" 
-                  size="xl" 
-                  asChild
-                  onClick={() => trackEvent('cta_get_started', { location: 'hero' })}
-                >
-                  <Link to="/docs">
-                    Get Started
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button 
-                  variant="heroOutline" 
-                  size="xl" 
-                  asChild
-                  onClick={() => trackEvent('view_github', { location: 'hero' })}
-                >
-                  <a
-                    href="https://github.com/devpulse/cli"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Github className="h-5 w-5" />
-                    View on GitHub
-                  </a>
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-6 mt-8 pt-8 border-t border-border animate-slide-in-left" style={{ animationDelay: "0.4s" }}>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Star className="h-4 w-4 text-yellow-500" />
-                  <span className="font-medium text-foreground">2.4k</span>
-                  <span>stars</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <GitFork className="h-4 w-4 text-primary" />
-                  <span className="font-medium text-foreground">340</span>
-                  <span>forks</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Terminal className="h-4 w-4 text-green-500" />
-                  <span className="font-medium text-foreground">MIT</span>
-                  <span>license</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="hidden lg:block animate-slide-in-right" style={{ animationDelay: "0.3s" }}>
-              <TerminalDemo />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mobile Terminal Demo */}
-      <section className="lg:hidden py-8 px-4">
-        <TerminalDemo />
-      </section>
+      {/* Hero Section */}
+      <HeroSection />
 
       {/* Stats Section - scroll triggered with real analytics data */}
       <section className="py-16 border-y border-border bg-muted/20">
@@ -327,6 +244,10 @@ export default function Landing() {
                 ))}
               </div>
             </div>
+          </div>
+          {/* New Bento grid section, keeping original content above */}
+          <div className="mt-16">
+            <BentoGrid />
           </div>
         </div>
       </section>

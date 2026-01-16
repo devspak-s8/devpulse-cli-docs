@@ -35,8 +35,19 @@ export const useOnboarding = () => {
     setState(prev => ({ ...prev, step: 'github-signin' }));
   };
 
-  const signInWithGitHub = () => {
-    // Simulate GitHub OAuth
+  const signInWithGitHub = (onProgress?: (progress: number) => void) => {
+    // Simulate GitHub OAuth with progress updates
+    if (onProgress) {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        onProgress(progress);
+        if (progress >= 100) {
+          clearInterval(interval);
+        }
+      }, 150);
+    }
+    
     setTimeout(() => {
       setState(prev => ({
         ...prev,

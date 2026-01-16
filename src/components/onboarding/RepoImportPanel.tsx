@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 interface RepoImportPanelProps {
   onImport: (repos: string[]) => void;
   isVisible: boolean;
+  onShowLoader?: (type: 'signin' | 'repos' | 'import') => void;
 }
 
 const mockRepos = [
@@ -16,7 +17,7 @@ const mockRepos = [
   { name: 'analytics-engine', fullName: 'dev-user/analytics-engine', language: 'Rust', updatedAt: '3 weeks ago' },
 ];
 
-export const RepoImportPanel = ({ onImport, isVisible }: RepoImportPanelProps) => {
+export const RepoImportPanel = ({ onImport, isVisible, onShowLoader }: RepoImportPanelProps) => {
   const [selectedRepos, setSelectedRepos] = useState<string[]>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
@@ -43,6 +44,7 @@ export const RepoImportPanel = ({ onImport, isVisible }: RepoImportPanelProps) =
 
   const handleImport = () => {
     setIsImporting(true);
+    onShowLoader?.('import');
     setTimeout(() => {
       onImport(selectedRepos);
     }, 2000);
