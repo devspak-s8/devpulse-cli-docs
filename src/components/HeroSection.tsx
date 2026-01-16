@@ -202,15 +202,15 @@ export function HeroSection() {
       </div>
 
       <div className="relative mx-auto max-w-[1400px] px-2.5 sm:px-6 lg:px-12">
-        <div className="flex flex-col lg:items-center lg:justify-center gap-12 lg:gap-20">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-20">
           {/* Left column - text content */}
-          <div className="lg:max-w-2xl lg:min-h-screen flex flex-col justify-center pt-24 lg:pt-20 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] px-3 py-1 text-xs text-[var(--color-neutral-400)] mb-8 mx-auto">
+          <div className="lg:max-w-xl lg:min-h-screen flex flex-col justify-center pt-24 lg:pt-20 md:items-center lg:items-start">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] px-3 py-1 text-xs text-[var(--color-neutral-400)] mb-8 w-fit md:mx-auto">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-neutral-300)]" />
               v2.0 now available
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--color-neutral-100)] leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--color-neutral-100)] leading-[1.1] md:text-center lg:text-left">
               Real-time API monitoring,
               <br />
               right from your
@@ -218,23 +218,30 @@ export function HeroSection() {
               <span className="text-[var(--color-neutral-400)]">CLI</span>
             </h1>
 
-            <p className="mt-6 text-lg text-[var(--color-neutral-400)] max-w-2xl leading-relaxed mx-auto">
+            <p className="mt-6 text-lg text-[var(--color-neutral-400)] max-w-md leading-relaxed md:text-center lg:text-left md:mx-auto lg:mx-0">
               DevPulse monitors your APIs in real time — tracking health, latency, errors, and global availability across regions. No SDKs. No rebuilds. Just one command.
             </p>
 
-            <div className="mt-10 flex justify-center w-full">
+            <div className="mt-10 flex flex-wrap items-center gap-4 md:justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="bg-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-50)] text-[var(--color-neutral-950)] font-semibold px-6 w-full max-w-md"
+                className="bg-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-50)] text-[var(--color-neutral-950)] font-semibold px-6"
               >
                 Start monitoring
                 <ArrowRight className="ml-2 h-4 w-4" weight="bold" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="lg"
+                className="text-[var(--color-neutral-300)] hover:text-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-800)]"
+              >
+                View CLI docs
               </Button>
             </div>
           </div>
 
           {/* Right column - terminals */}
-          <div className="w-full lg:max-w-4xl lg:min-h-screen flex flex-col items-center justify-center lg:pt-20 gap-8">
+          <div className="lg:flex-1 lg:max-w-2xl lg:min-h-screen flex flex-col items-center justify-center lg:pt-20">
             {/* Terminal 1 - Monitor CLI */}
             <div className="w-full rounded-2xl border-2 border-[var(--color-neutral-700)] bg-gradient-to-br from-[var(--color-neutral-950)] to-[var(--color-neutral-900)] overflow-hidden shadow-2xl">
               <div className="flex items-center justify-between px-5 py-4 border-b-2 border-[var(--color-neutral-700)] bg-[var(--color-neutral-900)]">
@@ -252,16 +259,16 @@ export function HeroSection() {
               <div className="p-6 font-mono text-sm bg-[var(--color-neutral-950)] relative">
                 <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)'}}></div>
                 <div className="relative">
-                  <div className="flex items-center gap-2 text-[var(--color-neutral-200)]">
-                    <span className="text-[var(--color-neutral-600)]">❯</span>
-                    <span className="text-[var(--color-neutral-600)]">~</span>
-                    <span className="text-[var(--color-neutral-300)]">
-                      {typedCommand}
-                      {cursorVisible && (
-                        <span className="inline-block w-2 h-4 bg-[var(--color-neutral-300)] ml-0.5 animate-pulse" />
-                      )}
-                    </span>
-                  </div>
+                <div className="flex items-center gap-2 text-[var(--color-neutral-200)]">
+                  <span className="text-[var(--color-neutral-600)]">❯</span>
+                  <span className="text-[var(--color-neutral-600)]">~</span>
+                  <span className="text-[var(--color-neutral-300)]">
+                    {typedCommand}
+                    {cursorVisible && (
+                      <span className="inline-block w-2 h-4 bg-[var(--color-neutral-300)] ml-0.5 animate-pulse" />
+                    )}
+                  </span>
+                </div>
 
                 <div className="mt-5 space-y-2.5">
                   {visibleSteps.map((stepIndex) => (
@@ -435,6 +442,8 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+            </div>
+
     </section>
   )
 }
