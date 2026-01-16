@@ -361,7 +361,7 @@ export default function Landing() {
                 We built DevPulse with the same principles we follow in our own
                 development workflow: simplicity, speed, and reliability.
               </p>
-              <Button variant="outline" asChild>
+              <Button variant="outline" asChild className="border-green-600 text-green-600 hover:bg-green-600 hover:text-white">
                 <Link to="/docs/quick-start">
                   Learn more
                   <ArrowRight className="h-4 w-4" />
@@ -433,7 +433,7 @@ export default function Landing() {
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={400} className="mt-8 text-center">
-              <Button variant="outline" asChild>
+              <Button variant="outline" asChild className="border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white">
                 <Link to="/docs/installation">
                   View full installation guide
                   <ArrowRight className="h-4 w-4" />
@@ -466,9 +466,9 @@ export default function Landing() {
             <ScrollReveal direction="up" delay={200}>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button 
-                  variant="hero" 
                   size="xl" 
                   asChild
+                  className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/20"
                   onClick={() => trackEvent('cta_get_started_bottom', { location: 'bottom' })}
                 >
                   <Link to="/docs">
@@ -477,9 +477,10 @@ export default function Landing() {
                   </Link>
                 </Button>
                 <Button 
-                  variant="heroOutline" 
+                  variant="outline" 
                   size="xl" 
                   asChild
+                  className="border-neutral-600 hover:bg-neutral-800"
                   onClick={() => trackEvent('star_github', { location: 'bottom' })}
                 >
                   <a

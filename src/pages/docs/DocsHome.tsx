@@ -43,14 +43,14 @@ export default function DocsHome() {
     <div className="prose-docs max-w-3xl">
       <div className="animate-fade-in">
         <div className="flex items-center gap-2 mb-4">
-          <span className="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+          <span className="px-2.5 py-1 rounded-full bg-blue-600/10 text-blue-600 text-sm font-medium border border-blue-600/20">
             Version 0.3.0
           </span>
         </div>
-        <h1>DevPulse Documentation</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-neutral-100 to-neutral-400 bg-clip-text text-transparent">DevPulse Documentation</h1>
       </div>
       
-      <p className="text-lg text-muted-foreground animate-fade-in-up">
+      <p className="text-lg text-neutral-300 leading-relaxed animate-fade-in-up mb-8">
         DevPulse is a Python-based developer analytics and productivity toolkit that you can run as a CLI,
         a local API (FastAPI), or embed as a reusable backend service. Its GitHub integration is fully
         implemented and provides repository and user insights.
@@ -72,20 +72,20 @@ export default function DocsHome() {
 
       {/* Key Features */}
       <div className="animate-fade-in-up" style={{ animationDelay: "0.15s" }}>
-        <h2 id="key-features">Key Features</h2>
+        <h2 id="key-features" className="text-2xl font-bold mb-6">Key Features</h2>
         <div className="grid sm:grid-cols-2 gap-4 not-prose mb-6">
           {features.map((feature, i) => (
             <div 
               key={feature.title} 
-              className="flex gap-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-all duration-200 hover:shadow-sm"
+              className="flex gap-3 p-5 rounded-lg border border-neutral-700 bg-neutral-900/50 hover:border-blue-600/50 transition-all duration-200 hover:shadow-lg hover:shadow-blue-600/10"
               style={{ animationDelay: `${0.2 + i * 0.05}s` }}
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-600/10 text-blue-600 border border-blue-600/20">
                 <feature.icon className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="font-medium mb-1">{feature.title}</h4>
-                <p className="text-sm text-muted-foreground">{feature.desc}</p>
+                <h4 className="font-semibold mb-1 text-neutral-100">{feature.title}</h4>
+                <p className="text-sm text-neutral-400 leading-relaxed">{feature.desc}</p>
               </div>
             </div>
           ))}
@@ -136,24 +136,24 @@ devpulse --help
         language="bash"
       />
 
-      <h2 id="quick-links">Quick Links</h2>
+      <h2 id="quick-links" className="text-2xl font-bold mb-6">Quick Links</h2>
 
       <div className="grid sm:grid-cols-2 gap-4 not-prose">
         {quickLinks.map((link, i) => (
           <Link
             key={link.href}
             to={link.href}
-            className="group flex items-start gap-4 p-4 rounded-lg border border-border hover:border-primary/50 hover:bg-muted/30 transition-all duration-200 animate-fade-in-up"
+            className="group flex items-start gap-4 p-5 rounded-lg border border-neutral-700 bg-neutral-900/50 hover:border-blue-600/50 hover:bg-neutral-900 transition-all duration-200 animate-fade-in-up hover:shadow-lg hover:shadow-blue-600/10"
             style={{ animationDelay: `${0.3 + i * 0.05}s` }}
           >
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-600/10 text-blue-600 border border-blue-600/20 group-hover:bg-blue-600/20 transition-colors">
               <link.icon className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="font-semibold mb-1 group-hover:text-primary transition-colors">
+              <h3 className="font-semibold mb-1 text-neutral-100 group-hover:text-blue-400 transition-colors">
                 {link.title}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-neutral-400 leading-relaxed">
                 {link.description}
               </p>
             </div>
