@@ -258,10 +258,10 @@ export default function Landing() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <ScrollReveal direction="left">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-neutral-100 to-neutral-400 bg-clip-text text-transparent">
                   Built for every workflow
                 </h2>
-                <p className="text-lg text-muted-foreground mb-8">
+                <p className="text-lg text-neutral-300 mb-8 leading-relaxed">
                   Whether you're a solo developer or part of a large team, DevPulse
                   adapts to your needs.
                 </p>
@@ -271,11 +271,11 @@ export default function Landing() {
                 {useCases.map((useCase, index) => (
                   <ScrollReveal key={useCase.title} direction="left" delay={200 + index * 150}>
                     <div className="flex gap-4">
-                      <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <useCase.icon className="h-6 w-6 text-primary" />
+                      <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-blue-600/10 border border-blue-600/20 flex items-center justify-center">
+                        <useCase.icon className="h-6 w-6 text-blue-600" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground mb-1">
+                        <h3 className="font-semibold text-neutral-100 mb-1">
                           {useCase.title}
                         </h3>
                         <p className="text-muted-foreground text-sm">

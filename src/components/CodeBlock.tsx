@@ -49,10 +49,10 @@ export function CodeBlock({
   const lines = code.trim().split("\n");
 
   return (
-    <div className={cn("code-block group", className)}>
+    <div className={cn("code-block group border-2 border-neutral-700 rounded-xl overflow-hidden bg-neutral-950/50 shadow-lg", className)}>
       {filename && (
-        <div className="code-block-header">
-          <span className="text-xs text-muted-foreground font-mono flex items-center gap-2">
+        <div className="code-block-header bg-neutral-900 border-b-2 border-neutral-700">
+          <span className="text-xs text-neutral-400 font-mono flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-red-500/80" />
             <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
             <span className="w-2 h-2 rounded-full bg-green-500/80" />
@@ -61,10 +61,10 @@ export function CodeBlock({
           <button
             onClick={copyToClipboard}
             className={cn(
-              "flex items-center gap-1.5 text-xs px-2 py-1 rounded transition-all",
+              "flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md transition-all font-medium",
               copied 
-                ? "text-green-500 bg-green-500/10" 
-                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                ? "text-green-400 bg-green-500/10 border border-green-500/20" 
+                : "text-neutral-300 hover:text-neutral-100 hover:bg-neutral-800 border border-neutral-700"
             )}
             aria-label="Copy code"
           >
@@ -82,8 +82,32 @@ export function CodeBlock({
           </button>
         </div>
       )}
+      {!filename && (
+        <button
+          onClick={copyToClipboard}
+          className={cn(
+            "absolute top-3 right-3 z-10 flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md transition-all font-medium opacity-0 group-hover:opacity-100",
+            copied 
+              ? "text-green-400 bg-green-500/10 border border-green-500/20" 
+              : "text-neutral-300 hover:text-neutral-100 bg-neutral-800 border border-neutral-700"
+          )}
+          aria-label="Copy code"
+        >
+          {copied ? (
+            <>
+              <Check className="h-3.5 w-3.5" />
+              <span>Copied!</span>
+            </>
+          ) : (
+            <>
+              <Copy className="h-3.5 w-3.5" />
+              <span>Copy</span>
+            </>
+          )}
+        </button>
+      )}
       <div className="relative">
-        <pre className="overflow-x-auto !bg-transparent">
+        <pre className="overflow-x-auto !bg-neutral-950 p-4">
           {showLineNumbers ? (
             <code ref={codeRef} className={`language-${language}`}>
               <div className="table">

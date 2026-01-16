@@ -108,14 +108,10 @@ export default function DocsHome() {
         and no authentication; treat it as a local/development server unless hardened.
       </Callout>
 
-      <h2 id="quick-install">Quick Install</h2>
+      <h2 id="quick-install" className="text-2xl font-bold mb-4">Quick Install</h2>
       
       <CodeBlock
-        code={`# Create virtual environment
-python3 -m venv .venv
-source .venv/bin/activate  # Windows: .venv\\Scripts\\Activate.ps1
-
-# Install DevPulse
+        code={`# Install DevPulse
 pip install devpulse-cli`}
         language="bash"
       />
@@ -125,14 +121,10 @@ pip install devpulse-cli`}
         <Link to="/docs/installation">Installation guide</Link>.
       </p>
 
-      <h2 id="verify-installation">Verify Installation</h2>
+      <h2 id="verify-installation" className="text-2xl font-bold mb-4">Verify Installation</h2>
 
       <CodeBlock
-        code={`devpulse --version
-# DevPulse CLI v0.1.3
-
-devpulse --help
-# Show all available commands`}
+        code={`devpulse --version`}
         language="bash"
       />
 
