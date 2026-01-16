@@ -299,7 +299,7 @@ export function HeroSection() {
                     </div>
                   </div>
                 )}
-                </div>
+              </div>
             </div>
 
             {/* Connector line */}
