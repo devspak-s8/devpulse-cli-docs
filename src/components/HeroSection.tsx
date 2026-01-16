@@ -253,14 +253,14 @@ export function HeroSection() {
                 <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)'}}></div>
                 <div className="relative">
                   <div className="flex items-center gap-2 text-[var(--color-neutral-200)]">
-                  <span className="text-[var(--color-neutral-600)]">❯</span>
-                  <span className="text-[var(--color-neutral-600)]">~</span>
-                  <span className="text-[var(--color-neutral-300)]">
-                    {typedCommand}
-                    {cursorVisible && (
-                      <span className="inline-block w-2 h-4 bg-[var(--color-neutral-300)] ml-0.5 animate-pulse" />
-                    )}
-                  </span>
+                    <span className="text-[var(--color-neutral-600)]">❯</span>
+                    <span className="text-[var(--color-neutral-600)]">~</span>
+                    <span className="text-[var(--color-neutral-300)]">
+                      {typedCommand}
+                      {cursorVisible && (
+                        <span className="inline-block w-2 h-4 bg-[var(--color-neutral-300)] ml-0.5 animate-pulse" />
+                      )}
+                    </span>
                   </div>
 
                 <div className="mt-5 space-y-2.5">
