@@ -261,7 +261,7 @@ export function HeroSection() {
                       <span className="inline-block w-2 h-4 bg-[var(--color-neutral-300)] ml-0.5 animate-pulse" />
                     )}
                   </span>
-                </div>
+                  </div>
 
                 <div className="mt-5 space-y-2.5">
                   {visibleSteps.map((stepIndex) => (
