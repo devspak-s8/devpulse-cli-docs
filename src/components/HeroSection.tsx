@@ -204,7 +204,7 @@ export function HeroSection() {
       <div className="relative mx-auto max-w-[1400px] px-2.5 sm:px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-20">
           {/* Left column - text content */}
-          <div className="lg:max-w-xl lg:min-h-screen flex flex-col justify-center pt-24 lg:pt-20 md:items-center lg:items-start">
+          <div className="lg:max-w-xl lg:min-h-screen flex flex-col justify-center pt-24 lg:pt-20 md:items-center lg:items-start px-4 md:px-6 lg:px-0">
             <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] px-3 py-1 text-xs text-[var(--color-neutral-400)] mb-8 w-fit md:mx-auto">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-neutral-300)]" />
               v2.0 now available
@@ -225,7 +225,7 @@ export function HeroSection() {
             <div className="mt-10 flex flex-wrap items-center gap-4 md:justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="bg-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-50)] text-[var(--color-neutral-950)] font-semibold px-6"
+                className="bg-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-50)] text-[var(--color-neutral-950)] font-semibold px-6 rounded-full md:rounded-lg"
               >
                 Start monitoring
                 <ArrowRight className="ml-2 h-4 w-4" weight="bold" />
@@ -241,7 +241,7 @@ export function HeroSection() {
           </div>
 
           {/* Right column - terminals */}
-          <div className="lg:flex-1 lg:max-w-2xl lg:min-h-screen flex flex-col items-center justify-center lg:pt-20">
+          <div className="lg:flex-1 lg:max-w-2xl lg:min-h-screen flex flex-col items-center justify-center lg:pt-20 px-4 md:px-6 lg:px-0">
             {/* Terminal 1 - Monitor CLI */}
             <div className="w-full rounded-2xl border-2 border-[var(--color-neutral-700)] bg-gradient-to-br from-[var(--color-neutral-950)] to-[var(--color-neutral-900)] overflow-hidden shadow-2xl">
               <div className="flex items-center justify-between px-5 py-4 border-b-2 border-[var(--color-neutral-700)] bg-[var(--color-neutral-900)]">
@@ -311,17 +311,19 @@ export function HeroSection() {
 
             {/* Connector line */}
             {lineConnectorProgress > 0 && (
-              <div className="relative w-px h-16 flex items-center justify-center">
-                <div
-                  className="absolute top-0 w-px bg-gradient-to-b from-[var(--color-neutral-400)] to-[var(--color-neutral-500)] transition-all duration-100"
-                  style={{
-                    height: `${lineConnectorProgress}%`,
-                    boxShadow: "0 0 20px rgba(230, 232, 235, 0.4), 0 0 40px rgba(230, 232, 235, 0.2)",
-                  }}
-                />
-                {lineConnectorProgress >= 100 && (
-                  <div className="absolute -bottom-1 h-3 w-3 rounded-full bg-[var(--color-neutral-300)] animate-pulse shadow-[0_0_15px_rgba(230, 232, 235, 0.4)]" />
-                )}
+              <div className="relative w-full flex items-center justify-center">
+                <div className="relative w-px h-16 flex items-center justify-center">
+                  <div
+                    className="absolute top-0 w-px bg-gradient-to-b from-[var(--color-neutral-400)] to-[var(--color-neutral-500)] transition-all duration-100"
+                    style={{
+                      height: `${lineConnectorProgress}%`,
+                      boxShadow: "0 0 20px rgba(230, 232, 235, 0.4), 0 0 40px rgba(230, 232, 235, 0.2)",
+                    }}
+                  />
+                  {lineConnectorProgress >= 100 && (
+                    <div className="absolute -bottom-1 h-3 w-3 rounded-full bg-[var(--color-neutral-300)] animate-pulse shadow-[0_0_15px_rgba(230, 232, 235, 0.4)]" />
+                  )}
+                </div>
               </div>
             )}
 
@@ -442,6 +444,8 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+            </div>
+
     </section>
   )
 }
