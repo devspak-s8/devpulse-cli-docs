@@ -91,25 +91,7 @@ export default function Commands() {
   };
 
   const shouldRender = (id: string) => {
-    // Only render command details when a specific group is selected
-    return group === id;
-  };
-
-  const getCurrentCommandIndex = () => {
-    if (!group) return -1;
-    return commands.findIndex(cmd => cmd.id === group);
-  };
-
-  const getNextCommand = () => {
-    const idx = getCurrentCommandIndex();
-    if (idx === -1 || idx >= commands.length - 1) return null;
-    return commands[idx + 1];
-  };
-
-  const getPrevCommand = () => {
-    const idx = getCurrentCommandIndex();
-    if (idx <= 0) return null;
-    return commands[idx - 1];
+    return group ? group === id : isVisible(id);
   };
 
   return (
@@ -202,7 +184,32 @@ devpulse COMMAND SUBCOMMAND --help  # Show help for subcommand`}
       </div>
       )}
 
-
+      {/* Pagination Controls (Top, overview only) */}
+      {!group && (
+      <div className="not-prose mb-6 flex items-center justify-between">
+        <p className="text-sm text-muted-foreground">
+          Showing {startIndex + 1}-{endIndex} of {totalSections}
+        </p>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            disabled={page === 1}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+          >
+            <ArrowLeft className="h-4 w-4 mr-1" /> Prev
+          </Button>
+          <span className="text-sm text-muted-foreground">Page {page} / {totalPages}</span>
+          <Button
+            size="sm"
+            disabled={page === totalPages}
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+          >
+            Next <ArrowRight className="h-4 w-4 ml-1" />
+          </Button>
+        </div>
+      </div>
+      )}
 
       {/* Track Commands */}
       {shouldRender("track") && (
@@ -248,13 +255,61 @@ devpulse track export --range 2026-01-01:2026-01-31`}
       {/* Stats Commands */}
       {shouldRender("stats") && (
       <div>
-        <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6 text-blue-500" /> Stats Commands</h2>
-        <p className="text-neutral-300">View analytics and statistics</p>
+        <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Stats Command Group</h2>
+        <p>View analytics and statistics</p>
 
+        <h3>stats show</h3>
         <CodeBlock
           code={`devpulse stats show                    # Show today's stats
-devpulse stats report --format json    # JSON format report
-devpulse stats trends --metric productivity  # Show trends`}
+devpulse stats show --week             # Weekly stats
+devpulse stats show --month            # Monthly stats`}
+          language="bash"
+        />
+
+        <h3>stats report</h3>
+        <CodeBlock
+          code={`devpulse stats report                  # Console report
+devpulse stats report --format json    # JSON format
+devpulse stats report --format html    # HTML report`}
+          language="bash"
+        />
+
+        <h3>stats trends</h3>
+        <CodeBlock
+          code={`devpulse stats trends                  # Show trends
+devpulse stats trends --metric productivity
+devpulse stats trends --chart          # Display chart`}
+          language="bash"
+        />
+
+        <h3>stats compare</h3>
+        <CodeBlock
+          code={`devpulse stats compare                 # Compare periods
+devpulse stats compare --metric productivity`}
+          language="bash"
+        />
+
+        <h3>stats breakdown</h3>
+        <CodeBlock
+          code={`devpulse stats breakdown               # Breakdown by project
+devpulse stats breakdown --by project
+devpulse stats breakdown --top 5       # Top 5 categories`}
+          language="bash"
+        />
+
+        <h3>stats productivity</h3>
+        <CodeBlock
+          code={`devpulse stats productivity            # Productivity score
+devpulse stats productivity --score    # Show score details
+devpulse stats productivity --insights # Get insights`}
+          language="bash"
+        />
+
+        <h3>stats goals</h3>
+        <CodeBlock
+          code={`devpulse stats goals                   # List goals
+devpulse stats goals --weekly          # Weekly goals
+devpulse stats goals set "Goal Name"   # Set new goal`}
           language="bash"
         />
       </div>
@@ -263,13 +318,15 @@ devpulse stats trends --metric productivity  # Show trends`}
       {/* Config Commands */}
       {shouldRender("config") && (
       <div>
-        <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6 text-purple-500" /> Config Commands</h2>
-        <p className="text-neutral-300">Manage configuration settings</p>
+        <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6" /> Config Command Group</h2>
+        <p>Manage configuration settings</p>
 
         <CodeBlock
           code={`devpulse config show                   # Show all config
-devpulse config set theme dark         # Set a setting
-devpulse config get theme              # Get specific setting`}
+devpulse config show user.name         # Show specific key
+devpulse config set theme dark
+devpulse config get theme
+devpulse config import-config config.json`}
           language="bash"
         />
       </div>
@@ -278,13 +335,16 @@ devpulse config get theme              # Get specific setting`}
       {/* Export Commands */}
       {shouldRender("export") && (
       <div>
-        <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6 text-green-500" /> Export Commands</h2>
-        <p className="text-neutral-300">Export data in various formats</p>
+        <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6" /> Export Command Group</h2>
+        <p>Export data in various formats</p>
 
         <CodeBlock
           code={`devpulse export all                    # Export as CSV
-devpulse export all --format json      # JSON format
-devpulse export sessions               # Export sessions only`}
+devpulse export all --format json
+devpulse export all --range 2026-01-01:2026-01-31
+devpulse export sessions
+devpulse export projects
+devpulse export notes`}
           language="bash"
         />
       </div>
@@ -296,18 +356,60 @@ devpulse export sessions               # Export sessions only`}
         <h2 id="github-commands" className="flex items-center gap-2"><Github className="h-6 w-6" /> GitHub Command Group</h2>
         <p>GitHub integration, analytics, and PR management</p>
 
-        <h3>github stats</h3> text-pink-500" /> GitHub Commands</h2>
-        <p className="text-neutral-300">GitHub integration, analytics, and PR management</p>
-
+        <h3>github stats</h3>
         <CodeBlock
-          code={`devpulse github stats --repo owner/name            # Repository stats
-devpulse github activity username                   # User activity
-devpulse github prs owner/repo                      # List PRs
-devpulse github contributors owner/repo --top 5    # Top contributors`}
+          code={`devpulse github stats --repo owner/name              # Repository statistics
+devpulse github stats --username torvalds            # User statistics
+devpulse github stats --repo owner/name --json       # JSON output
+devpulse github stats --repo owner/name --include health,contributors`}
           language="bash"
         />
-      </div>
-      )}odeBlock
+
+        <h3>github activity</h3>
+        <CodeBlock
+          code={`devpulse github activity username                    # User activity
+devpulse github activity username --events push,pr   # Filter events
+devpulse github activity username --since 7d         # Last 7 days
+devpulse github activity username --json             # JSON format`}
+          language="bash"
+        />
+
+        <h3>github contributors</h3>
+        <CodeBlock
+          code={`devpulse github contributors owner/repo              # Top contributors
+devpulse github contributors owner/repo --top 5      # Show top 5
+devpulse github contributors owner/repo --json       # JSON output`}
+          language="bash"
+        />
+
+        <h3>github top-languages</h3>
+        <CodeBlock
+          code={`devpulse github top-languages owner/repo             # Language breakdown
+devpulse github top-languages owner/repo --json      # JSON output`}
+          language="bash"
+        />
+
+        <h3>github prs <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
+        <CodeBlock
+          code={`devpulse github prs owner/repo                       # List open PRs
+devpulse github prs owner/repo --state all           # All PRs (open + closed)
+devpulse github prs owner/repo --state closed        # Closed PRs only
+devpulse github prs owner/repo --conflicts-only      # Only conflicted PRs
+devpulse github prs owner/repo --json                # JSON output
+devpulse github prs owner/repo --force-refresh       # Bypass cache`}
+          language="bash"
+        />
+
+        <h3>github pr view <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
+        <CodeBlock
+          code={`devpulse github pr view owner/repo 123               # View PR details
+devpulse github pr view owner/repo 123 --json        # JSON output
+devpulse github pr view owner/repo 123 --force-refresh`}
+          language="bash"
+        />
+
+        <h3>github pr merge <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
+        <CodeBlock
           code={`# Preview merge (no token needed if env var set)
 devpulse github pr merge owner/repo 123 --dry-run --json
 
@@ -881,55 +983,20 @@ pip install --upgrade devpulse-cli`}
       </Callout>
 
       {/* Navigation */}
-      {!group ? (
-        <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
-          <Button variant="outline" asChild className="text-foreground">
-            <Link to="/docs/quick-start">
-              <ArrowLeft className="h-4 w-4" />
-              Quick Start
-            </Link>
-          </Button>
-          <Button asChild className="text-foreground">
-            <Link to="/docs/api-reference">
-              API Reference
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
-      ) : (
-        <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
-          {getPrevCommand() ? (
-            <Button variant="outline" asChild>
-              <Link to={`/docs/commands/${getPrevCommand()!.id}`}>
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                {getPrevCommand()!.name}
-              </Link>
-            </Button>
-          ) : (
-            <Button variant="outline" asChild>
-              <Link to="/docs/commands">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                All Commands
-              </Link>
-            </Button>
-          )}
-          {getNextCommand() ? (
-            <Button asChild>
-              <Link to={`/docs/commands/${getNextCommand()!.id}`}>
-                {getNextCommand()!.name}
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Link>
-            </Button>
-          ) : (
-            <Button variant="outline" asChild>
-              <Link to="/docs/commands">
-                All Commands
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Link>
-            </Button>
-          )}
-        </div>
-      )}
+      <div className="flex items-center justify-between mt-12 pt-6 border-t border-border not-prose animate-fade-in">
+        <Button variant="outline" asChild className="text-foreground">
+          <Link to="/docs/quick-start">
+            <ArrowLeft className="h-4 w-4" />
+            Quick Start
+          </Link>
+        </Button>
+        <Button asChild className="text-foreground">
+          <Link to="/docs/api-reference">
+            API Reference
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </Button>
+      </div>
 
       {/* Search Modal */}
       {searchOpen && (
