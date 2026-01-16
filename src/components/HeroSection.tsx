@@ -278,7 +278,7 @@ export function HeroSection() {
                       </div>
                       <span className="text-[var(--color-neutral-350)]">{CLI_SEQUENCE.steps[stepIndex].text}</span>
                     </div>
-                  ))}}
+                  ))}
                 </div>
 
                 {showStatus && (
