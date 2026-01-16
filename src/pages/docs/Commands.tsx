@@ -248,61 +248,13 @@ devpulse track export --range 2026-01-01:2026-01-31`}
       {/* Stats Commands */}
       {shouldRender("stats") && (
       <div>
-        <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6" /> Stats Command Group</h2>
-        <p>View analytics and statistics</p>
+        <h2 id="stats-commands" className="flex items-center gap-2"><BarChart3 className="h-6 w-6 text-blue-500" /> Stats Commands</h2>
+        <p className="text-neutral-300">View analytics and statistics</p>
 
-        <h3>stats show</h3>
         <CodeBlock
           code={`devpulse stats show                    # Show today's stats
-devpulse stats show --week             # Weekly stats
-devpulse stats show --month            # Monthly stats`}
-          language="bash"
-        />
-
-        <h3>stats report</h3>
-        <CodeBlock
-          code={`devpulse stats report                  # Console report
-devpulse stats report --format json    # JSON format
-devpulse stats report --format html    # HTML report`}
-          language="bash"
-        />
-
-        <h3>stats trends</h3>
-        <CodeBlock
-          code={`devpulse stats trends                  # Show trends
-devpulse stats trends --metric productivity
-devpulse stats trends --chart          # Display chart`}
-          language="bash"
-        />
-
-        <h3>stats compare</h3>
-        <CodeBlock
-          code={`devpulse stats compare                 # Compare periods
-devpulse stats compare --metric productivity`}
-          language="bash"
-        />
-
-        <h3>stats breakdown</h3>
-        <CodeBlock
-          code={`devpulse stats breakdown               # Breakdown by project
-devpulse stats breakdown --by project
-devpulse stats breakdown --top 5       # Top 5 categories`}
-          language="bash"
-        />
-
-        <h3>stats productivity</h3>
-        <CodeBlock
-          code={`devpulse stats productivity            # Productivity score
-devpulse stats productivity --score    # Show score details
-devpulse stats productivity --insights # Get insights`}
-          language="bash"
-        />
-
-        <h3>stats goals</h3>
-        <CodeBlock
-          code={`devpulse stats goals                   # List goals
-devpulse stats goals --weekly          # Weekly goals
-devpulse stats goals set "Goal Name"   # Set new goal`}
+devpulse stats report --format json    # JSON format report
+devpulse stats trends --metric productivity  # Show trends`}
           language="bash"
         />
       </div>
@@ -311,15 +263,13 @@ devpulse stats goals set "Goal Name"   # Set new goal`}
       {/* Config Commands */}
       {shouldRender("config") && (
       <div>
-        <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6" /> Config Command Group</h2>
-        <p>Manage configuration settings</p>
+        <h2 id="config-commands" className="flex items-center gap-2"><Settings className="h-6 w-6 text-purple-500" /> Config Commands</h2>
+        <p className="text-neutral-300">Manage configuration settings</p>
 
         <CodeBlock
           code={`devpulse config show                   # Show all config
-devpulse config show user.name         # Show specific key
-devpulse config set theme dark
-devpulse config get theme
-devpulse config import-config config.json`}
+devpulse config set theme dark         # Set a setting
+devpulse config get theme              # Get specific setting`}
           language="bash"
         />
       </div>
@@ -328,16 +278,13 @@ devpulse config import-config config.json`}
       {/* Export Commands */}
       {shouldRender("export") && (
       <div>
-        <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6" /> Export Command Group</h2>
-        <p>Export data in various formats</p>
+        <h2 id="export-commands" className="flex items-center gap-2"><Download className="h-6 w-6 text-green-500" /> Export Commands</h2>
+        <p className="text-neutral-300">Export data in various formats</p>
 
         <CodeBlock
           code={`devpulse export all                    # Export as CSV
-devpulse export all --format json
-devpulse export all --range 2026-01-01:2026-01-31
-devpulse export sessions
-devpulse export projects
-devpulse export notes`}
+devpulse export all --format json      # JSON format
+devpulse export sessions               # Export sessions only`}
           language="bash"
         />
       </div>
@@ -349,60 +296,18 @@ devpulse export notes`}
         <h2 id="github-commands" className="flex items-center gap-2"><Github className="h-6 w-6" /> GitHub Command Group</h2>
         <p>GitHub integration, analytics, and PR management</p>
 
-        <h3>github stats</h3>
+        <h3>github stats</h3> text-pink-500" /> GitHub Commands</h2>
+        <p className="text-neutral-300">GitHub integration, analytics, and PR management</p>
+
         <CodeBlock
-          code={`devpulse github stats --repo owner/name              # Repository statistics
-devpulse github stats --username torvalds            # User statistics
-devpulse github stats --repo owner/name --json       # JSON output
-devpulse github stats --repo owner/name --include health,contributors`}
+          code={`devpulse github stats --repo owner/name            # Repository stats
+devpulse github activity username                   # User activity
+devpulse github prs owner/repo                      # List PRs
+devpulse github contributors owner/repo --top 5    # Top contributors`}
           language="bash"
         />
-
-        <h3>github activity</h3>
-        <CodeBlock
-          code={`devpulse github activity username                    # User activity
-devpulse github activity username --events push,pr   # Filter events
-devpulse github activity username --since 7d         # Last 7 days
-devpulse github activity username --json             # JSON format`}
-          language="bash"
-        />
-
-        <h3>github contributors</h3>
-        <CodeBlock
-          code={`devpulse github contributors owner/repo              # Top contributors
-devpulse github contributors owner/repo --top 5      # Show top 5
-devpulse github contributors owner/repo --json       # JSON output`}
-          language="bash"
-        />
-
-        <h3>github top-languages</h3>
-        <CodeBlock
-          code={`devpulse github top-languages owner/repo             # Language breakdown
-devpulse github top-languages owner/repo --json      # JSON output`}
-          language="bash"
-        />
-
-        <h3>github prs <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
-        <CodeBlock
-          code={`devpulse github prs owner/repo                       # List open PRs
-devpulse github prs owner/repo --state all           # All PRs (open + closed)
-devpulse github prs owner/repo --state closed        # Closed PRs only
-devpulse github prs owner/repo --conflicts-only      # Only conflicted PRs
-devpulse github prs owner/repo --json                # JSON output
-devpulse github prs owner/repo --force-refresh       # Bypass cache`}
-          language="bash"
-        />
-
-        <h3>github pr view <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
-        <CodeBlock
-          code={`devpulse github pr view owner/repo 123               # View PR details
-devpulse github pr view owner/repo 123 --json        # JSON output
-devpulse github pr view owner/repo 123 --force-refresh`}
-          language="bash"
-        />
-
-        <h3>github pr merge <span className="text-xs font-semibold text-primary ml-2 px-2 py-1 bg-primary/10 rounded">NEW</span></h3>
-        <CodeBlock
+      </div>
+      )}odeBlock
           code={`# Preview merge (no token needed if env var set)
 devpulse github pr merge owner/repo 123 --dry-run --json
 
