@@ -242,45 +242,50 @@ export function HeroSection() {
 
           {/* Right column - terminals */}
           <div className="lg:flex-1 lg:max-w-2xl lg:min-h-screen flex flex-col items-center justify-center lg:pt-20">
-            {/* Terminal 1 - Deploy */}
-            <div className="w-full rounded-xl border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] overflow-hidden shadow-2xl">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-neutral-700)]">
-                <div className="flex gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
-                  <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
-                  <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
+            {/* Terminal 1 - Monitor CLI */}
+            <div className="w-full rounded-2xl border-2 border-[var(--color-neutral-700)] bg-gradient-to-br from-[var(--color-neutral-950)] to-[var(--color-neutral-900)] overflow-hidden shadow-2xl">
+              <div className="flex items-center justify-between px-5 py-4 border-b-2 border-[var(--color-neutral-700)] bg-[var(--color-neutral-900)]">
+                <div className="flex items-center gap-3">
+                  <div className="flex gap-1.5">
+                    <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-neutral-600)]" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-neutral-600)]" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-neutral-600)]" />
+                  </div>
+                  <span className="text-xs font-semibold text-[var(--color-neutral-400)] uppercase tracking-wider">devpulse monitor</span>
                 </div>
-                <div className="flex-1 text-center">
-                  <span className="text-xs text-[var(--color-neutral-500)] font-mono">terminal</span>
-                </div>
+                <span className="text-[10px] font-medium px-2 py-1 rounded bg-[var(--color-neutral-800)] text-[var(--color-neutral-500)] border border-[var(--color-neutral-700)]">live</span>
               </div>
 
-              <div className="p-5 font-mono text-sm">
-                <div className="flex items-center gap-2 text-[var(--color-neutral-300)]">
-                  <span className="text-[var(--color-neutral-500)]">→</span>
-                  <span className="text-[var(--color-neutral-500)]">~</span>
-                  <span>
+              <div className="p-6 font-mono text-sm bg-[var(--color-neutral-950)] relative">
+                <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, currentColor 2px, currentColor 4px)'}}></div>
+                <div className="relative">
+                <div className="flex items-center gap-2 text-[var(--color-neutral-200)]">
+                  <span className="text-[var(--color-neutral-600)]">❯</span>
+                  <span className="text-[var(--color-neutral-600)]">~</span>
+                  <span className="text-[var(--color-neutral-300)]">
                     {typedCommand}
                     {cursorVisible && (
-                      <span className="inline-block w-2 h-4 bg-[var(--color-neutral-400)] ml-0.5 animate-pulse" />
+                      <span className="inline-block w-2 h-4 bg-[var(--color-neutral-300)] ml-0.5 animate-pulse" />
                     )}
                   </span>
                 </div>
 
-                <div className="mt-4 space-y-2">
+                <div className="mt-5 space-y-2.5">
                   {visibleSteps.map((stepIndex) => (
                     <div
                       key={stepIndex}
-                      className="flex items-center gap-2 text-[var(--color-neutral-400)] animate-in fade-in slide-in-from-left-2 duration-300"
+                      className="flex items-center gap-3 text-[var(--color-neutral-400)] animate-in fade-in slide-in-from-left-2 duration-300"
                     >
-                      {stepIndex < visibleSteps.length - 1 || showStatus ? (
-                        <span className="text-[var(--color-neutral-300)]">✓</span>
-                      ) : (
-                        <span className="inline-block h-3 w-3 border-2 border-[var(--color-neutral-300)] border-t-transparent rounded-full animate-spin" />
-                      )}
-                      <span>{CLI_SEQUENCE.steps[stepIndex].text}</span>
+                      <div className="flex-shrink-0">
+                        {stepIndex < visibleSteps.length - 1 || showStatus ? (
+                          <span className="text-[var(--color-neutral-300)] font-semibold">✓</span>
+                        ) : (
+                          <span className="inline-block h-3 w-3 border-2 border-[var(--color-neutral-400)] border-t-transparent rounded-full animate-spin" />
+                        )}
+                      </div>
+                      <span className="text-[var(--color-neutral-350)]">{CLI_SEQUENCE.steps[stepIndex].text}</span>
                     </div>
-                  ))}
+                  ))}}
                 </div>
 
                 {showStatus && (
@@ -320,108 +325,111 @@ export function HeroSection() {
               </div>
             )}
 
-            {/* Terminal 2 - Agent */}
+            {/* Terminal 2 - CLI Output */}
             {showAgentTerminal && (
               <div
-                className="w-full rounded-xl border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] overflow-hidden animate-in fade-in zoom-in-95 duration-500"
+                className="w-full rounded-2xl border-2 border-[var(--color-neutral-600)] bg-gradient-to-br from-neutral-900 to-neutral-950 overflow-hidden animate-in fade-in zoom-in-95 duration-500"
                 style={{
-                  boxShadow: "0 0 60px -10px rgba(230, 232, 235, 0.1)",
+                  boxShadow: "0 0 60px -10px rgba(230, 232, 235, 0.15)",
                 }}
               >
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-neutral-700)]">
+                <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-neutral-700)] bg-neutral-900/50">
                   <div className="flex gap-1.5">
                     <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
                     <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
                     <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-500)]" />
                   </div>
                   <div className="flex-1 text-center">
-                    <span className="text-xs text-[var(--color-neutral-500)] font-mono flex items-center justify-center gap-2">
-                      <Code weight="bold" className="h-3 w-3" />
-                      cli.log
+                    <span className="text-xs font-semibold tracking-wider text-neutral-300 uppercase flex items-center justify-center gap-2">
+                      <Code weight="bold" className="h-4 w-4" />
+                      CLI Output
                     </span>
+                  </div>
+                  <div className="text-xs font-medium px-2 py-1 bg-neutral-800 border border-neutral-700 text-neutral-400 rounded">
+                    v1.0
                   </div>
                 </div>
 
                 <div className="p-5 font-mono text-sm">
-                  <div className="space-y-0.5">
+                  <div className="space-y-1">
                     {agentLines.map((line, i) => (
-                      <div key={i} className="animate-in fade-in slide-in-from-left-1 duration-150">
+                      <div key={i} className="animate-in fade-in slide-in-from-left-1 duration-150 text-neutral-300 leading-relaxed">
                         {line === "" ? (
                           <div className="h-5" />
                         ) : line.startsWith("import") ? (
                           <span>
-                            <span className="text-[var(--color-baltic-sea-500)]">import</span>
-                            <span className="text-[var(--color-baltic-sea-300)]">
+                            <span className="text-neutral-500">import</span>
+                            <span className="text-neutral-400">
                               {" "}
                               {"{"} Agent {"}"}{" "}
                             </span>
-                            <span className="text-[var(--color-baltic-sea-500)]">from</span>
-                            <span className="text-[var(--color-keppel-400)]"> '@anchor/sdk'</span>
+                            <span className="text-neutral-500">from</span>
+                            <span className="text-neutral-300"> '@anchor/sdk'</span>
                           </span>
                         ) : line.startsWith("const") ? (
                           <span>
-                            <span className="text-[var(--color-baltic-sea-500)]">const</span>
-                            <span className="text-[var(--color-baltic-sea-300)]"> agent = </span>
-                            <span className="text-[var(--color-baltic-sea-500)]">new</span>
-                            <span className="text-[var(--color-keppel-400)]"> Agent</span>
-                            <span className="text-[var(--color-baltic-sea-300)]">({"{"}</span>
+                            <span className="text-neutral-500">const</span>
+                            <span className="text-neutral-400"> agent = </span>
+                            <span className="text-neutral-500">new</span>
+                            <span className="text-neutral-300"> Agent</span>
+                            <span className="text-neutral-400">({"{"}</span>
                           </span>
                         ) : line.startsWith("await") ? (
                           <span>
-                            <span className="text-[var(--color-baltic-sea-500)]">await</span>
-                            <span className="text-[var(--color-baltic-sea-300)]"> agent.</span>
-                            <span className="text-[var(--color-keppel-400)]">run</span>
-                            <span className="text-[var(--color-baltic-sea-300)]">(</span>
-                            <span className="text-[var(--color-keppel-400)]">'Analyze the codebase'</span>
-                            <span className="text-[var(--color-baltic-sea-300)]">)</span>
+                            <span className="text-neutral-500">await</span>
+                            <span className="text-neutral-400"> agent.</span>
+                            <span className="text-neutral-300">run</span>
+                            <span className="text-neutral-400">(</span>
+                            <span className="text-neutral-300">&#39;Analyze the codebase&#39;</span>
+                            <span className="text-neutral-400">)</span>
                           </span>
                         ) : line.includes(":") ? (
-                          <span className="text-[var(--color-baltic-sea-400)]">
+                          <span className="text-neutral-400">
                             {"  "}
                             {line.split(":")[0].trim()}
-                            <span className="text-[var(--color-baltic-sea-500)]">:</span>
-                            <span className="text-[var(--color-keppel-400)]">{line.split(":")[1]}</span>
+                            <span className="text-neutral-500;">:</span>
+                            <span className="text-neutral-300">{line.split(":")[1]}</span>
                           </span>
                         ) : (
-                          <span className="text-[var(--color-baltic-sea-300)]">{line}</span>
+                          <span className="text-neutral-300">{line}</span>
                         )}
                       </div>
                     ))}
                   </div>
 
                   {agentOutputs.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-[var(--color-neutral-700)]">
-                      <div className="flex items-center gap-2 text-xs text-[var(--color-neutral-500)] mb-3">
-                        <Terminal weight="bold" className="h-3 w-3" />
-                        <span>output</span>
+                    <div className="mt-4 pt-4 border-t border-neutral-700">
+                      <div className="flex items-center gap-2 text-xs text-neutral-500 mb-3 font-semibold uppercase tracking-wider">
+                        <Terminal weight="bold" className="h-4 w-4" />
+                        <span>Results</span>
                         {isAgentRunning && (
                           <span className="flex gap-0.5 ml-2">
                             <span
-                              className="h-1 w-1 rounded-full bg-[var(--color-neutral-400)] animate-bounce"
+                              className="h-1.5 w-1.5 rounded-full bg-neutral-400 animate-bounce"
                               style={{ animationDelay: "0ms" }}
                             />
                             <span
-                              className="h-1 w-1 rounded-full bg-[var(--color-neutral-400)] animate-bounce"
+                              className="h-1.5 w-1.5 rounded-full bg-neutral-400 animate-bounce"
                               style={{ animationDelay: "150ms" }}
                             />
                             <span
-                              className="h-1 w-1 rounded-full bg-[var(--color-neutral-400)] animate-bounce"
+                              className="h-1.5 w-1.5 rounded-full bg-neutral-400 animate-bounce"
                               style={{ animationDelay: "300ms" }}
                             />
                           </span>
                         )}
                       </div>
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         {agentOutputs.map((output, i) => (
                           <div
                             key={i}
-                            className={`text-xs animate-in fade-in slide-in-from-left-1 duration-200 ${
+                            className={`text-xs animate-in fade-in slide-in-from-left-1 duration-200 font-medium ${
                               output.startsWith("✓")
-                                ? "text-[var(--color-neutral-300)]"
-                                : "text-[var(--color-neutral-400)]"
+                                ? "text-neutral-300"
+                                : "text-neutral-400"
                             }`}
                           >
-                            <span className="text-[var(--color-neutral-500)] mr-2">→</span>
+                            <span className="text-neutral-500 mr-2">→</span>
                             {output}
                           </div>
                         ))}
