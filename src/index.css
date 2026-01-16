@@ -6,58 +6,74 @@
 
 @layer base {
   :root {
-    /* Updated background to custom black */
-    --background: 255 11.11% 7.06%;
-    --foreground: 210 20% 94%;
-    --card: 222 20% 11%;
-    --card-foreground: 210 20% 94%;
-    --popover: 222 20% 11%;
-    --popover-foreground: 210 20% 94%;
-    --primary: 187 85% 53%;
-    --primary-foreground: 222 22% 8%;
-    --secondary: 222 18% 14%;
-    --secondary-foreground: 210 20% 94%;
-    --muted: 222 18% 16%;
-    --muted-foreground: 215 16% 58%;
-    --accent: 187 85% 53%;
-    --accent-foreground: 222 22% 8%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 94%;
-    --success: 142 71% 45%;
-    --warning: 38 92% 50%;
-    --border: 222 15% 18%;
-    --input: 222 15% 18%;
-    --ring: 187 85% 53%;
+    /* Monochrome Infra Palette */
+    --background: 210 15% 6.25%;  /* #0B0D10 */
+    --surface: 210 15% 10.5%;     /* #14171C */
+    --card: 210 12% 12.5%;        /* #1C2027 */
+    --border-color: 210 10% 17.5%; /* #2A2F38 */
+    
+    /* Text Colors */
+    --text-primary: 210 8% 92%;    /* #E6E8EB */
+    --text-secondary: 210 7% 67%;  /* #9AA1AC */
+    --text-muted: 210 6% 42%;      /* #6B7280 */
+    --text-accent: 210 0% 63%;     /* #A1A1AA (neutral) */
+    
+    /* Semantic Colors (desaturated) */
+    --error: 0 70% 50%;            /* Desaturated red */
+    --warning: 45 85% 50%;         /* Soft amber/yellow */
+    --success: 120 30% 55%;        /* Soft light gray-green */
+    --info: 210 8% 60%;            /* Gray */
+    
+    /* Tailwind compatibility */
+    --foreground: 210 8% 92%;
+    --card-foreground: 210 8% 92%;
+    --popover: 210 12% 12.5%;
+    --popover-foreground: 210 8% 92%;
+    --primary: 210 8% 92%;          /* Use neutral for primary */
+    --primary-foreground: 210 15% 6.25%;
+    --secondary: 210 15% 10.5%;
+    --secondary-foreground: 210 8% 92%;
+    --muted: 210 10% 17.5%;
+    --muted-foreground: 210 7% 67%;
+    --accent: 210 8% 92%;           /* Neutral accent */
+    --accent-foreground: 210 15% 6.25%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 210 8% 92%;
+    --success: 120 30% 55%;
+    --warning: 45 85% 50%;
+    --border: 210 10% 17.5%;
+    --input: 210 15% 10.5%;
+    --ring: 210 8% 92%;
     --radius: 0.5rem;
 
-    /* Baltic Sea palette */
-    --color-baltic-sea-50: hsl(0 0% 100%);
-    --color-baltic-sea-100: hsl(210 20% 94%);
-    --color-baltic-sea-200: hsl(210 15% 85%);
-    --color-baltic-sea-300: hsl(222 20% 60%);
-    --color-baltic-sea-400: hsl(222 18% 50%);
-    --color-baltic-sea-500: hsl(222 15% 40%);
-    --color-baltic-sea-600: hsl(222 15% 35%);
-    --color-baltic-sea-700: hsl(222 15% 30%);
-    --color-baltic-sea-800: hsl(222 20% 11%);
-    --color-baltic-sea-900: hsl(222 20% 8%);
-    --color-baltic-sea-950: hsl(222 22% 5%);
+    /* Monochrome accent palette (for legacy support) */
+    --color-baltic-sea-50: hsl(210 0% 100%);
+    --color-baltic-sea-100: hsl(210 8% 92%);
+    --color-baltic-sea-200: hsl(210 8% 85%);
+    --color-baltic-sea-300: hsl(210 7% 75%);
+    --color-baltic-sea-400: hsl(210 7% 67%);
+    --color-baltic-sea-500: hsl(210 7% 55%);
+    --color-baltic-sea-600: hsl(210 8% 45%);
+    --color-baltic-sea-700: hsl(210 10% 35%);
+    --color-baltic-sea-800: hsl(210 12% 12.5%);
+    --color-baltic-sea-900: hsl(210 15% 10.5%);
+    --color-baltic-sea-950: hsl(210 15% 6.25%);
 
-    /* Keppel accent palette */
-    --color-keppel-50: hsl(180 100% 95%);
-    --color-keppel-100: hsl(180 100% 90%);
-    --color-keppel-200: hsl(180 90% 80%);
-    --color-keppel-300: hsl(180 85% 70%);
-    --color-keppel-400: hsl(180 85% 60%);
-    --color-keppel-500: hsl(187 85% 53%);
-    --color-keppel-600: hsl(187 75% 45%);
-    --color-keppel-700: hsl(187 70% 38%);
-    --color-keppel-800: hsl(187 60% 30%);
-    --color-keppel-900: hsl(187 55% 22%);
-    --color-keppel-950: hsl(187 50% 15%);
+    /* Neutral gray accent palette (replacing keppel) */
+    --color-neutral-50: hsl(210 0% 100%);
+    --color-neutral-100: hsl(210 8% 92%);
+    --color-neutral-200: hsl(210 8% 85%);
+    --color-neutral-300: hsl(210 8% 75%);
+    --color-neutral-400: hsl(210 8% 65%);
+    --color-neutral-500: hsl(210 7% 55%);
+    --color-neutral-600: hsl(210 7% 45%);
+    --color-neutral-700: hsl(210 8% 35%);
+    --color-neutral-800: hsl(210 10% 25%);
+    --color-neutral-900: hsl(210 12% 15%);
+    --color-neutral-950: hsl(210 15% 6.25%);
 
-    /* Bento card shadow */
-    --bento-shadow: 0px 20px 60px rgba(0, 0, 0, 0.35);
+    /* Bento card shadow - more subtle */
+    --bento-shadow: 0px 10px 40px rgba(0, 0, 0, 0.5);
   }
 
   * {
@@ -83,12 +99,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--border));
+    background: hsl(210 10% 25%);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(215, 16%, 30%);
+    background: hsl(210 8% 35%);
   }
 }
 

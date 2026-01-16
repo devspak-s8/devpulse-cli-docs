@@ -187,11 +187,11 @@ export function HeroSection() {
               key={i}
               className={`aspect-square rounded-sm transition-all duration-700 ${
                 activeCells.has(i)
-                  ? "bg-[var(--color-keppel-500)] shadow-[0_0_30px_var(--color-keppel-500)]"
-                  : "border border-[var(--color-baltic-sea-800)] bg-transparent"
+                  ? "bg-[var(--color-neutral-500)] shadow-[0_0_30px_rgba(230,232,235,0.3)]"
+                  : "border border-[var(--color-neutral-700)] bg-transparent"
               }`}
               style={{
-                opacity: activeCells.has(i) ? 0.8 : 0.4,
+                opacity: activeCells.has(i) ? 0.6 : 0.2,
               }}
             />
           ))}
@@ -205,27 +205,27 @@ export function HeroSection() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-20">
           {/* Left column - text content */}
           <div className="lg:max-w-xl lg:min-h-screen flex flex-col justify-center pt-24 lg:pt-20">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-keppel-700)] bg-[var(--color-keppel-950)] px-3 py-1 text-xs text-[var(--color-keppel-300)] mb-8 w-fit">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-keppel-400)]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] px-3 py-1 text-xs text-[var(--color-neutral-400)] mb-8 w-fit">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-neutral-300)]" />
               v2.0 now available
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--color-baltic-sea-50)] leading-[1.1]">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[var(--color-neutral-100)] leading-[1.1]">
               Real-time API monitoring,
               <br />
               right from your
               <br />
-              <span className="text-[var(--color-keppel-400)]">CLI</span>
+              <span className="text-[var(--color-neutral-400)]">CLI</span>
             </h1>
 
-            <p className="mt-6 text-lg text-[var(--color-baltic-sea-400)] max-w-md leading-relaxed">
+            <p className="mt-6 text-lg text-[var(--color-neutral-400)] max-w-md leading-relaxed">
               DevPulse monitors your APIs in real time — tracking health, latency, errors, and global availability across regions. No SDKs. No rebuilds. Just one command.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button
                 size="lg"
-                className="bg-[var(--color-keppel-500)] hover:bg-[var(--color-keppel-600)] text-[var(--color-keppel-950)] font-semibold px-6"
+                className="bg-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-50)] text-[var(--color-neutral-950)] font-semibold px-6"
               >
                 Start monitoring
                 <ArrowRight className="ml-2 h-4 w-4" weight="bold" />
@@ -233,7 +233,7 @@ export function HeroSection() {
               <Button
                 variant="ghost"
                 size="lg"
-                className="text-[var(--color-baltic-sea-300)] hover:text-[var(--color-baltic-sea-100)] hover:bg-[var(--color-baltic-sea-900)]"
+                className="text-[var(--color-neutral-300)] hover:text-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-800)]"
               >
                 View CLI docs
               </Button>
@@ -243,26 +243,26 @@ export function HeroSection() {
           {/* Right column - terminals */}
           <div className="lg:flex-1 lg:max-w-2xl lg:min-h-screen flex flex-col items-center justify-center lg:pt-20">
             {/* Terminal 1 - Deploy */}
-            <div className="w-full rounded-xl border border-[var(--color-baltic-sea-800)] bg-[var(--color-baltic-sea-950)] overflow-hidden shadow-2xl">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-baltic-sea-800)]">
+            <div className="w-full rounded-xl border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] overflow-hidden shadow-2xl">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-neutral-700)]">
                 <div className="flex gap-1.5">
-                  <div className="h-3 w-3 rounded-full bg-[var(--color-baltic-sea-700)]" />
-                  <div className="h-3 w-3 rounded-full bg-[var(--color-baltic-sea-700)]" />
-                  <div className="h-3 w-3 rounded-full bg-[var(--color-baltic-sea-700)]" />
+                  <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
+                  <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
+                  <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
                 </div>
                 <div className="flex-1 text-center">
-                  <span className="text-xs text-[var(--color-baltic-sea-500)] font-mono">terminal</span>
+                  <span className="text-xs text-[var(--color-neutral-500)] font-mono">terminal</span>
                 </div>
               </div>
 
               <div className="p-5 font-mono text-sm">
-                <div className="flex items-center gap-2 text-[var(--color-baltic-sea-300)]">
-                  <span className="text-[var(--color-keppel-500)]">→</span>
-                  <span className="text-[var(--color-keppel-500)]">~</span>
+                <div className="flex items-center gap-2 text-[var(--color-neutral-300)]">
+                  <span className="text-[var(--color-neutral-500)]">→</span>
+                  <span className="text-[var(--color-neutral-500)]">~</span>
                   <span>
                     {typedCommand}
                     {cursorVisible && (
-                      <span className="inline-block w-2 h-4 bg-[var(--color-baltic-sea-400)] ml-0.5 animate-pulse" />
+                      <span className="inline-block w-2 h-4 bg-[var(--color-neutral-400)] ml-0.5 animate-pulse" />
                     )}
                   </span>
                 </div>
@@ -271,12 +271,12 @@ export function HeroSection() {
                   {visibleSteps.map((stepIndex) => (
                     <div
                       key={stepIndex}
-                      className="flex items-center gap-2 text-[var(--color-baltic-sea-400)] animate-in fade-in slide-in-from-left-2 duration-300"
+                      className="flex items-center gap-2 text-[var(--color-neutral-400)] animate-in fade-in slide-in-from-left-2 duration-300"
                     >
                       {stepIndex < visibleSteps.length - 1 || showStatus ? (
-                        <span className="text-[var(--color-keppel-500)]">✓</span>
+                        <span className="text-[var(--color-neutral-300)]">✓</span>
                       ) : (
-                        <span className="inline-block h-3 w-3 border-2 border-[var(--color-keppel-500)] border-t-transparent rounded-full animate-spin" />
+                        <span className="inline-block h-3 w-3 border-2 border-[var(--color-neutral-300)] border-t-transparent rounded-full animate-spin" />
                       )}
                       <span>{CLI_SEQUENCE.steps[stepIndex].text}</span>
                     </div>
@@ -284,19 +284,19 @@ export function HeroSection() {
                 </div>
 
                 {showStatus && (
-                  <div className="mt-5 p-4 rounded-lg border border-[var(--color-keppel-800)] bg-[var(--color-keppel-950)] animate-in fade-in zoom-in-95 duration-500">
-                    <div className="flex items-center gap-2 text-[var(--color-keppel-400)] text-xs uppercase tracking-wider mb-3">
+                  <div className="mt-5 p-4 rounded-lg border border-[var(--color-neutral-600)] bg-[var(--color-neutral-900)] animate-in fade-in zoom-in-95 duration-500">
+                    <div className="flex items-center gap-2 text-[var(--color-neutral-300)] text-xs uppercase tracking-wider mb-3">
                       <Play weight="fill" className="h-3 w-3" />
-                      <span>Deployed</span>
+                      <span>Monitoring Live</span>
                     </div>
                     <div className="space-y-1.5 text-xs">
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-baltic-sea-500)]">endpoint</span>
-                        <span className="text-[var(--color-baltic-sea-200)]">{CLI_SEQUENCE.status.endpoint}</span>
+                        <span className="text-[var(--color-neutral-500)]">endpoint</span>
+                        <span className="text-[var(--color-neutral-200)]">{CLI_SEQUENCE.status.endpoint}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[var(--color-baltic-sea-500)]">cold start</span>
-                        <span className="text-[var(--color-keppel-400)]">{CLI_SEQUENCE.status.coldStart}</span>
+                        <span className="text-[var(--color-neutral-500)]">status</span>
+                        <span className="text-[var(--color-neutral-300)]">{CLI_SEQUENCE.status.coldStart}</span>
                       </div>
                     </div>
                   </div>
@@ -308,14 +308,14 @@ export function HeroSection() {
             {lineConnectorProgress > 0 && (
               <div className="relative w-px h-16 flex items-center justify-center">
                 <div
-                  className="absolute top-0 w-px bg-gradient-to-b from-[var(--color-keppel-500)] to-[var(--color-keppel-400)] transition-all duration-100"
+                  className="absolute top-0 w-px bg-gradient-to-b from-[var(--color-neutral-400)] to-[var(--color-neutral-500)] transition-all duration-100"
                   style={{
                     height: `${lineConnectorProgress}%`,
-                    boxShadow: "0 0 20px var(--color-keppel-500), 0 0 40px var(--color-keppel-600)",
+                    boxShadow: "0 0 20px rgba(230, 232, 235, 0.4), 0 0 40px rgba(230, 232, 235, 0.2)",
                   }}
                 />
                 {lineConnectorProgress >= 100 && (
-                  <div className="absolute -bottom-1 h-3 w-3 rounded-full bg-[var(--color-keppel-500)] animate-pulse shadow-[0_0_15px_var(--color-keppel-500)]" />
+                  <div className="absolute -bottom-1 h-3 w-3 rounded-full bg-[var(--color-neutral-300)] animate-pulse shadow-[0_0_15px_rgba(230, 232, 235, 0.4)]" />
                 )}
               </div>
             )}
@@ -323,21 +323,21 @@ export function HeroSection() {
             {/* Terminal 2 - Agent */}
             {showAgentTerminal && (
               <div
-                className="w-full rounded-xl border border-[var(--color-baltic-sea-800)] bg-[var(--color-baltic-sea-950)] overflow-hidden animate-in fade-in zoom-in-95 duration-500"
+                className="w-full rounded-xl border border-[var(--color-neutral-700)] bg-[var(--color-neutral-950)] overflow-hidden animate-in fade-in zoom-in-95 duration-500"
                 style={{
-                  boxShadow: "0 0 60px -10px var(--color-keppel-900)",
+                  boxShadow: "0 0 60px -10px rgba(230, 232, 235, 0.1)",
                 }}
               >
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-baltic-sea-800)]">
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-neutral-700)]">
                   <div className="flex gap-1.5">
-                    <div className="h-3 w-3 rounded-full bg-[var(--color-baltic-sea-700)]" />
-                    <div className="h-3 w-3 rounded-full bg-[var(--color-baltic-sea-700)]" />
-                    <div className="h-3 w-3 rounded-full bg-[var(--color-keppel-500)]" />
+                    <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
+                    <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-600)]" />
+                    <div className="h-3 w-3 rounded-full bg-[var(--color-neutral-500)]" />
                   </div>
                   <div className="flex-1 text-center">
-                    <span className="text-xs text-[var(--color-baltic-sea-500)] font-mono flex items-center justify-center gap-2">
+                    <span className="text-xs text-[var(--color-neutral-500)] font-mono flex items-center justify-center gap-2">
                       <Code weight="bold" className="h-3 w-3" />
-                      agent.ts
+                      cli.log
                     </span>
                   </div>
                 </div>
@@ -390,22 +390,22 @@ export function HeroSection() {
                   </div>
 
                   {agentOutputs.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-[var(--color-baltic-sea-800)]">
-                      <div className="flex items-center gap-2 text-xs text-[var(--color-baltic-sea-500)] mb-3">
+                    <div className="mt-4 pt-4 border-t border-[var(--color-neutral-700)]">
+                      <div className="flex items-center gap-2 text-xs text-[var(--color-neutral-500)] mb-3">
                         <Terminal weight="bold" className="h-3 w-3" />
                         <span>output</span>
                         {isAgentRunning && (
                           <span className="flex gap-0.5 ml-2">
                             <span
-                              className="h-1 w-1 rounded-full bg-[var(--color-keppel-500)] animate-bounce"
+                              className="h-1 w-1 rounded-full bg-[var(--color-neutral-400)] animate-bounce"
                               style={{ animationDelay: "0ms" }}
                             />
                             <span
-                              className="h-1 w-1 rounded-full bg-[var(--color-keppel-500)] animate-bounce"
+                              className="h-1 w-1 rounded-full bg-[var(--color-neutral-400)] animate-bounce"
                               style={{ animationDelay: "150ms" }}
                             />
                             <span
-                              className="h-1 w-1 rounded-full bg-[var(--color-keppel-500)] animate-bounce"
+                              className="h-1 w-1 rounded-full bg-[var(--color-neutral-400)] animate-bounce"
                               style={{ animationDelay: "300ms" }}
                             />
                           </span>
@@ -417,11 +417,11 @@ export function HeroSection() {
                             key={i}
                             className={`text-xs animate-in fade-in slide-in-from-left-1 duration-200 ${
                               output.startsWith("✓")
-                                ? "text-[var(--color-keppel-400)]"
-                                : "text-[var(--color-baltic-sea-400)]"
+                                ? "text-[var(--color-neutral-300)]"
+                                : "text-[var(--color-neutral-400)]"
                             }`}
                           >
-                            <span className="text-[var(--color-keppel-600)] mr-2">→</span>
+                            <span className="text-[var(--color-neutral-500)] mr-2">→</span>
                             {output}
                           </div>
                         ))}
