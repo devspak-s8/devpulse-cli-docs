@@ -7,11 +7,9 @@ import { useEffect, useState, useRef } from "react"
 const CLI_SEQUENCE = {
   command: "devpulse monitor https://devup-backend.onrender.com",
   steps: [
-    { text: "Registering target service...", delay: 500 },
-    { text: "Running health checks (/health)...", delay: 700 },
-    { text: "Collecting performance metrics (10 requests)...", delay: 1000 },
-    { text: "Analyzing latency & error rates...", delay: 800 },
-    { text: "Generating global service health map...", delay: 1000 },
+    { text: "Running health checks...", delay: 500 },
+    { text: "Analyzing latency & errors...", delay: 800 },
+    { text: "Generating health map...", delay: 1000 },
   ],
   status: {
     endpoint: "devup-backend.onrender.com",
@@ -24,18 +22,15 @@ const AGENT_SEQUENCE = {
     { text: "DevPulse CLI v1.0", delay: 80 },
     { text: "", delay: 200 },
     { text: "Target: https://devup-backend.onrender.com", delay: 80 },
-    { text: "Health endpoint: /health", delay: 80 },
-    { text: "Regions: NA, EU, AS, SA, AF, OC", delay: 80 },
+    { text: "Regions: NA, EU, AS", delay: 80 },
     { text: "", delay: 200 },
-    { text: "▶ Starting distributed health scan", delay: 100 },
+    { text: "▶ Starting health scan", delay: 100 },
   ],
   outputs: [
     { text: "Health check passed (200 OK)", delay: 300 },
     { text: "Avg latency: 2.0s", delay: 300 },
-    { text: "Success rate: 100%", delay: 300 },
-    { text: "No downtime detected", delay: 400 },
-    { text: "6/6 regions healthy", delay: 500 },
-    { text: "✓ Global health map generated", delay: 0 },
+    { text: "3/3 regions healthy", delay: 500 },
+    { text: "✓ Health map generated", delay: 0 },
   ],
 }
 
@@ -225,7 +220,7 @@ export function HeroSection() {
             <div className="mt-10 flex flex-wrap items-center gap-4 md:justify-center lg:justify-start">
               <Button
                 size="lg"
-                className="bg-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-50)] text-[var(--color-neutral-950)] font-semibold px-6 rounded-full md:rounded-lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 rounded-full md:rounded-lg shadow-lg shadow-blue-600/20"
               >
                 Start monitoring
                 <ArrowRight className="ml-2 h-4 w-4" weight="bold" />
@@ -233,7 +228,7 @@ export function HeroSection() {
               <Button
                 variant="ghost"
                 size="lg"
-                className="text-[var(--color-neutral-300)] hover:text-[var(--color-neutral-100)] hover:bg-[var(--color-neutral-800)]"
+                className="text-neutral-300 hover:text-neutral-100 hover:bg-neutral-800 border border-neutral-700"
               >
                 View CLI docs
               </Button>
