@@ -79,29 +79,29 @@ export function TerminalDemo() {
   }, [visibleLines]);
 
   return (
-    <div className="relative rounded-xl overflow-hidden shadow-2xl border border-border">
+    <div className="relative rounded-xl overflow-hidden shadow-2xl border-2 border-neutral-700 bg-neutral-950">
       {/* Terminal header */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-muted/80 border-b border-border">
+      <div className="flex items-center gap-2 px-4 py-3 bg-neutral-900 border-b-2 border-neutral-700">
         <div className="flex gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500/80" />
           <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
           <div className="w-3 h-3 rounded-full bg-green-500/80" />
         </div>
-        <span className="text-xs text-muted-foreground font-mono ml-2">
+        <span className="text-xs text-neutral-400 font-mono ml-2 uppercase tracking-wider font-semibold">
           devpulse — zsh — 80×24
         </span>
       </div>
 
       {/* Terminal content */}
-      <div className="bg-[hsl(222,22%,6%)] p-4 font-mono text-sm min-h-[400px] max-h-[400px] overflow-hidden">
+      <div className="bg-neutral-950 p-4 font-mono text-sm min-h-[400px] max-h-[400px] overflow-hidden">
         {terminalLines.slice(0, visibleLines).map((line, index) => (
           <div
             key={index}
             className={cn(
               "whitespace-pre",
-              line.type === "comment" && "text-muted-foreground",
-              line.type === "command" && "text-primary",
-              line.type === "output" && "text-foreground/90"
+              line.type === "comment" && "text-green-500",
+              line.type === "command" && "text-blue-400",
+              line.type === "output" && "text-neutral-300"
             )}
           >
             {line.text}
@@ -110,7 +110,7 @@ export function TerminalDemo() {
         
         {/* Currently typing line */}
         {isTyping && (
-          <div className="text-primary whitespace-pre">
+          <div className="text-blue-400 whitespace-pre">
             {currentText}
             <span className="animate-pulse">▊</span>
           </div>
@@ -118,7 +118,7 @@ export function TerminalDemo() {
 
         {/* Cursor when not typing */}
         {!isTyping && visibleLines < terminalLines.length && (
-          <div className="text-primary">
+          <div className="text-blue-400">
             <span className="animate-pulse">▊</span>
           </div>
         )}

@@ -205,43 +205,46 @@ export default function Landing() {
       <section className="py-20 md:py-28">
         <div className="container">
           <ScrollReveal direction="up" className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-neutral-100 to-neutral-400 bg-clip-text text-transparent">
               Built for developers
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
               Everything you need to track, analyze, and improve your development
               workflow.
             </p>
           </ScrollReveal>
 
           <div className="space-y-4">
-            <div
-              className="relative overflow-hidden
-              [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]
-              [-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]"
-            >
-              <div className="flex gap-6 w-max animate-marquee">
-                {[...features, ...features].map((feature, index) => (
-                  <div
-                    key={`${feature.title}-${index}`}
-                    className="flex items-start gap-4 px-6 py-4 rounded-xl w-80
-                    bg-card border border-border
-                    hover:border-primary/50 hover:bg-primary/5
-                    transition-all flex-shrink-0"
-                  >
-                    <div className="flex-shrink-0 h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <feature.icon className="h-6 w-6 text-primary" />
+            <div className="overflow-x-auto pb-4 scroll-smooth" style={{scrollBehavior: 'smooth'}}>
+              <div className="flex gap-6 w-max">
+                {features.map((feature, index) => {
+                  const colors = [
+                    { bg: 'bg-blue-600/10', border: 'border-blue-600/30', text: 'text-blue-400', iconBg: 'bg-blue-600/10', iconText: 'text-blue-500' },
+                    { bg: 'bg-purple-600/10', border: 'border-purple-600/30', text: 'text-purple-400', iconBg: 'bg-purple-600/10', iconText: 'text-purple-500' },
+                    { bg: 'bg-green-600/10', border: 'border-green-600/30', text: 'text-green-400', iconBg: 'bg-green-600/10', iconText: 'text-green-500' },
+                    { bg: 'bg-pink-600/10', border: 'border-pink-600/30', text: 'text-pink-400', iconBg: 'bg-pink-600/10', iconText: 'text-pink-500' },
+                    { bg: 'bg-cyan-600/10', border: 'border-cyan-600/30', text: 'text-cyan-400', iconBg: 'bg-cyan-600/10', iconText: 'text-cyan-500' },
+                  ];
+                  const color = colors[index % colors.length];
+                  return (
+                    <div
+                      key={`${feature.title}-${index}`}
+                      className={`flex items-start gap-4 px-6 py-4 rounded-xl w-80 ${color.bg} border-2 ${color.border} hover:${color.border.replace('30', '50')} transition-all flex-shrink-0`}
+                    >
+                      <div className={`flex-shrink-0 h-12 w-12 rounded-lg ${color.iconBg} flex items-center justify-center border border-${color.iconText.split('-')[1]}-600/20`}>
+                        <feature.icon className={`h-6 w-6 ${color.iconText}`} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-neutral-100 mb-1 whitespace-nowrap">
+                          {feature.title}
+                        </h3>
+                        <p className="text-neutral-400 text-sm line-clamp-2">
+                          {feature.description}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-foreground mb-1 whitespace-nowrap">
-                        {feature.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm line-clamp-2">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -376,27 +379,37 @@ export default function Landing() {
       <section className="py-20 md:py-28 bg-muted/30">
         <div className="container">
           <ScrollReveal direction="up" className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-neutral-100 to-neutral-400 bg-clip-text text-transparent">
               Works with your stack
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-neutral-300 max-w-2xl mx-auto">
               Seamless integrations with the tools you already use.
             </p>
           </ScrollReveal>
 
-          <div className="flex flex-wrap justify-center gap-6">
-            {integrations.map((integration, index) => (
-              <ScrollReveal
-                key={integration.name}
-                direction="scale"
-                delay={100 + index * 80}
-              >
-                <div className="flex items-center gap-3 px-6 py-4 bg-card border border-border rounded-xl">
-                  <integration.icon className="h-6 w-6 text-primary" />
-                  <span className="font-medium text-foreground">{integration.name}</span>
-                </div>
-              </ScrollReveal>
-            ))}
+          <div className="flex flex-wrap justify-center gap-4">
+            {integrations.map((integration, index) => {
+              const colors = [
+                { bg: 'bg-blue-600/10', border: 'border-blue-600/30', text: 'text-blue-400', icon: 'text-blue-500' },
+                { bg: 'bg-purple-600/10', border: 'border-purple-600/30', text: 'text-purple-400', icon: 'text-purple-500' },
+                { bg: 'bg-green-600/10', border: 'border-green-600/30', text: 'text-green-400', icon: 'text-green-500' },
+                { bg: 'bg-pink-600/10', border: 'border-pink-600/30', text: 'text-pink-400', icon: 'text-pink-500' },
+                { bg: 'bg-cyan-600/10', border: 'border-cyan-600/30', text: 'text-cyan-400', icon: 'text-cyan-500' },
+              ];
+              const color = colors[index % colors.length];
+              return (
+                <ScrollReveal
+                  key={integration.name}
+                  direction="scale"
+                  delay={100 + index * 80}
+                >
+                  <div className={`flex items-center gap-3 px-6 py-4 rounded-xl border-2 ${color.bg} ${color.border} hover:${color.border.replace('30', '50')} transition-all`}>
+                    <integration.icon className={`h-6 w-6 ${color.icon}`} />
+                    <span className={`font-medium ${color.text}`}>{integration.name}</span>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
           </div>
         </div>
       </section>
